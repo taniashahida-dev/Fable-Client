@@ -36,7 +36,7 @@ export default function Footer() {
           <div className="md:col-span-4 space-y-5">
             <Link href="/" className="flex items-center gap-2">
                <span className="text-indigo-600 text-3xl font-bold"> <GiBlackBook  /></span>
-              <span className="text-3xl agbalumo  font-bold text-white tracking-tight">Fable</span>
+              <span className="text-3xl font-agbalumo  font-bold text-white tracking-tight">Fable</span>
             </Link>
             <p className="text-sm leading-relaxed text-slate-400 max-w-sm">
               A digital platform connecting ebook lovers with talented independent writers.

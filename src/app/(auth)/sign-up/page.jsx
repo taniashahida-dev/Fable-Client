@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button, Link } from "@heroui/react"; 
 import { Eye, EyeOff } from "lucide-react";
+import { GiBlackBook } from "react-icons/gi";
 
 export default function SignupPage() {
   // Form fields
@@ -30,11 +31,6 @@ export default function SignupPage() {
 //   const handleSignup = async (e) => {
 //     e.preventDefault();
 //     setError("");
-// 
-//     if (password !== confirmPassword) {
-//       setError("Passwords do not match.");
-//       return;
-//     }
 // 
 //     setIsLoading(true);
 // 
@@ -79,14 +75,8 @@ export default function SignupPage() {
       <div className="hidden lg:flex w-[45%] flex-col justify-between bg-[#7c5dfa] p-16 text-white relative overflow-hidden">
         {/* Logo and Brand */}
         <div className="flex items-center gap-3 z-10">
-          <Image
-            src="/images/logo.png" 
-            alt="Fable Logo"
-            width={32}
-            height={32}
-            className="brightness-0 invert" 
-          />
-          <span className="text-xl font-bold tracking-tight">Fable</span>
+             <span className=" text-3xl font-bold"> <GiBlackBook /></span>
+          <span className="text-4xl font-agbalumo font-bold tracking-tight">Fable</span>
         </div>
 
         {/* Catchphrase */}
@@ -94,16 +84,16 @@ export default function SignupPage() {
           <h1 className="text-[44px] font-bold tracking-tight leading-tight mb-5 text-white">
             Every story finds its reader here.
           </h1>
-          <p className="text-base text-purple-100/90 leading-relaxed max-w-[380px]">
+          <p className="text-base text-purple-100/90 leading-relaxed max-w-95">
             Join thousands of readers and writers building an open library of
             original ebooks.
           </p>
         </div>
 
         {/* Illustration Stacked Graphics */}
-        <div className="absolute -bottom-10 -right-10 w-[380px] h-[340px] z-10">
+        <div className="absolute bottom-50 -right-10 w-95 h-85 z-10">
           <Image
-            src="/images/books.png"
+            src="/image/book.png"
             alt="Stacked books illustration"
             fill
             priority
@@ -114,7 +104,7 @@ export default function SignupPage() {
 
       {/* --- Right Side: Signup Form --- */}
       <div className="w-full lg:w-[55%] flex items-center justify-center p-6 sm:p-12 md:p-16 xl:p-20 bg-white">
-        <div className="w-full max-w-[460px] flex flex-col gap-8">
+        <div className="w-full max-w-115 flex flex-col gap-8">
           {/* Header */}
           <div className="space-y-1">
             <h2 className="text-[28px] font-bold text-slate-900 tracking-tight">
@@ -138,7 +128,7 @@ export default function SignupPage() {
               <label className="text-sm font-bold text-slate-800">Full name</label>
               <input
                 type="text"
-                placeholder="Tania Shahida"
+                placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -159,10 +149,9 @@ export default function SignupPage() {
               />
             </div>
 
-            {/* Password Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+         
               {/* Password */}
-              <div className="flex flex-col gap-1.5">
+              <div className=" gap-1.5">
                 <label className="text-sm font-bold text-slate-800">Password</label>
                 <div className="relative w-full">
                   <input
@@ -184,27 +173,8 @@ export default function SignupPage() {
               </div>
 
               {/* Confirm Password */}
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-bold text-slate-800">Confirm password</label>
-                <div className="relative w-full">
-                  <input
-                    type={isConfirmVisible ? "text" : "password"}
-                    placeholder="********"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                    className="w-full border border-gray-200/80 hover:border-gray-300 focus:border-purple-500 focus:outline-none h-11 shadow-sm pl-4 pr-10 rounded-xl text-sm placeholder:text-gray-300 text-slate-800 transition-colors"
-                  />
-                  <button
-                    className="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-neutral-400 hover:text-neutral-600 transition"
-                    type="button"
-                    onClick={toggleConfirmVisibility}
-                  >
-                    {isConfirmVisible ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
-              </div>
-            </div>
+         
+
 
             {/* Role Selection Blocks */}
             <div className="space-y-2">
@@ -259,7 +229,7 @@ export default function SignupPage() {
               <Button
                 type="submit"
                 radius="xl"
-                className="w-full h-11 bg-[#7c5dfa] text-white font-bold text-sm hover:bg-[#694be2] shadow-sm shadow-purple-100 transition-colors duration-200"
+                className="w-full h-11 bg-[#7c5dfa] text-white font-bold  hover:bg-[#694be2] shadow-sm shadow-purple-100 transition-colors duration-200"
                 isLoading={isLoading}
                 isDisabled={isLoading}
               >
@@ -279,7 +249,7 @@ export default function SignupPage() {
                 type="button"
                 variant="bordered"
                 radius="xl"
-                className="w-full h-11 bg-white border border-gray-200 text-slate-800 font-bold text-sm hover:bg-gray-50 transition-colors duration-200"
+                className="w-full h-11 bg-white border border-gray-200 text-slate-800 font-bold  hover:bg-gray-50 transition-colors duration-200"
                 startContent={
                   <div className="relative w-4 h-4 mr-0.5">
                     <Image
@@ -300,7 +270,7 @@ export default function SignupPage() {
           <div className="text-center text-sm font-medium text-slate-500">
             Already have an account?{" "}
             <Link
-              href={`/signin?redirect=${redirectTo}`}
+              href={`/sign-in?redirect=${redirectTo}`}
               className="font-bold text-[#4f46e5] text-sm hover:underline transition-all ml-0.5"
             >
               Log in

@@ -51,7 +51,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
           <span className="text-indigo-600 text-3xl font-bold"> <GiBlackBook  /></span>
-            <span className="text-2xl agbalumo font-bold text-slate-900 tracking-tight">Fable</span>
+            <span className="text-2xl font-agbalumo font-bold text-slate-900 tracking-tight">Fable</span>
           </Link>
 
           {/* Desktop Menu Center Links */}
