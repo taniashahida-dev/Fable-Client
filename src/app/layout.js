@@ -30,13 +30,16 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${agbalumo.variable} h-full antialiased`} 
     >
-      <body className="flex flex-col">
-      
-       <main className=" ">
-         {children}
-       </main>
-     
-        </body>
+      <body className="flex flex-col  min-h-screen  bg-white text-slate-900">
+        {/* গ্লোবাল ন্যাভবার যা সব পেজেই থাকবে */}
+        <Navbar />
+        
+        <main className="flex-1">
+          {children}
+        </main>
+        
+        <Footer />
+      </body>
     </html>
   );
 }

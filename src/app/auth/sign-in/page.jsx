@@ -6,6 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button, Link } from "@heroui/react"; 
 import { Eye, EyeOff } from "lucide-react";
 import { GiBlackBook } from "react-icons/gi";
+import { FcGoogle } from "react-icons/fc";
+import { signIn } from "@/lib/auth-client";
 
 export default function SigninPage() {
   // Form fields
@@ -14,7 +16,7 @@ export default function SigninPage() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") || "/dashboard"; 
+  const redirectTo = searchParams.get("redirect") || "/"; 
   const router = useRouter();
 
   // UI States
@@ -24,29 +26,29 @@ export default function SigninPage() {
 
   const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
 
-//   const handleSignin = async (e) => {
-//     e.preventDefault();
-//     setError("");
-//     setIsLoading(true);
-// 
-//     try {
-//       const { data, error: authError } = await signIn.email({
-//         email,
-//         password,
-//       });
-// 
-//       if (authError) {
-//         setError(authError.message || "Invalid email or password.");
-//         return;
-//       }
-// 
-//       router.push(redirectTo);
-//     } catch (err) {
-//       setError("An unexpected network error occurred.");
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
+  const handleSignin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      const { data, error: authError } = await signIn.email({
+        email,
+        password,
+      });
+
+      if (authError) {
+        setError(authError.message || "Invalid email or password.");
+        return;
+      }
+
+      router.push(redirectTo);
+    } catch (err) {
+      setError("An unexpected network error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
 //   const handleGoogleSignIn = async () => {
 //     setError("");
@@ -75,13 +77,13 @@ export default function SigninPage() {
           <h1 className="text-[44px] font-bold tracking-tight leading-tight mb-5 text-white">
             Welcome back to your stories.
           </h1>
-          <p className="text-base text-purple-100/90 leading-relaxed max-w-[380px]">
+          <p className="text-base text-purple-100/90 leading-relaxed max-w-95">
             Log in to pick up right where you left off, manage your shelf, or share your latest chapter.
           </p>
         </div>
 
         {/* Illustration Stacked Graphics */}
-        <div className="absolute bottom-50 -right-10 w-[380px] h-[340px] z-10">
+        <div className="absolute bottom-50 -right-10 w-95 h-85 z-10">
           <Image
             src="/image/book.png"
             alt="Stacked books illustration"
@@ -94,7 +96,7 @@ export default function SigninPage() {
 
       {/* --- Right Side: Signin Form --- */}
       <div className="w-full lg:w-[55%] flex items-center justify-center p-6 sm:p-12 md:p-16 xl:p-20 bg-white">
-        <div className="w-full max-w-[460px] flex flex-col gap-8">
+        <div className="w-full max-w-115 flex flex-col gap-8">
           {/* Header */}
           <div className="space-y-1">
             <h2 className="text-[28px] font-bold text-slate-900 tracking-tight">
@@ -105,7 +107,8 @@ export default function SigninPage() {
             </p>
           </div>
 
-          <form className="flex flex-col gap-5">
+          <form className="flex flex-col gap-5"
+          onSubmit={handleSignin}>
             {/* Display Error Message */}
             {error && (
               <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm font-medium border border-red-200">
@@ -192,23 +195,17 @@ export default function SigninPage() {
 
               {/* Custom Google Authentication Row */}
               <Button
-                type="button"
-                variant="bordered"
-                radius="xl"
-                className="w-full h-11 bg-white border border-gray-200 text-slate-800 font-bold text-sm hover:bg-gray-50 transition-colors duration-200"
-                startContent={
-                  <div className="relative w-4 h-4 mr-0.5">
-                    <Image
-                      src="/images/google.svg" 
-                      alt="Google logo icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                }
-              >
-                Continue with Google
-              </Button>
+                             type="button"
+                             variant="bordered"
+                             radius="xl"
+                             className="w-full h-11 bg-white border items-center border-gray-200 text-slate-800 font-bold  hover:bg-gray-50 transition-colors duration-200"
+                             
+                           >
+                             <span >
+                                 <FcGoogle/>
+                               </span>
+                             Continue with Google
+                           </Button>
             </div>
           </form>
 
@@ -216,7 +213,7 @@ export default function SigninPage() {
           <div className="text-center text-sm font-medium text-slate-500">
             Do not have an account yet?{" "}
             <Link
-              href={`/sign-up?redirect=${redirectTo}`}
+              href={`/auth/sign-up?redirect=${redirectTo}`}
               className="font-bold text-[#4f46e5] text-sm hover:underline transition-all ml-0.5"
             >
               Sign up

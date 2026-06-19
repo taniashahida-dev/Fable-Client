@@ -6,17 +6,19 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Button, Link } from "@heroui/react"; 
 import { Eye, EyeOff } from "lucide-react";
 import { GiBlackBook } from "react-icons/gi";
+import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
+
 
 export default function SignupPage() {
   // Form fields
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("reader"); // Default role matching design
 
   const searchParams = useSearchParams();
-  const redirectTo = searchParams.get("redirect") || "/dashboard"; 
+  const redirectTo = searchParams.get("redirect") || '/'; 
   const router = useRouter();
 
   // UI States
@@ -28,46 +30,45 @@ export default function SignupPage() {
   const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
   const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
 
-//   const handleSignup = async (e) => {
-//     e.preventDefault();
-//     setError("");
-// 
-//     setIsLoading(true);
-// 
-//     try {
-//       const { data, error: authError } = await signUp.email({
-//         email,
-//         password,
-//         name,
-//         customAttributes: {
-//           role: role, 
-//         },
-//       });
-// 
-//       if (authError) {
-//         setError(authError.message || "Failed to create account.");
-//         return;
-//       }
-// 
-//       router.push(redirectTo);
-//     } catch (err) {
-//       setError("An unexpected network error occurred.");
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    setError("");
 
-//   const handleGoogleSignIn = async () => {
-//     setError("");
-//     try {
-//       await signIn.social({
-//         provider: "google",
-//         redirectTo: redirectTo,
-//       });
-//     } catch (err) {
-//       setError("Google sign-in failed.");
-//     }
-//   };
+    setIsLoading(true);
+
+    try {
+      const { data, error: authError } = await authClient.signUp.email({
+        email,
+        password,
+        name,
+       role: role
+      });
+
+      if (authError) {
+        setError(authError.message || "Failed to create account.");
+        return;
+      }
+
+      router.push(redirectTo);
+    } catch (err) {
+      setError("An unexpected network error occurred.");
+    } finally {
+      setIsLoading(false);
+    }
+    
+  };
+
+  // const handleGoogleSignIn = async () => {
+  //   setError("");
+  //   try {
+  //     await signIn.social({
+  //       provider: "google",
+  //       redirectTo: redirectTo,
+  //     });
+  //   } catch (err) {
+  //     setError("Google sign-in failed.");
+  //   }
+  // };
 
   return (
     <div className="flex min-h-screen bg-white font-sans">
@@ -115,7 +116,7 @@ export default function SignupPage() {
             </p>
           </div>
 
-          <form className="flex flex-col gap-5">
+          <form className="flex flex-col gap-5" onSubmit={handleSignup}>
             {/* Display Error Message */}
             {error && (
               <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm font-medium border border-red-200">
@@ -244,33 +245,27 @@ export default function SignupPage() {
                 </span>
               </div>
 
+            </div>
+          </form>
+
               {/* Custom Google Authentication Row */}
               <Button
                 type="button"
                 variant="bordered"
                 radius="xl"
-                className="w-full h-11 bg-white border border-gray-200 text-slate-800 font-bold  hover:bg-gray-50 transition-colors duration-200"
-                startContent={
-                  <div className="relative w-4 h-4 mr-0.5">
-                    <Image
-                      src="/images/google.svg" 
-                      alt="Google logo icon"
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                }
+                className="w-full h-11 bg-white border items-center border-gray-200 text-slate-800 font-bold  hover:bg-gray-50 transition-colors duration-200"
+                
               >
+                <span >
+                    <FcGoogle/>
+                  </span>
                 Continue with Google
               </Button>
-            </div>
-          </form>
-
           {/* Navigation Option Footer */}
           <div className="text-center text-sm font-medium text-slate-500">
             Already have an account?{" "}
             <Link
-              href={`/sign-in?redirect=${redirectTo}`}
+              href={`/auth/sign-in?redirect=${redirectTo}`}
               className="font-bold text-[#4f46e5] text-sm hover:underline transition-all ml-0.5"
             >
               Log in

@@ -23,8 +23,8 @@ export default function NotFound() {
         {/* --- Visual Illustration Centrepiece --- */}
         <div className="relative w-48 h-48 my-2 drop-shadow-[0_10px_25px_rgba(124,93,250,0.12)]">
           {/* Decorative background cards representing books */}
-          <div className="absolute inset-0 bg-[#f5a623] rounded-2xl rotate-[-12deg] scale-90 translate-y-2 opacity-90" />
-          <div className="absolute inset-0 bg-[#7c5dfa] rounded-2xl rotate-[-6deg] scale-95 translate-x-1" />
+          <div className="absolute inset-0 bg-[#f5a623] rounded-2xl -rotate-12 scale-90 translate-y-2 opacity-90" />
+          <div className="absolute inset-0 bg-[#7c5dfa] rounded-2xl -rotate-6 scale-95 translate-x-1" />
           
           {/* Main front card */}
           <div className="absolute inset-0 bg-white border border-gray-100 rounded-2xl shadow-sm flex flex-col items-center justify-center p-4 rotate-[4deg]">
@@ -39,8 +39,8 @@ export default function NotFound() {
           <h1 className="text-[32px] font-bold text-slate-900 tracking-tight leading-tight">
             Page Not Found
           </h1>
-          <p className="text-slate-400 text-sm font-medium max-w-[340px] mx-auto leading-relaxed">
-            This story took an unscheduled trip off the shelf. Let&apos;s get you back to the library.
+          <p className="text-slate-400 text-sm font-medium max-w-85 mx-auto leading-relaxed">
+            This story took an unscheduled trip off the shelf. Let`s;s get you back to the library.
           </p>
         </div>
 
