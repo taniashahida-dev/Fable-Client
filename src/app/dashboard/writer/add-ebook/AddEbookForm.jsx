@@ -109,7 +109,7 @@ export default function AddEbookForm({ writer }) {
         try {
             console.log("Submitting Ebook Payload Data:", newEbookData);
             const payload = await createEbooks(newEbookData);
-            console.log(payload);
+            // console.log(payload);
 
             if (payload?.insertedId) {
                 toast.success("Ebook added to publishing queue successfully!");
