@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 import { useSession } from "@/lib/auth-client";
+import { usePathname } from "next/navigation"; // কারেন্ট রাউট ট্র্যাক করার জন্য যুক্ত করা হয়েছে
 import { Bell, Briefcase, Envelope, House, Magnifier, Person, LayoutSideContent } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
+import { GiBlackBook } from "react-icons/gi";
 
 const ROLE_NAV_ITEMS = {
   admin: {
@@ -41,6 +43,7 @@ const ROLE_NAV_ITEMS = {
 
 export function DashboardSidebar() {
   const { data: session } = useSession();
+  const pathname = usePathname(); // কারেন্ট ইউআরএল পাথ ডাইনামিকালি রিড করবে
   const user = session?.user;
   const role = user?.role;
   const config = ROLE_NAV_ITEMS[role] || ROLE_NAV_ITEMS.reader;
@@ -62,11 +65,9 @@ export function DashboardSidebar() {
       <div className="flex flex-col gap-6">
         {/* Brand Header Identity */}
         <div className="px-3 flex flex-col gap-0.5">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-amber-500 flex items-center justify-center text-white font-black text-xs">
-              F
-            </div>
-            <span className="text-lg font-bold text-white tracking-tight">Fable</span>
+          <div className="flex items-center text-white gap-2">
+            <span className=" text-3xl font-bold"> <GiBlackBook /></span>
+            <span className="text-lg font-bold tracking-tight">Fable</span>
           </div>
           <span className="text-[9px] font-bold tracking-widest text-slate-500 uppercase mt-1">
             {config.subtitle}
@@ -74,19 +75,34 @@ export function DashboardSidebar() {
         </div>
 
         {/* Navigation Core List */}
-        <nav className="flex flex-col gap-1">
-          {config.items.map((item) => (
-            <Link
-              href={item.href}
-              key={item.label}
-              onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-slate-400 transition-colors hover:bg-white/5 hover:text-white"
-              type="button"
-            >
-              <item.icon className="size-5 text-slate-500" />
-              {item.label}
-            </Link>
-          ))}
+        <nav className="flex flex-col gap-1.5">
+          {config.items.map((item) => {
+            // চেক করা হচ্ছে কারেন্ট পেজের পাথ এবং লিংকের পাথ একই কিনা
+            const isActive = pathname === item.href;
+
+            return (
+              <Link
+                href={item.href}
+                key={item.label}
+                onClick={() => setIsOpen(false)}
+                // image_cdeddf.png অনুযায়ী কন্ডিশনাল টেইলউইন্ড ক্লাস ডাইনামিকালি সেট করা হয়েছে
+                className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
+                  isActive 
+                    ? "bg-[#7c5dfa] text-white font-semibold shadow-md shadow-[#7c5dfa]/20" 
+                    : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
+                }`}
+                type="button"
+              >
+                {/* ইমেজ ফাইলের মতো আইকনের ব্যাকগ্রাউন্ড স্কয়ার কন্টেইনার আর্ট */}
+                <div className={`p-1.5 rounded-lg flex items-center justify-center transition-colors ${
+                  isActive ? "bg-white/20 text-white" : "text-slate-500 group-hover:text-slate-300"
+                }`}>
+                  <item.icon className="size-4" />
+                </div>
+                {item.label}
+              </Link>
+            );
+          })}
         </nav>
       </div>
 
