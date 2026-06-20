@@ -15,7 +15,7 @@ export const getWriterEbooks = async (writerId, status = '') => {
 
 
 export const getEbooks = async () => {
-   return serverFetch('/api/ebooks')
+   return serverFetch(`/api/ebooks`)
 };
 
 

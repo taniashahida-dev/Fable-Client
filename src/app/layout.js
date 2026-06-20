@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} ${agbalumo.variable} h-full antialiased`} 
     >
       <body className="flex flex-col  min-h-screen  bg-white text-slate-900">
-        {/* গ্লোবাল ন্যাভবার যা সব পেজেই থাকবে */}
+     
         <Navbar />
         
         <main className="flex-1">
