@@ -12,12 +12,14 @@ export const getWriterEbooks = async (writerId, status = '') => {
     return res.json();
 }
 
+
+
 export const getEbooks = async () => {
    return serverFetch('/api/ebooks')
 };
 
 
-export const getSingleEbook = async (bookId) => {
+export const getEBookById = async (bookId) => {
     const res = await fetch(`${baseUrl}/api/ebooks/${bookId}`, {
       
         cache: 'no-store' 
@@ -25,11 +27,13 @@ export const getSingleEbook = async (bookId) => {
     return res.json();
 };
 
-export const updateEbookStatus = async (bookId, status) => {
+
+
+export const updateEbook = async (bookId, updatedData) => {
     const res = await fetch(`${baseUrl}/api/ebooks/${bookId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status })
+        body: JSON.stringify({ updatedData })
     });
     return res.json();
 };

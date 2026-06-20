@@ -1,9 +1,10 @@
-import { getWriterEbooks, updateEbookStatus, deleteEbook } from "@/lib/api/ebooks";
 import { getUserSession } from "@/lib/core/session";
 import { revalidatePath } from "next/cache";
-import { Eye, Pencil, ArrowRightToSquare, SquareCheck } from '@gravity-ui/icons';
+import { Eye, ArrowRightToSquare, SquareCheck } from '@gravity-ui/icons';
 import DeleteBookButton from "@/components/Dashboard/DeleteBookButton";
-import Link from "next/link";
+import { deleteEbook, getWriterEbooks, updateEbook } from "@/lib/api/ebooks";
+import { EditBookModal } from "./EditBookModal";
+// নতুন মোডালটি ইম্পোর্ট করুন (পাথ ঠিক করে নেবেন)
 
 
 const MyBooksPage = async () => {
@@ -22,8 +23,8 @@ const MyBooksPage = async () => {
         const currentStatus = formData.get('currentStatus');
         const newStatus = currentStatus?.toLowerCase() === 'published' ? 'unpublished' : 'published';
         
-        await updateEbookStatus(bookId, newStatus);
-        revalidatePath('/my-books'); 
+        await updateEbook(bookId, newStatus);
+        revalidatePath('/my-ebooks'); 
     };
 
     const handleDelete = async (formData) => {
@@ -105,7 +106,6 @@ const MyBooksPage = async () => {
                                 ) : (
                                     writersEBook.map((book) => {
                                         const isPublished = book.status?.toLowerCase() === 'published';
-                                        // console.log(book)
                                         return (
                                             <tr key={book._id} className="hover:bg-[#1c223a]/40 transition-colors group">
                                                 <td className="py-4 px-6 flex items-center gap-4">
@@ -155,17 +155,14 @@ const MyBooksPage = async () => {
                                                             </button>
                                                         </form>
 
-                                                        {/* Edit Button */}
-                                                        <Link href={`/dashboard/writer/my-ebooks/edit/${book._id}`} className="p-2 bg-slate-800/80 hover:bg-indigo-600 text-slate-400 hover:text-white rounded-lg transition border border-slate-700/30" title="Edit Ebook">
-                                                            <Pencil size={14} />
-                                                        </Link>
+                                                        {/* পুরোনো লিংক বাদ দিয়ে এখানে নতুন ক্লায়েন্ট মোডালটি বসালাম */}
+                                                        <EditBookModal book={book} />
 
                                                         {/* View Details Button */}
                                                         <button className="p-2 bg-slate-800/80 hover:bg-teal-600 text-slate-400 hover:text-white rounded-lg transition border border-slate-700/30" title="View Details">
                                                             <Eye size={14} />
                                                         </button>
 
-                                                   
                                                         <DeleteBookButton bookId={book._id} deleteAction={handleDelete} />
 
                                                     </div>

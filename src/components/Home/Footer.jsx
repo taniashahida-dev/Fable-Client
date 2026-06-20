@@ -7,7 +7,7 @@ import { GiBlackBook } from "react-icons/gi";
 export default function Footer() {
   const quickLinks = [
     { name: "About", href: "/about" },
-    { name: "Browse Ebooks", href: "/ebooks" },
+    { name: "Browse Ebooks", href: "/browse-books" },
     { name: "Become a Writer", href: "/become-writer" },
     { name: "Contact", href: "/contact" },
   ];
