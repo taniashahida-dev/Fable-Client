@@ -5,7 +5,7 @@ import TopWriters from "@/components/Home/TopWriters";
 
 export default function Home() {
   return (
-    <div className="block pt-24 min-h-screen bg-white text-slate-900">
+    <div className="block pt-24 min-h-screen ">
       
        <Banner></Banner>
        <FeaturedEbooks></FeaturedEbooks>
