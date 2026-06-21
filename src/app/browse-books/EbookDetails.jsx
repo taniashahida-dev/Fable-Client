@@ -65,6 +65,7 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
   const response = await addBookmark({
     bookId: id,
     bookName: title,
+    coverImage: coverImage,
     writerId: bookData.writerId,
     writerName,
     price,
