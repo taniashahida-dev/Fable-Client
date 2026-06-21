@@ -14,10 +14,14 @@ export const getWriterEbooks = async (writerId, status = '') => {
 
 
 
-export const getEbooks = async () => {
-   return serverFetch(`/api/ebooks`)
+export const getEbooks = async (filters = {}) => {
+  const { search = "", category = "all", availability = "all", sortBy = "newest" } = filters;
+  
+  // Construct parameters to match the req.query keys of the backend
+  const queryString = `?search=${search}&category=${category}&availability=${availability}&sortBy=${sortBy}`;
+  
+  return serverFetch(`/api/ebooks${queryString}`);
 };
-
 
 export const getEBookById = async (bookId) => {
     const res = await fetch(`${baseUrl}/api/ebooks/${bookId}`, {

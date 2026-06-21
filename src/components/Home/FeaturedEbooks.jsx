@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Link from 'next/link';
 import { BookOpen, Star, ArrowRight } from 'lucide-react';
 import { getEbooks } from '@/lib/api/ebooks';
@@ -30,7 +30,7 @@ const FeaturedEbooks = async () => {
           </div>
           
           <Link 
-            href="/browse" 
+            href="/browse-books" 
             className="inline-flex items-center gap-2 text-sm font-medium text-[#1A4B58] hover:text-black transition-colors group"
           >
             See all publications
@@ -100,7 +100,7 @@ const FeaturedEbooks = async () => {
                     </div>
 
                     <Link 
-                      href={`/browse/${book._id}`}
+                      href={`/browse-books/${book._id}`}
                       className="inline-flex items-center gap-1.5 px-4 py-2 bg-gray-900 hover:bg-black text-white text-xs font-medium rounded transition-all shadow-xs"
                     >
                       View Details

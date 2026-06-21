@@ -9,13 +9,13 @@ import { GiBlackBook } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 
-
 export default function SignupPage() {
   // Form fields
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("reader"); // Default role matching design
+  const [confirmPassword, setConfirmPassword] = useState(""); // Added confirmation state
+  const [role, setRole] = useState("reader"); 
 
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") || '/'; 
@@ -23,7 +23,7 @@ export default function SignupPage() {
 
   // UI States
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false); // Visibility state for confirmation
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -34,6 +34,12 @@ export default function SignupPage() {
     e.preventDefault();
     setError("");
 
+    // Client-side validation to ensure passwords match perfectly
+    if (password !== confirmPassword) {
+      setError("Passwords do not match. Please recheck your input.");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -41,7 +47,7 @@ export default function SignupPage() {
         email,
         password,
         name,
-       role: role
+        role: role
       });
 
       if (authError) {
@@ -55,20 +61,7 @@ export default function SignupPage() {
     } finally {
       setIsLoading(false);
     }
-    
   };
-
-  // const handleGoogleSignIn = async () => {
-  //   setError("");
-  //   try {
-  //     await signIn.social({
-  //       provider: "google",
-  //       redirectTo: redirectTo,
-  //     });
-  //   } catch (err) {
-  //     setError("Google sign-in failed.");
-  //   }
-  // };
 
   return (
     <div className="flex min-h-screen bg-white font-sans">
@@ -76,7 +69,7 @@ export default function SignupPage() {
       <div className="hidden lg:flex w-[45%] flex-col justify-between bg-[#7c5dfa] p-16 text-white relative overflow-hidden">
         {/* Logo and Brand */}
         <div className="flex items-center gap-3 z-10">
-             <span className=" text-3xl font-bold"> <GiBlackBook /></span>
+          <span className="text-3xl font-bold"><GiBlackBook /></span>
           <span className="text-4xl font-agbalumo font-bold tracking-tight">Fable</span>
         </div>
 
@@ -86,8 +79,7 @@ export default function SignupPage() {
             Every story finds its reader here.
           </h1>
           <p className="text-base text-purple-100/90 leading-relaxed max-w-95">
-            Join thousands of readers and writers building an open library of
-            original ebooks.
+            Join thousands of readers and writers building an open library of original ebooks.
           </p>
         </div>
 
@@ -150,32 +142,49 @@ export default function SignupPage() {
               />
             </div>
 
-         
-              {/* Password */}
-              <div className=" gap-1.5">
-                <label className="text-sm font-bold text-slate-800">Password</label>
-                <div className="relative w-full">
-                  <input
-                    type={isPasswordVisible ? "text" : "password"}
-                    placeholder="********"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="w-full border border-gray-200/80 hover:border-gray-300 focus:border-purple-500 focus:outline-none h-11 shadow-sm pl-4 pr-10 rounded-xl text-sm placeholder:text-gray-300 text-slate-800 transition-colors"
-                  />
-                  <button
-                    className="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-neutral-400 hover:text-neutral-600 transition"
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                  >
-                    {isPasswordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
-                </div>
+            {/* Password */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-bold text-slate-800">Password</label>
+              <div className="relative w-full">
+                <input
+                  type={isPasswordVisible ? "text" : "password"}
+                  placeholder="********"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full border border-gray-200/80 hover:border-gray-300 focus:border-purple-500 focus:outline-none h-11 shadow-sm pl-4 pr-10 rounded-xl text-sm placeholder:text-gray-300 text-slate-800 transition-colors"
+                />
+                <button
+                  className="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-neutral-400 hover:text-neutral-600 transition"
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                >
+                  {isPasswordVisible ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
+            </div>
 
-              {/* Confirm Password */}
-         
-
+            {/* Confirm Password Field */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-bold text-slate-800">Confirm Password</label>
+              <div className="relative w-full">
+                <input
+                  type={isConfirmVisible ? "text" : "password"}
+                  placeholder="********"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  className="w-full border border-gray-200/80 hover:border-gray-300 focus:border-purple-500 focus:outline-none h-11 shadow-sm pl-4 pr-10 rounded-xl text-sm placeholder:text-gray-300 text-slate-800 transition-colors"
+                />
+                <button
+                  className="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-neutral-400 hover:text-neutral-600 transition"
+                  type="button"
+                  onClick={toggleConfirmVisibility}
+                >
+                  {isConfirmVisible ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
 
             {/* Role Selection Blocks */}
             <div className="space-y-2">
@@ -230,7 +239,7 @@ export default function SignupPage() {
               <Button
                 type="submit"
                 radius="xl"
-                className="w-full h-11 bg-[#7c5dfa] text-white font-bold  hover:bg-[#694be2] shadow-sm shadow-purple-100 transition-colors duration-200"
+                className="w-full h-11 bg-[#7c5dfa] text-white font-bold hover:bg-[#694be2] shadow-sm shadow-purple-100 transition-colors duration-200"
                 isLoading={isLoading}
                 isDisabled={isLoading}
               >
@@ -244,23 +253,22 @@ export default function SignupPage() {
                   or
                 </span>
               </div>
-
             </div>
           </form>
 
-              {/* Custom Google Authentication Row */}
-              <Button
-                type="button"
-                variant="bordered"
-                radius="xl"
-                className="w-full h-11 bg-white border items-center border-gray-200 text-slate-800 font-bold  hover:bg-gray-50 transition-colors duration-200"
-                
-              >
-                <span >
-                    <FcGoogle/>
-                  </span>
-                Continue with Google
-              </Button>
+          {/* Custom Google Authentication Row */}
+          <Button
+            type="button"
+            variant="bordered"
+            radius="xl"
+            className="w-full h-11 bg-white border items-center border-gray-200 text-slate-800 font-bold hover:bg-gray-50 transition-colors duration-200"
+          >
+            <span>
+              <FcGoogle/>
+            </span>
+            Continue with Google
+          </Button>
+
           {/* Navigation Option Footer */}
           <div className="text-center text-sm font-medium text-slate-500">
             Already have an account?{" "}

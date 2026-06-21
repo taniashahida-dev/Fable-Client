@@ -21,17 +21,16 @@ export default function EbookCard({ book }) {
       href={`/browse-books/${book._id}`}
       className="group bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col relative"
     >
-      {/* কভার ইমেজ এরিয়া - উচ্চতা ২:৩ অনুপাত রক্ষা করে */}
       <div className="w-full aspect-3/4 relative overflow-hidden bg-slate-100">
         
-        {/* SOLD ব্যাজ আর্ট */}
+     
         {isSold && (
           <div className="absolute top-3 right-3 bg-rose-500 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md z-20 shadow-md">
             Sold
           </div>
         )}
 
-        {/* কভার রেন্ডারার */}
+       
         {book.coverImage ? (
           <img
             src={book.coverImage}
@@ -46,7 +45,7 @@ export default function EbookCard({ book }) {
         )}
       </div>
 
-      {/* টেক্সট মেটাডাটা ইনফো এরিয়া */}
+   
       <div className="p-4 flex-1 flex flex-col justify-between gap-2">
         <div className="space-y-0.5">
           <h2 className="font-bold text-slate-800 text-base leading-snug group-hover:text-indigo-600 transition-colors truncate">
@@ -62,7 +61,7 @@ export default function EbookCard({ book }) {
             {book.price === 0 ? "Free" : `$${book.price.toFixed(2)}`}
           </span>
           
-          {/* ক্যাটাগরি ট্যাগ ব্যাজ */}
+       
           <span className="text-[10px] font-extrabold uppercase tracking-wider bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md">
             {book.category || "General"}
           </span>
