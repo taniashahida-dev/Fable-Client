@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Bookmark, Lock, BookOpen, AlertCircle, Calendar, Hash, Globe } from 'lucide-react';
+import { addBookmark } from '@/lib/actions/bookmark';
 
 const EbookDetails = ({ bookData, currentUser, writer }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -30,23 +31,54 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
     status = "Available",
     createdAt = "N/A",
     pages = "—",
-    language = "English",
     format = "Digital PDF",
     hasPurchased = false
   } = bookData;
 
   // Determining authorization states securely
-  const isWriter = currentUser && currentUser.id === bookData.writerId;
+  const isWriter = currentUser && currentUser._id === bookData.writerId;
   const isSoldOut = status?.toLowerCase() === 'sold';
   
   const handlePurchaseClick = async () => {
-    if (!currentUser?.isAuthenticated) {
+    // FIX: Fallback to directly checking if currentUser or currentUser._id exists
+    if (!currentUser || (typeof currentUser === 'object' && Object.keys(currentUser).length === 0)) {
       alert('Please log in with a buyer account to purchase this book.');
       return;
     }
+
+    // Secondary Check: Ensure the writer cannot buy their own book anyway
+    if (isWriter) {
+      alert('You cannot purchase your own published ebook.');
+      return;
+    }
+
     setIsProcessingPurchase(true);
     console.log(`Initiating checkout session for book id: ${id}`);
+    
+    // Your Stripe or Checkout fetch logic goes here...
   };
+
+
+  const handleBookmarkClick = async () => {
+  if (!currentUser) return alert("Please log in to bookmark this book.");
+
+  const response = await addBookmark({
+    bookId: id,
+    bookName: title,
+    writerId: bookData.writerId,
+    writerName,
+    price,
+    userEmail: currentUser.email,
+    userName: currentUser.name || "Anonymous Reader"
+  });
+
+  if (response.success) {
+    setIsBookmarked(true);
+    alert("Bookmarked successfully!");
+  } else {
+    alert(response.message);
+  }
+};
 
   return (
     <div className="py-12 mt-20 px-4 sm:px-6 lg:px-8">
@@ -71,16 +103,14 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
 
           {/* User bookmark action module */}
           <button 
-            onClick={() => setIsBookmarked(!isBookmarked)}
-            className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-md border text-sm font-medium transition-all ${
-              isBookmarked 
-                ? 'bg-[#EAE6DF] border-[#D1CBC4] text-gray-900' 
-                : 'bg-white border-[#E0DCD3] hover:bg-gray-50 text-gray-700'
-            }`}
-          >
-            <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-gray-800' : ''}`} />
-            {isBookmarked ? 'Bookmarked' : 'Bookmark'}
-          </button>
+  onClick={handleBookmarkClick}
+  className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-md border text-sm font-medium transition-all ${
+    isBookmarked ? 'bg-[#EAE6DF] border-[#D1CBC4] text-gray-900' : 'bg-white border-[#E0DCD3] text-gray-700'
+  }`}
+>
+  <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-gray-800' : ''}`} />
+  {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+</button>
 
           {/* Dynamic Writer Profile Component */}
           <div className="bg-[#FAF9F5] rounded-lg p-5 border border-[#EAE6DF]">
@@ -186,12 +216,7 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
                 <Hash className="w-3.5 h-3.5 text-gray-400" /> {pages}
               </span>
             </div>
-            <div>
-              <span className="text-[10px] tracking-wider uppercase font-semibold text-gray-400 block mb-1">Language</span>
-              <span className="text-sm font-medium text-gray-800 flex items-center justify-center gap-1">
-                <Globe className="w-3.5 h-3.5 text-gray-400" /> {language}
-              </span>
-            </div>
+           
             <div>
               <span className="text-[10px] tracking-wider uppercase font-semibold text-gray-400 block mb-1">Format</span>
               <span className="text-sm font-medium text-gray-800 flex items-center justify-center gap-1">

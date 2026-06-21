@@ -17,7 +17,6 @@ import {
 import { ArrowUpToLine, BookOpen, ArrowRight, ChevronDown, Flame } from '@gravity-ui/icons';
 import { createEbooks } from '@/lib/actions/addEbooks';
 
-// থিম ম্যাচিং ডিজাইনের জন্য শেয়ার্ড সিএসএস ক্লাস কনস্ট্যান্টস
 const textInputClass = "w-full bg-[#161b2e] border border-slate-800 text-slate-200 rounded-xl px-3 py-2.5 outline-none placeholder:text-slate-600 focus:border-indigo-600/80 transition";
 const selectBoxClass = "w-full flex flex-col gap-1";
 const triggerClasses = "w-full bg-[#161b2e] border border-slate-800 text-slate-200 rounded-xl px-3 py-2.5 flex items-center justify-between outline-none data-[hover=true]:border-indigo-600/50";
@@ -26,14 +25,14 @@ const listItemClasses = "text-slate-300 px-3 py-2 rounded-lg cursor-pointer hove
 const textAreaClass = "w-full bg-[#161b2e] border border-slate-800 text-slate-200 rounded-xl p-3 outline-none placeholder:text-slate-600 focus:border-indigo-600/80 transition resize-none";
 
 export default function AddEbookForm({ writer }) {
-    // ১. স্টেট ম্যানেজমেন্ট
-    const formRef = useRef(null); // ফর্ম সরাসরি রিসেট করার জন্য রেফ রেফারেন্স
+  
+    const formRef = useRef(null); 
     const [errors, setErrors] = useState({});
     const [coverUrl, setCoverUrl] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // ২. IMGBB ক্লায়েন্ট-সাইড কভার ইমেজ আপলোড হ্যান্ডলার
+ 
     const handleCoverUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -69,7 +68,7 @@ export default function AddEbookForm({ writer }) {
         }
     };
 
-    // ৩. সাবমিট ফর্ম ডাটা হ্যান্ডলার
+   
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -80,7 +79,7 @@ export default function AddEbookForm({ writer }) {
         const tags = formData.get('tags');
         const description = formData.get('description');
 
-        // সিম্পল ভ্যালিডেশন
+       
         const newErrors = {};
         if (!title) newErrors.title = "Book title is required";
         if (!price || isNaN(price)) newErrors.price = "Valid price value is required";
@@ -114,11 +113,11 @@ export default function AddEbookForm({ writer }) {
             if (payload?.insertedId) {
                 toast.success("Ebook added to publishing queue successfully!");
                 
-                // ফর্ম এবং ইমেজ স্টেট সম্পূর্ণ খালি করার লজিক
+             
                 setCoverUrl('');
                 setErrors({});
                 if (formRef.current) {
-                    formRef.current.reset(); // পুরো এইচটিএমএল ফর্ম রিসেট করবে
+                    formRef.current.reset(); 
                 }
             } else {
                 toast.error("Failed to add ebook. Please try again.");
@@ -138,7 +137,7 @@ export default function AddEbookForm({ writer }) {
                         <BookOpen className="text-indigo-500" /> Publish New Masterpiece
                     </legend>
 
-                    {/* রো ১: টাইটেল ও ক্যাটাগরি */}
+                 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <TextField name="title" isInvalid={!!errors.title} className="flex flex-col gap-1 w-full">
                             <Label className="text-slate-400 font-medium text-sm">Ebook Title</Label>
@@ -159,12 +158,13 @@ export default function AddEbookForm({ writer }) {
                                     <ListBox.Item id="sci-fi" className={listItemClasses} textValue="Sci-Fi & Fantasy">Sci-Fi & Fantasy</ListBox.Item>
                                     <ListBox.Item id="mystery" className={listItemClasses} textValue="Mystery & Thriller">Mystery & Thriller</ListBox.Item>
                                     <ListBox.Item id="biography" className={listItemClasses} textValue="Biography">Biography</ListBox.Item>
+                                    <ListBox.Item id="horro" className={listItemClasses} textValue="Horror">Horro</ListBox.Item>
                                 </ListBox>
                             </Select.Popover>
                         </Select>
                     </div>
 
-                    {/* রো ২: প্রাইস ও ট্যাগস */}
+                 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <TextField name="price" defaultValue="0" isInvalid={!!errors.price} className="flex flex-col gap-1 w-full">
                             <Label className="text-slate-400 font-medium text-sm">Price (USD)</Label>
@@ -226,7 +226,7 @@ export default function AddEbookForm({ writer }) {
                     </TextField>
                 </Fieldset>
 
-                {/* অ্যাকশন বাটন এরিয়া */}
+              
                 <div className="flex justify-end gap-3 pt-5 border-t border-slate-900 w-full">
                     <Button
                         type="submit"

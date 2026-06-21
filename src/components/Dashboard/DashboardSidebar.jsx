@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useSession } from "@/lib/auth-client";
-import { usePathname } from "next/navigation"; // কারেন্ট রাউট ট্র্যাক করার জন্য যুক্ত করা হয়েছে
-import { Bell, Briefcase, Envelope, House, Magnifier, Person, LayoutSideContent } from "@gravity-ui/icons";
+import { usePathname } from "next/navigation"; 
+import { Bell, Briefcase, Envelope, House, Magnifier, Person, LayoutSideContent ,Bookmark,Books} from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 import { GiBlackBook } from "react-icons/gi";
@@ -23,8 +23,8 @@ const ROLE_NAV_ITEMS = {
     items: [
       { icon: House, href: "/dashboard/reader", label: "Overview" },
       { icon: Briefcase, href: "/dashboard/reader/purchase-history", label: "Purchase History" },
-      { icon: Magnifier, href: "/dashboard/reader/my-library", label: "My Library" },
-      { icon: Bell, href: "/dashboard/reader/bookmarks", label: "Bookmarks" },
+      { icon: Books, href: "/dashboard/reader/bookshelf", label: "Bookshelf" },
+      { icon: Bookmark, href: "/dashboard/reader/bookmarks", label: "Bookmarks" },
       { icon: Person, href: "/dashboard/reader/profile", label: "Profile" },
     ],
   },
