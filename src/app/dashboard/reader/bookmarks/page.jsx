@@ -1,17 +1,18 @@
-import { getUserBookmarks } from "@/lib/api/bookmark";
+
 import { getUserSession } from "@/lib/core/session";
 import { Bookmark, Compass, Sparkles } from "lucide-react";
 import Link from "next/link";
 import BookmarkGalleryPage from "./BookmarkGalleryPage";
+import { getUserBookMarks } from "@/lib/api/bookmark";
 
 const Bookmarks = async () => {
   const user = await getUserSession();
   const email = user?.email;
 
   let initialBookmarks = [];
-  if (email) {
-    initialBookmarks = await getUserBookmarks(email);
-  }
+
+    initialBookmarks = await getUserBookMarks()
+  
 
   return (
     <div className="w-full min-h-screen  text-slate-900 pt-12 pb-12 font-sans">
