@@ -1,6 +1,7 @@
 
 import ReaderOverviewCharts from "@/components/Dashboard/ReaderOverviewCharts";
-import { getUserBookMarks } from "@/lib/api/bookmark";
+import { getUserBookMarks } from "@/lib/api/bookmark.server";
+
 
 
 import { getPurchasedBooks } from "@/lib/api/purchasedbooksData";

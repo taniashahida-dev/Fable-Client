@@ -12,11 +12,6 @@ const MyBooksPage = async () => {
     const user = await getUserSession();
     const writersEBook = await getWriterEbooks(user?.id) || [];
     
-    const totalEarnings = writersEBook.reduce((acc, book) => acc + (book.salesCount ? book.salesCount * book.price : 0), 0);
-    const totalSales = writersEBook.reduce((acc, book) => acc + (book.salesCount || 0), 0);
-    const publishedCount = writersEBook.filter(book => book.status?.toLowerCase() === 'published').length;
-
-    // --- SERVER ACTIONS ---
     const handleTogglePublish = async (formData) => {
         'use server';
         const bookId = formData.get('bookId');
@@ -54,8 +49,7 @@ const MyBooksPage = async () => {
     return (
         <div className="min-h-screen text-slate-200 p-6 md:p-10 font-sans">
             <div className="mx-auto space-y-8">
-                
-                {/* হেডার সেকশন */}
+             
                 <div className="flex justify-between items-center border-b border-slate-900 pb-5">
                     <h1 className="text-3xl text-[#f59e0b] font-bold tracking-tight">My Ebooks</h1>
                     <span className="text-sm bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 px-3 py-1.5 rounded-xl font-medium">
@@ -63,27 +57,7 @@ const MyBooksPage = async () => {
                     </span>
                 </div>
 
-                {/* স্ট্যাটাস কার্ডস */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-[#161b2e] border border-slate-900 p-6 rounded-2xl shadow-xl flex flex-col justify-between">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Earnings</span>
-                        <h2 className="text-4xl font-bold text-indigo-400 mt-2">${totalEarnings.toFixed(2)}</h2>
-                    </div>
 
-                    <div className="bg-[#161b2e] border border-slate-900 p-6 rounded-2xl shadow-xl flex flex-col justify-between">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Total Sales</span>
-                        <h2 className="text-4xl font-bold text-slate-200 mt-2">{totalSales}</h2>
-                    </div>
-
-                    <div className="bg-[#161b2e] border border-slate-900 p-6 rounded-2xl shadow-xl flex flex-col justify-between">
-                        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Published Books</span>
-                        <h2 className="text-4xl font-bold text-emerald-400 mt-2">
-                            {publishedCount} <span className="text-sm text-slate-500 font-normal">/ {writersEBook.length} total</span>
-                        </h2>
-                    </div>
-                </div>
-
-                {/* টেবিল লিস্ট */}
                 <div className="bg-[#161b2e] border border-slate-900 rounded-2xl shadow-2xl overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
@@ -155,11 +129,9 @@ const MyBooksPage = async () => {
                                                             </button>
                                                         </form>
 
-                                                        {/* পুরোনো লিংক বাদ দিয়ে এখানে নতুন ক্লায়েন্ট মোডালটি বসালাম */}
+                                                      
                                                         <EditBookModal book={book} />
-
-                                                        {/* View Details Button */}
-                                                        <button className="p-2 bg-slate-800/80 hover:bg-teal-600 text-slate-400 hover:text-white rounded-lg transition border border-slate-700/30" title="View Details">
+   <button className="p-2 bg-slate-800/80 hover:bg-teal-600 text-slate-400 hover:text-white rounded-lg transition border border-slate-700/30" title="View Details">
                                                             <Eye size={14} />
                                                         </button>
 

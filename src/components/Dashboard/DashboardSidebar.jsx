@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSession } from "@/lib/auth-client";
 import { usePathname } from "next/navigation"; 
-import { Bell, Briefcase, Envelope, House, Magnifier, Person, LayoutSideContent ,Bookmark,Books} from "@gravity-ui/icons";
+import {  Briefcase, Envelope, House, Magnifier, Person, LayoutSideContent ,Bookmark,Books,BookOpen,CopyPlus,PencilToSquare,ObjectsAlignBottom} from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 import { GiBlackBook } from "react-icons/gi";
@@ -32,10 +32,11 @@ const ROLE_NAV_ITEMS = {
     subtitle: "WRITER DASHBOARD",
     items: [
       { icon: House, href: "/dashboard/writer", label: "Overview" },
-      { icon: Briefcase, href: "/dashboard/writer/my-ebooks", label: "My Ebooks" },
-      { icon: Bell, href: "/dashboard/writer/add-ebook", label: "Add Ebook" },
-      { icon: Magnifier, href: "/dashboard/writer/sales-history", label: "Sales History" },
-      { icon: Envelope, href: "/dashboard/writer/bookmarks", label: "Bookmarks" },
+      { icon: BookOpen, href: "/dashboard/writer/my-ebooks", label: "My Ebooks" },
+      { icon: CopyPlus, href: "/dashboard/writer/add-ebook", label: "Add Ebook" },
+      { icon: PencilToSquare, href: "/dashboard/writer/edit-ebook", label: "Edit Ebook" },
+      { icon: ObjectsAlignBottom, href: "/dashboard/writer/sales-history", label: "Sales History" },
+      { icon: Bookmark, href: "/dashboard/writer/bookmarks", label: "Bookmarks" },
       { icon: Person, href: "/dashboard/writer/profile", label: "Profile" },
     ],
   },

@@ -21,3 +21,30 @@ export const getPurchasedBooks = async () => {
   
   return getPurchasedBooksOfReader(user.email);
 };
+
+
+
+
+
+export  const purchasedBookWriter =async(writerId)=>{
+
+return serverFetch(`/api/purchased-books/writer?writerId=${writerId}`,
+  { cache: 'no-store' } 
+)
+}
+
+
+export const getPurchasedBooksOfWriter = async () => {
+
+  const user = await getUserSession();
+
+  if (!user || !user.id) {
+    console.warn("Unauthorized attempt or missing session data for writer sales.");
+    return [];
+  }
+  const data = await serverFetch(
+    `/api/purchased-books/writer?writerId=${user.id}`,
+    { cache: 'no-store' }
+  );
+  return Array.isArray(data) ? data : [];
+};

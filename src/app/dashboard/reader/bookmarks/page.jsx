@@ -1,17 +1,14 @@
 
-import { getUserSession } from "@/lib/core/session";
 import { Bookmark, Compass, Sparkles } from "lucide-react";
 import Link from "next/link";
 import BookmarkGalleryPage from "./BookmarkGalleryPage";
-import { getUserBookMarks } from "@/lib/api/bookmark";
+import { getUserBookMarks } from "@/lib/api/bookmark.server";
 
 const Bookmarks = async () => {
-  const user = await getUserSession();
-  const email = user?.email;
+
 
   let initialBookmarks = [];
-
-    initialBookmarks = await getUserBookMarks()
+  initialBookmarks = await getUserBookMarks()
   
 
   return (
