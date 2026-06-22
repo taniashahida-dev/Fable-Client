@@ -7,13 +7,13 @@ import { ChevronsLeft,  ArrowRightToSquare } from '@gravity-ui/icons';
 
 export default function UnauthorizedPage() {
   return (
-    <div className="min-h-screen bg-[#0e111d] flex items-center justify-center relative overflow-hidden px-4">
+    <div className="min-h-screen  flex items-center justify-center relative overflow-hidden px-4">
       {/* ব্যাকগ্রাউন্ড অ্যাম্বিয়েন্ট গ্লো ইফেক্টস */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-1/3 w-[250px] h-[250px] bg-purple-600/5 rounded-full blur-[100px] pointer-events-none" />
 
       {/* মেইন কন্টেন্ট কন্টেইনার */}
-      <div className="max-w-md w-full bg-[#161b2e]/40 backdrop-blur-xl border border-slate-900/80 p-8 rounded-3xl shadow-2xl text-center space-y-8 relative z-10">
+      <div className="max-w-md w-full bg-[#161b2e] backdrop-blur-xl border border-slate-900/80 p-8 rounded-3xl shadow-2xl text-center space-y-8 relative z-10">
         
         {/* ৪০১ ডিজিটাল লক আইকন বা জ্যামিতিক আর্ট */}
         <div className="relative w-24 h-24 mx-auto flex items-center justify-center">
