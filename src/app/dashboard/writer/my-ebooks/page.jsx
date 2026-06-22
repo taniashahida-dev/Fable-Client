@@ -4,8 +4,6 @@ import { Eye, ArrowRightToSquare, SquareCheck } from '@gravity-ui/icons';
 import DeleteBookButton from "@/components/Dashboard/DeleteBookButton";
 import { deleteEbook, getWriterEbooks, updateEbook } from "@/lib/api/ebooks";
 import { EditBookModal } from "./EditBookModal";
-// নতুন মোডালটি ইম্পোর্ট করুন (পাথ ঠিক করে নেবেন)
-
 
 const MyBooksPage = async () => {
 
@@ -32,37 +30,40 @@ const MyBooksPage = async () => {
         }
     };
 
+    // High Contrast Status Pill styling for light backgrounds
     const getStatusStyle = (status) => {
         switch (status?.toLowerCase()) {
             case 'published':
-                return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                return 'bg-emerald-50 text-emerald-700 border-emerald-300';
             case 'unpublished':
             case 'draft':
-                return 'bg-slate-500/10 text-slate-400 border-slate-500/20';
+                return 'bg-slate-100 text-slate-700 border-slate-300';
             case 'pending':
-                return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+                return 'bg-amber-50 text-amber-700 border-amber-300';
             default:
-                return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+                return 'bg-indigo-50 text-indigo-700 border-indigo-300';
         }
     };
 
     return (
-        <div className="min-h-screen text-slate-200 p-6 md:p-10 font-sans">
-            <div className="mx-auto space-y-8">
+        <div className="min-h-screen p-6 md:p-10 font-sans mt-10 max-w-7xl mx-auto">
+            <div className="space-y-8">
              
-                <div className="flex justify-between items-center border-b border-slate-900 pb-5">
-                    <h1 className="text-3xl text-[#f59e0b] font-bold tracking-tight">My Ebooks</h1>
-                    <span className="text-sm bg-indigo-600/10 text-indigo-400 border border-indigo-500/20 px-3 py-1.5 rounded-xl font-medium">
+                {/* Header Container Section — High Contrast Titles */}
+                <div className="flex justify-between items-center border-b-2 border-slate-200 pb-5">
+                    <h1 className="text-3xl text-[#0F172A] font-serif font-black tracking-tight">My Ebooks</h1>
+                    <span className="text-xs bg-[#6366F1]/10 text-[#6366F1] border-2 border-[#6366F1]/20 px-3 py-1.5 rounded-xl font-bold uppercase tracking-wider">
                         Writer Panel
                     </span>
                 </div>
 
-
-                <div className="bg-[#161b2e] border border-slate-900 rounded-2xl shadow-2xl overflow-hidden">
+                {/* 📊 CRUNCHY BRIGHT TABLE: Built with clear grid boundaries and sharp color contrast */}
+                <div className="bg-white border-2 border-slate-200 rounded-2xl shadow-md overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="border-b border-slate-900 text-slate-500 uppercase text-xs font-bold tracking-wider bg-[#111524]">
+                                {/* Header row explicitly tinted with clean grey block and Prussian Blue lettering */}
+                                <tr className="border-b-2 border-slate-300 text-[#0F172A] uppercase text-xs font-black tracking-wide bg-slate-100/90">
                                     <th className="py-4 px-6">Title</th>
                                     <th className="py-4 px-4">Price</th>
                                     <th className="py-4 px-4">Status</th>
@@ -70,10 +71,10 @@ const MyBooksPage = async () => {
                                     <th className="py-4 px-6 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-slate-900/60">
+                            <tbody className="divide-y-2 divide-slate-100 text-sm font-semibold text-slate-700">
                                 {writersEBook.length === 0 ? (
                                     <tr>
-                                        <td colSpan="5" className="py-10 text-center text-slate-500 text-sm">
+                                        <td colSpan="5" className="py-12 text-center text-[#64748B] font-medium text-base">
                                             No ebooks uploaded yet. Create your first masterpiece!
                                         </td>
                                     </tr>
@@ -81,60 +82,69 @@ const MyBooksPage = async () => {
                                     writersEBook.map((book) => {
                                         const isPublished = book.status?.toLowerCase() === 'published';
                                         return (
-                                            <tr key={book._id} className="hover:bg-[#1c223a]/40 transition-colors group">
+                                            <tr key={book._id} className="hover:bg-slate-50/80 transition-colors group">
+                                                
+                                                {/* Column 1: Artwork Cover Preview Frame + Bold Title Text */}
                                                 <td className="py-4 px-6 flex items-center gap-4">
-                                                    <div className="w-10 h-14 bg-slate-800 rounded-lg overflow-hidden border border-slate-700/50 shadow-md shrink-0">
+                                                    <div className="w-10 h-14 bg-slate-100 rounded-lg overflow-hidden border-2 border-slate-200 shadow-xs shrink-0">
                                                         {book.coverImage ? (
                                                             <img src={book.coverImage} alt={book.title} className="w-full h-full object-cover" />
                                                         ) : (
-                                                            <div className="w-full h-full bg-indigo-950 flex items-center justify-center text-[10px] text-indigo-400 font-bold">NO CV</div>
+                                                            <div className="w-full h-full bg-slate-200 flex items-center justify-center text-[9px] text-[#64748B] font-black tracking-tighter">NO COVER</div>
                                                         )}
                                                     </div>
-                                                    <div className="font-semibold text-slate-200 group-hover:text-white transition-colors truncate max-w-[200px] md:max-w-xs">
+                                                    <div className="font-bold text-[#0F172A] group-hover:text-[#6366F1] transition-colors truncate max-w-[200px] md:max-w-xs">
                                                         {book.title}
                                                     </div>
                                                 </td>
                                                 
-                                                <td className="py-4 px-4 text-indigo-300 font-medium">
-                                                    {book.price === 0 ? 'Free' : `$${book.price}`}
+                                                {/* Column 2: Distinct Pricing Color Segment */}
+                                                <td className="py-4 px-4 text-[#6366F1] font-bold">
+                                                    {book.price === 0 ? 'Free' : `$${book.price.toFixed(2)}`}
                                                 </td>
 
+                                                {/* Column 3: Higher visibility badges */}
                                                 <td className="py-4 px-4">
-                                                    <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border tracking-wide uppercase ${getStatusStyle(book.status)}`}>
+                                                    <span className={`px-3 py-1 rounded-full text-[10px] font-black border-2 tracking-wider uppercase ${getStatusStyle(book.status)}`}>
                                                         {book.status || 'Pending'}
                                                     </span>
                                                 </td>
 
-                                                <td className="py-4 px-4 text-slate-400 font-mono">
+                                                {/* Column 4: Counter Metrics display */}
+                                                <td className="py-4 px-4 text-[#0F172A] font-mono font-bold text-sm">
                                                     {book.salesCount || '0'}
                                                 </td>
 
+                                                {/* Column 5: Action Button Containers */}
                                                 <td className="py-4 px-6 text-right">
-                                                    <div className="flex items-center justify-end gap-2">
+                                                    <div className="flex items-center justify-end gap-2.5">
                                                         
-                                                        {/* Publish / Unpublish Form */}
+                                                        {/* Publish / Unpublish Interactive Trigger Form */}
                                                         <form action={handleTogglePublish}>
                                                             <input type="hidden" name="bookId" value={book._id} />
                                                             <input type="hidden" name="currentStatus" value={book.status || 'pending'} />
                                                             <button 
                                                                 type="submit"
-                                                                className={`p-2 rounded-lg transition border border-slate-700/30 ${
+                                                                className={`p-2 rounded-lg transition-all border-2 ${
                                                                     isPublished 
-                                                                        ? 'bg-amber-600/20 hover:bg-amber-600 text-amber-400 hover:text-white' 
-                                                                        : 'bg-emerald-600/20 hover:bg-emerald-600 text-emerald-400 hover:text-white'
+                                                                        ? 'bg-amber-50 border-amber-200 text-amber-600 hover:bg-amber-600 hover:text-white hover:border-amber-600' 
+                                                                        : 'bg-emerald-50 border-emerald-200 text-emerald-600 hover:bg-emerald-600 hover:text-white hover:border-emerald-600'
                                                                 }`} 
                                                                 title={isPublished ? "Unpublish Ebook" : "Publish Ebook"}
                                                             >
-                                                                {isPublished ? <ArrowRightToSquare size={14} /> : <SquareCheck size={14} />}
+                                                                {isPublished ? <ArrowRightToSquare size={15} /> : <SquareCheck size={15} />}
                                                             </button>
                                                         </form>
 
-                                                      
+                                                        {/* Edit Modal Component Wireframe */}
                                                         <EditBookModal book={book} />
-   <button className="p-2 bg-slate-800/80 hover:bg-teal-600 text-slate-400 hover:text-white rounded-lg transition border border-slate-700/30" title="View Details">
-                                                            <Eye size={14} />
+
+                                                        {/* View Details Feature Anchor Link */}
+                                                        <button className="p-2 bg-slate-50 hover:bg-[#6366F1] text-slate-500 hover:text-white rounded-lg transition-all border-2 border-slate-200 hover:border-[#6366F1]" title="View Details">
+                                                            <Eye size={15} />
                                                         </button>
 
+                                                        {/* Action Handler Server Component Button */}
                                                         <DeleteBookButton bookId={book._id} deleteAction={handleDelete} />
 
                                                     </div>

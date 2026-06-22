@@ -5,13 +5,25 @@ import { getUserSession } from "../core/session";
 
 
 
-
-export const getBookmarks = async (email) => {  
-    return serverFetch(`/api/bookmarks?email=${email}`, { cache: 'no-store' })
+export const getUserBookMarks = async () => {
+  const user = await getUserSession();
+    if (!user?.email) return [];
+    return serverFetch(`/api/bookmarks?email=${user.email}&role=reader`, { cache: 'no-store' });
 };
 
-export const getUserBookMarks = async () => {
+
+
+// export const getBookmarkedEbooks = async () => {
+//     const user = await getUserSession();
+//     if (!user?.email) return [];
+//     return getBookmarks(user.email);
+// };
+
+export const getWriterBookmarkedAnalytics = async () => {
+    const user = await getUserSession();
+    if (!user?.email) return [];
     
-    const user = await getUserSession()
-    return getBookmarks(user.email)
+    const writerName = user.name || "Tania"; 
+    
+    return serverFetch(`/api/bookmarks?email=${user.email}&role=writer&name=${writerName}`, { cache: 'no-store' });
 };

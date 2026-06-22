@@ -17,22 +17,22 @@ import {
 import { ArrowUpToLine, BookOpen, ArrowRight, ChevronDown, Flame } from '@gravity-ui/icons';
 import { createEbooks } from '@/lib/actions/addEbooks';
 
-const textInputClass = "w-full bg-[#161b2e] border border-slate-800 text-slate-200 rounded-xl px-3 py-2.5 outline-none placeholder:text-slate-600 focus:border-indigo-600/80 transition";
-const selectBoxClass = "w-full flex flex-col gap-1";
-const triggerClasses = "w-full bg-[#161b2e] border border-slate-800 text-slate-200 rounded-xl px-3 py-2.5 flex items-center justify-between outline-none data-[hover=true]:border-indigo-600/50";
-const popoverClasses = "bg-[#0e111d] border border-slate-800 rounded-xl p-1 shadow-2xl min-w-[200px]";
-const listItemClasses = "text-slate-300 px-3 py-2 rounded-lg cursor-pointer hover:bg-indigo-600 hover:text-white outline-none data-[focused=true]:bg-indigo-600";
-const textAreaClass = "w-full bg-[#161b2e] border border-slate-800 text-slate-200 rounded-xl p-3 outline-none placeholder:text-slate-600 focus:border-indigo-600/80 transition resize-none";
+// 🎨 Streamlined High-Contrast Bright UI Utility Classes mapping your brand palette
+const textInputClass = "w-full bg-[#F8FAFC] border-2 border-slate-200 text-[#0F172A] font-medium rounded-xl px-4 py-3 outline-none placeholder:text-slate-400 focus:border-[#6366F1] focus:bg-white transition-all";
+const selectBoxClass = "w-full flex flex-col gap-1.5";
+const triggerClasses = "w-full bg-[#F8FAFC] border-2 border-slate-200 text-[#0F172A] font-medium rounded-xl px-4 py-3 flex items-center justify-between outline-none data-[hover=true]:border-[#6366F1] transition-all";
+const popoverClasses = "bg-white border-2 border-slate-200 rounded-xl p-1 shadow-xl min-w-[200px] z-50 animate-in fade-in slide-in-from-top-1 duration-200";
+const listItemClasses = "text-[#0F172A] font-semibold px-3 py-2.5 rounded-lg cursor-pointer hover:bg-[#6366F1] hover:text-white outline-none data-[focused=true]:bg-[#6366F1] data-[focused=true]:text-white transition-colors";
+const textAreaClass = "w-full bg-[#F8FAFC] border-2 border-slate-200 text-[#0F172A] font-medium rounded-xl p-4 outline-none placeholder:text-slate-400 focus:border-[#6366F1] focus:bg-white transition-all resize-none";
 
 export default function AddEbookForm({ writer }) {
-  
     const formRef = useRef(null); 
     const [errors, setErrors] = useState({});
     const [coverUrl, setCoverUrl] = useState('');
     const [isUploading, setIsUploading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
- 
+    // Asynchronously handle and upload selected cover images directly to ImgBB
     const handleCoverUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -68,7 +68,7 @@ export default function AddEbookForm({ writer }) {
         }
     };
 
-   
+    // Process submission payloads and call server actions securely
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
@@ -79,7 +79,7 @@ export default function AddEbookForm({ writer }) {
         const tags = formData.get('tags');
         const description = formData.get('description');
 
-       
+        // Form fields runtime validations validation layer
         const newErrors = {};
         if (!title) newErrors.title = "Book title is required";
         if (!price || isNaN(price)) newErrors.price = "Valid price value is required";
@@ -108,12 +108,9 @@ export default function AddEbookForm({ writer }) {
         try {
             console.log("Submitting Ebook Payload Data:", newEbookData);
             const payload = await createEbooks(newEbookData);
-            // console.log(payload);
 
             if (payload?.insertedId) {
                 toast.success("Ebook added to publishing queue successfully!");
-                
-             
                 setCoverUrl('');
                 setErrors({});
                 if (formRef.current) {
@@ -130,67 +127,73 @@ export default function AddEbookForm({ writer }) {
     };
 
     return (
-        <div className="max-w-3xl mx-auto my-8 bg-[#0e111d] p-8 border border-slate-900 rounded-2xl shadow-2xl">
-            <Form ref={formRef} onSubmit={handleSubmit} className="space-y-8" validationErrors={errors} validationBehavior="aria">
+        // Clean white card format utilizing strong Slate Grey borders and soft visual depths
+        <div className="max-w-3xl mx-auto my-8 bg-white p-8 border-2 border-slate-200 rounded-2xl shadow-md">
+            <Form ref={formRef} onSubmit={handleSubmit} className="space-y-6" validationErrors={errors} validationBehavior="aria">
                 <Fieldset className="space-y-6 w-full">
-                    <legend className="text-xl font-bold text-white border-b border-slate-900 w-full pb-3 mb-2 tracking-tight flex items-center gap-2">
-                        <BookOpen className="text-indigo-500" /> Publish New Masterpiece
+                    
+                    {/* Header Component Title with bold Prussian Blue branding styling (#0F172A) */}
+                    <legend className="text-2xl font-serif font-black text-[#0F172A] border-b-2 border-slate-200 w-full pb-4 tracking-tight flex items-center gap-2.5">
+                        <div className="p-2 bg-[#6366F1]/10 text-[#6366F1] rounded-lg">
+                            <BookOpen size={20} className="stroke-[2.5]" />
+                        </div> 
+                        Publish New Masterpiece
                     </legend>
 
-                 
+                    {/* Title & Category Input Grid Container Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <TextField name="title" isInvalid={!!errors.title} className="flex flex-col gap-1 w-full">
-                            <Label className="text-slate-400 font-medium text-sm">Ebook Title</Label>
+                        <TextField name="title" acts="form-field" isInvalid={!!errors.title} className="flex flex-col gap-1.5 w-full">
+                            <Label className="text-[#0F172A] font-bold text-xs uppercase tracking-wider">Ebook Title</Label>
                             <Input placeholder="e.g. The Chronicles of Fable" className={textInputClass} />
-                            {errors.title && <FieldError className="text-xs text-rose-500 mt-1">{errors.title}</FieldError>}
+                            {errors.title && <FieldError className="text-xs font-semibold text-rose-500 mt-1">{errors.title}</FieldError>}
                         </TextField>
 
                         <Select className={selectBoxClass} name="category" defaultSelectedKeys={['fiction']}>
-                            <Label className="text-slate-400 font-medium text-sm mb-1 block">Genre Category</Label>
+                            <Label className="text-[#0F172A] font-bold text-xs uppercase tracking-wider block">Genre Category</Label>
                             <Select.Trigger className={triggerClasses}>
-                                <Select.Value className="text-slate-200" />
-                                <Select.Indicator><ChevronDown size={16} className="text-slate-500" /></Select.Indicator>
+                                <Select.Value className="text-[#0F172A] font-semibold text-sm" />
+                                <Select.Indicator><ChevronDown size={16} className="text-slate-500 stroke-[2.5]" /></Select.Indicator>
                             </Select.Trigger>
                             <Select.Popover className={popoverClasses}>
-                                <ListBox className="outline-none">
+                                <ListBox className="outline-none border-0 p-0">
                                     <ListBox.Item id="fiction" className={listItemClasses} textValue="Fiction">Fiction</ListBox.Item>
                                     <ListBox.Item id="non-fiction" className={listItemClasses} textValue="Non-Fiction">Non-Fiction</ListBox.Item>
                                     <ListBox.Item id="sci-fi" className={listItemClasses} textValue="Sci-Fi & Fantasy">Sci-Fi & Fantasy</ListBox.Item>
                                     <ListBox.Item id="mystery" className={listItemClasses} textValue="Mystery & Thriller">Mystery & Thriller</ListBox.Item>
                                     <ListBox.Item id="biography" className={listItemClasses} textValue="Biography">Biography</ListBox.Item>
-                                    <ListBox.Item id="horro" className={listItemClasses} textValue="Horror">Horro</ListBox.Item>
+                                    <ListBox.Item id="horror" className={listItemClasses} textValue="Horror">Horror</ListBox.Item>
                                 </ListBox>
                             </Select.Popover>
                         </Select>
                     </div>
 
-                 
+                    {/* Pricing & Tag Fields Split Section Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <TextField name="price" defaultValue="0" isInvalid={!!errors.price} className="flex flex-col gap-1 w-full">
-                            <Label className="text-slate-400 font-medium text-sm">Price (USD)</Label>
+                        <TextField name="price" defaultValue="0" isInvalid={!!errors.price} className="flex flex-col gap-1.5 w-full">
+                            <Label className="text-[#0F172A] font-bold text-xs uppercase tracking-wider">Price (USD)</Label>
                             <div className="relative flex items-center">
-                                <span className="absolute left-3 text-slate-500 text-sm font-semibold select-none border-r border-slate-800 pr-2">
+                                <span className="absolute left-4 text-[#64748B] text-sm font-bold select-none border-r-2 border-slate-200 pr-3 z-10">
                                     $
                                 </span>
-                                <Input placeholder="0.00 (Enter 0 for Free)" className={`${textInputClass} pl-10`} />
+                                <Input placeholder="0.00 (Enter 0 for Free)" className={`${textInputClass} pl-12`} />
                             </div>
-                            {errors.price && <FieldError className="text-xs text-rose-500 mt-1">{errors.price}</FieldError>}
+                            {errors.price && <FieldError className="text-xs font-semibold text-rose-500 mt-1">{errors.price}</FieldError>}
                         </TextField>
 
-                        <TextField name="tags" className="flex flex-col gap-1 w-full">
-                            <Label className="text-slate-400 font-medium text-sm">Search Tags</Label>
+                        <TextField name="tags" className="flex flex-col gap-1.5 w-full">
+                            <Label className="text-[#0F172A] font-bold text-xs uppercase tracking-wider">Search Tags</Label>
                             <div className="relative flex items-center">
-                                <Flame size={16} className="absolute left-3 text-slate-600 pointer-events-none z-10" />
-                                <Input placeholder="novel, fantasy, adventure (comma separated)" className={`${textInputClass} pl-10`} />
+                                <Flame size={16} className="absolute left-4 text-[#F59E0B] stroke-[2.5] pointer-events-none z-10" />
+                                <Input placeholder="novel, fantasy, adventure" className={`${textInputClass} pl-12`} />
                             </div>
                         </TextField>
                     </div>
 
-                   
-                    <div className="flex flex-col gap-1 w-full">
-                        <span className="text-slate-400 font-medium text-sm">Book Cover Image</span>
-                        <div className="flex items-center gap-4 mt-1 bg-[#161b2e]/30 border border-slate-900 p-4 rounded-xl">
-                            <label className="w-16 h-24 border border-dashed border-slate-700 hover:border-indigo-500 bg-[#161b2e] rounded-xl flex flex-col items-center justify-center cursor-pointer transition-colors group relative overflow-hidden shrink-0 shadow-inner">
+                    {/* Book Cover Thumbnail Upload Module Component View */}
+                    <div className="flex flex-col gap-1.5 w-full">
+                        <span className="text-[#0F172A] font-bold text-xs uppercase tracking-wider">Book Cover Image</span>
+                        <div className="flex items-center gap-5 mt-1 bg-[#F8FAFC] border-2 border-slate-200 p-4 rounded-xl">
+                            <label className="w-20 h-28 border-2 border-dashed border-slate-300 hover:border-[#6366F1] bg-white rounded-xl flex flex-col items-center justify-center cursor-pointer transition-colors group relative overflow-hidden shrink-0 shadow-xs">
                                 <input 
                                     type="file" 
                                     accept="image/png, image/jpeg" 
@@ -200,40 +203,40 @@ export default function AddEbookForm({ writer }) {
                                 {coverUrl ? (
                                     <img src={coverUrl} alt="Cover Preview" className="w-full h-full object-cover" />
                                 ) : (
-                                    <ArrowUpToLine size={20} className="text-slate-500 group-hover:text-indigo-400 transition-colors" />
+                                    <ArrowUpToLine size={20} className="text-slate-400 group-hover:text-[#6366F1] transition-colors stroke-[2.5]" />
                                 )}
                             </label>
                             
                             <div className="flex flex-col">
-                                <span className="text-sm font-semibold text-slate-300">
-                                    {isUploading ? 'Uploading artwork...' : 'Upload cover template'}
+                                <span className="text-sm font-bold text-[#0F172A]">
+                                    {isUploading ? 'Uploading artwork blueprint...' : 'Upload cover template artwork'}
                                 </span>
-                                <span className="text-xs text-slate-600 mt-0.5">High-res portrait format (PNG, JPG up to 5MB)</span>
-                                {errors.cover && <span className="text-xs text-rose-500 font-medium mt-1">{errors.cover}</span>}
+                                <span className="text-xs text-[#64748B] font-medium mt-0.5">High-resolution portrait asset formats (PNG, JPG up to 5MB)</span>
+                                {errors.cover && <span className="text-xs text-rose-500 font-bold mt-1.5">{errors.cover}</span>}
                             </div>
                         </div>
                     </div>
 
-                   
-                    <TextField name="description" isInvalid={!!errors.description} className="flex flex-col gap-1 w-full">
-                        <Label className="text-slate-400 font-medium text-sm">Ebook Synopsis / Overview</Label>
+                    {/* Synopsis Description TextArea Field Frame */}
+                    <TextField name="description" isInvalid={!!errors.description} className="flex flex-col gap-1.5 w-full">
+                        <Label className="text-[#0F172A] font-bold text-xs uppercase tracking-wider">Ebook Synopsis / Overview</Label>
                         <TextArea
                             placeholder="Draft a compelling synopsis to captivate potential readers..."
                             rows={5}
                             className={textAreaClass}
                         />
-                        {errors.description && <FieldError className="text-xs text-rose-500 mt-1">{errors.description}</FieldError>}
+                        {errors.description && <FieldError className="text-xs font-semibold text-rose-500 mt-1">{errors.description}</FieldError>}
                     </TextField>
                 </Fieldset>
 
-              
-                <div className="flex justify-end gap-3 pt-5 border-t border-slate-900 w-full">
+                {/* Clear Action CTA Footer Section Row */}
+                <div className="flex justify-end gap-3 pt-5 border-t-2 border-slate-200 w-full">
                     <Button
                         type="submit"
-                        isDisabled={isUploading || isSubmitting}
-                        className="bg-indigo-600 text-white font-semibold hover:bg-indigo-700 rounded-xl px-6 transition-all h-11 shadow-lg shadow-indigo-600/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                        disabled={isUploading || isSubmitting}
+                        className="bg-[#0F172A] text-white font-bold hover:bg-black rounded-xl px-6 transition-all h-12 shadow-md disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1.5"
                     >
-                        {isSubmitting ? 'Publishing...' : 'Publish Book Assets'} <ArrowRight size={16} className="ml-1" />
+                        {isSubmitting ? 'Publishing...' : 'Publish Book Assets'} <ArrowRight size={16} className="stroke-[2.5]" />
                     </Button>
                 </div>
             </Form>
