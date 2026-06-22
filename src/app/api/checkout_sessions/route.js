@@ -22,6 +22,8 @@ export async function POST(request) {
     const bookName = formData.get('bookName');
     const price = formData.get('price');
     const writerId = formData.get('writerId'); 
+    const writerName = formData.get('writerName'); 
+    const bookCover = formData.get('bookCover');
 
     const session = await stripe.checkout.sessions.create({
     
@@ -32,13 +34,17 @@ export async function POST(request) {
         bookName,
         price,
         buyerEmail: currentUser.email, // 👈 সিকিউরড ইমেইল
-        writerId: writerId || '' 
+        writerId: writerId || '' ,
+        writerName: writerName || '', // মেটাডাটা
+        bookCover: bookCover || ''
       },
       line_items: [
         {
           price_data: {
             currency: 'usd',
-            product_data: { name: bookName || 'Ebook' },
+            product_data: { name: bookName || 'Ebook' ,
+              images: bookCover ? [bookCover] : []
+            },
             unit_amount: Math.round(Number(price) * 100), 
           },
           quantity: 1,
@@ -53,8 +59,10 @@ export async function POST(request) {
       bookId,
       bookName,
       price: Number(price),
-      buyerEmail: currentUser.email, // 👈 সিকিউরড ইমেইল
+      buyerEmail: currentUser.email,
       writerId,
+      writerName, 
+      bookCover,
       purchasedAt: new Date(),
       status: 'pending' 
     });

@@ -53,17 +53,17 @@ const FeaturedEbooks = async () => {
                 className="group bg-white border border-[#EAE6DF] rounded-xl overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Book Cover Container */}
-                <div className="p-5 bg-[#FAF9F5] border-b border-[#EAE6DF] flex items-center justify-center relative overflow-hidden aspect-[4/3]">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                <div className="p-5 bg-[#FAF9F5] border-b border-[#EAE6DF] flex items-center justify-center relative overflow-hidden aspect-4/3">
+                  <div className="absolute inset-0 bg-linear-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
                   
                   {book.coverImage ? (
                     <img 
                       src={book.coverImage} 
                       alt={book.title}
-                      className="w-32 sm:w-36 aspect-[3/4] object-cover shadow-md group-hover:scale-105 transition-transform duration-500 rounded-sm"
+                      className="w-32 sm:w-36 aspect-3/4 object-cover shadow-md group-hover:scale-105 transition-transform duration-500 rounded-sm"
                     />
                   ) : (
-                    <div className="w-32 sm:w-36 aspect-[3/4] bg-[#1A4B58] rounded shadow-md flex flex-col justify-between p-4 text-white">
+                    <div className="w-32 sm:w-36 aspect-3/4 bg-[#1A4B58] rounded shadow-md flex flex-col justify-between p-4 text-white">
                       <span className="text-[8px] uppercase tracking-wider opacity-60">Fable Digital</span>
                       <p className="font-serif text-xs font-bold line-clamp-3">{book.title}</p>
                       <span className="text-[9px] opacity-70">by {book.writerName || "Author"}</span>

@@ -28,7 +28,7 @@ const Banner = () => {
               Discover & Read <br className="hidden sm:inline" />
               <span className="text-[#1A4B58] relative inline-block">
                 Original Ebooks
-                <span className="absolute left-0 bottom-1 w-full h-[4px] bg-amber-400/60 rounded-full -z-10" />
+                <span className="absolute left-0 bottom-1 w-full h-1 bg-amber-400/60 rounded-full -z-10" />
               </span>
             </h1>
 
@@ -77,12 +77,12 @@ const Banner = () => {
           {/* Right Column: Creative Visual Feature (Book Stack Layering) */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
             {/* Decorative background dynamic frame */}
-            <div className="absolute w-72 sm:w-80 aspect-[3/4] bg-[#1A4B58] rounded-2xl rotate-6 translate-x-4 opacity-10 blur-sm" />
+            <div className="absolute w-72 sm:w-80 aspect-3/4 bg-[#1A4B58] rounded-2xl rotate-6 translate-x-4 opacity-10 blur-sm" />
             
             {/* Main Interactive Banner Artwork */}
-            <div className="relative w-72 sm:w-80 aspect-[3/4] bg-[#1A4B58] rounded-xl shadow-xl overflow-hidden border border-[#143c47] flex flex-col justify-between p-8 transform -rotate-3 transition-transform hover:rotate-0 duration-500 group">
+            <div className="relative w-72 sm:w-80 aspect-3/4 bg-[#1A4B58] rounded-xl shadow-xl overflow-hidden border border-[#143c47] flex flex-col justify-between p-8 transform -rotate-3 transition-transform hover:rotate-0 duration-500 group">
               {/* Artistic geometric patterns on book cover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/30 opacity-60 pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-black/30 opacity-60 pointer-events-none" />
               <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/20 rounded-full blur-2xl pointer-events-none" />
               
               {/* Top Banner Branding */}
@@ -98,7 +98,7 @@ const Banner = () => {
                 <p className="font-serif text-2xl sm:text-3xl font-bold text-[#FAF9F5] leading-tight tracking-wide group-hover:text-amber-300 transition-colors">
                   The Art of Digital Narrative
                 </p>
-                <div className="w-12 h-[2px] bg-amber-400 my-4" />
+                <div className="w-12 h-0.5 bg-amber-400 my-4" />
                 <p className="text-xs text-white/60 font-light tracking-wide">
                   By curated global creators
                 </p>
@@ -112,7 +112,7 @@ const Banner = () => {
             </div>
 
             {/* Secondary Floating Card */}
-            <div className="absolute bottom-[-20px] left-4 sm:left-10 bg-white border border-[#EAE6DF] rounded-lg p-3 shadow-md flex items-center gap-3 animate-bounce-slow max-w-[200px]">
+            <div className="absolute -bottom-5 left-4 sm:left-10 bg-white border border-[#EAE6DF] rounded-lg p-3 shadow-md flex items-center gap-3 animate-bounce-slow max-w-50">
               <div className="w-8 h-8 rounded bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xs">
                 ✨
               </div>

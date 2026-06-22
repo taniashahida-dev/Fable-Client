@@ -14,7 +14,7 @@ const Bookmarks = async () => {
   }
 
   return (
-    <div className="w-full min-h-screen bg-[#FAF9F5] text-slate-900 pt-12 pb-12 font-sans">
+    <div className="w-full min-h-screen  text-slate-900 pt-12 pb-12 font-sans">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         {/* Header */}
         <div className="border-b border-[#EAE6DF] pb-4">

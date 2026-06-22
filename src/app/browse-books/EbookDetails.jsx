@@ -64,7 +64,7 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
         
         {/* Left Side */}
         <div className="flex flex-col space-y-5">
-          <div className="relative group w-full aspect-[3/4] bg-[#1A4B58] rounded-lg shadow-md overflow-hidden flex items-center justify-center border border-[#E0DCD3]">
+          <div className="relative group w-full aspect-3/4 bg-[#1A4B58] rounded-lg shadow-md overflow-hidden flex items-center justify-center border border-[#E0DCD3]">
             {coverImage ? (
               <img src={coverImage} alt={title} className="w-full h-full object-cover" />
             ) : (
@@ -132,19 +132,33 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
                   <button disabled className="w-full bg-gray-200 text-gray-400 py-3 px-4 rounded-md font-medium text-sm cursor-not-allowed">This item is no longer available</button>
                 ) : (
                   /* Stripe HTML Form Integration */
-                  <form action="/api/checkout_sessions" method="POST" className="w-full">
-                   <input type="hidden" name="bookId" value={id} />
+               <form action="/api/checkout_sessions" method="POST" className="w-full">
+  <input type="hidden" name="bookId" value={id} />
   <input type="hidden" name="bookName" value={title} />
   <input type="hidden" name="price" value={price} />
   <input type="hidden" name="writerId" value={bookData?.writerId} />
-                    
-                    <button 
-                      type="submit"
-                      className="w-full bg-gray-900 hover:bg-black text-white py-3 px-4 rounded-md font-medium text-sm transition-all shadow-sm flex items-center justify-center gap-2"
-                    >
-                      Checkout
-                    </button>
-                  </form>
+  
+  {/* 🚀 নতুন যোগ করা ২ টি ইনপুট ফিল্ড (ইমেজ ও রাইটারের নামের জন্য) */}
+  <input type="hidden" name="bookCover" value={coverImage || ''} />
+  <input type="hidden" name="writerName" value={writerName || ''} />
+  
+  {currentUser ? (
+    <button 
+      type="submit"
+      className="w-full bg-gray-900 hover:bg-black text-white py-3 px-4 rounded-md font-medium text-sm transition-all shadow-sm flex items-center justify-center gap-2"
+    >
+      Checkout
+    </button>
+  ) : (
+    <button 
+      type="button"
+      onClick={() => alert("Please log in to purchase this book.")}
+      className="w-full bg-gray-400 hover:bg-gray-500 text-white py-3 px-4 rounded-md font-medium text-sm transition-all shadow-sm flex items-center justify-center gap-2"
+    >
+      Login to Buy
+    </button>
+  )}
+</form>
                 )}
               </div>
               <p className="text-[11px] text-gray-400 text-center mt-2">Secure checkout · Instant access after payment</p>
@@ -155,7 +169,7 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
               <p className="text-sm text-gray-700 leading-relaxed font-light first-letter:text-3xl first-letter:font-serif first-letter:font-bold first-letter:mr-2 first-letter:float-left first-letter:text-gray-900">{description}</p>
               
               {!hasPurchased && !isWriter && (
-                <div className="mt-4 bg-gradient-to-b from-transparent to-[#FAF9F5] p-6 rounded-lg text-center border border-dashed border-[#E0DCD3]">
+                <div className="mt-4 bg-linear-to-b from-transparent to-[#FAF9F5] p-6 rounded-lg text-center border border-dashed border-[#E0DCD3]">
                   <Lock className="w-5 h-5 mx-auto text-gray-400 mb-2" />
                   <p className="text-xs text-gray-500 font-medium">Full book contents are hidden until purchase.</p>
                 </div>

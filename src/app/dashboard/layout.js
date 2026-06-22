@@ -6,7 +6,7 @@ const DashboardLayOut = ({ children }) => {
     
     <div 
       style={{ '--sidebar-width': '16rem' }} 
-      className="flex flex-col lg:flex-row min-h-screen bg-slate-50 w-full"
+      className="flex flex-col lg:flex-row min-h-screen  w-full"
     >
      
       <DashboardSidebar />
