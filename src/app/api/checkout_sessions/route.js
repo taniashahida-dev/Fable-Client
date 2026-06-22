@@ -48,7 +48,7 @@ export async function POST(request) {
       cancel_url: `${origin}/browse-books/${bookId}?canceled=true`,
     });
 
-    await db.collection('orders').insertOne({
+    await db.collection('purchased_books').insertOne({
       stripeSessionId: session.id,
       bookId,
       bookName,

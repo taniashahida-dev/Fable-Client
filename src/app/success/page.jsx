@@ -2,10 +2,12 @@ import { stripe } from '@/lib/stripe';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle2, ArrowRight, Mail, Download, ShoppingBag } from 'lucide-react';
-import { db } from '@/lib/mongodb'; // 👈 গ্লোবাল ডাটাবেজ ইমপোর্ট
+import { db } from '@/lib/mongodb'; 
+import { getUserSession } from '@/lib/core/session';
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams;
+const user = await getUserSession()
 
   if (!session_id) {
     throw new Error('Please provide a valid session_id (`cs_test_...`)');
@@ -25,8 +27,8 @@ export default async function Success({ searchParams }) {
 
   if (status === 'complete') {
     try {
-      // 🚀 গ্লোবাল db দিয়ে অর্ডার স্ট্যাটাস আপডেট
-      await db.collection('orders').updateOne(
+      
+      await db.collection('purchased_books').updateOne(
         { stripeSessionId: session_id },
         { $set: { status: 'completed' } }
       );
@@ -79,7 +81,7 @@ export default async function Success({ searchParams }) {
               <Download className="w-4 h-4" /> Go to Your Library
               <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link href="/" className="w-full bg-white hover:bg-gray-50 border border-[#E0DCD3] text-gray-700 py-3 px-4 rounded-lg font-medium text-sm transition-all block">Continue Browsing</Link>
+            <Link href="/browse-books" className="w-full bg-[#f59e0b] hover:bg-gray-50 border border-[#E0DCD3] text-gray-700 py-3 px-4 rounded-lg font-medium text-sm transition-all block">Continue Browsing</Link>
           </div>
         </div>
       </div>

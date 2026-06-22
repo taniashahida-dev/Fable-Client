@@ -136,7 +136,6 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
                    <input type="hidden" name="bookId" value={id} />
   <input type="hidden" name="bookName" value={title} />
   <input type="hidden" name="price" value={price} />
-  <input type="hidden" name="userEmail" value={currentUser?.email} />
   <input type="hidden" name="writerId" value={bookData?.writerId} />
                     
                     <button 

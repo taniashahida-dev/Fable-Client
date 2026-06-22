@@ -49,7 +49,7 @@ const Banner = () => {
               
               <Link
               href="/dashboard"
-                className="w-full sm:w-auto bg-white hover:bg-gray-50 text-gray-800 px-8 py-4 rounded-lg font-medium text-sm transition-all border border-[#E0DCD3] hover:border-gray-400 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-[#f59e0b] hover:bg-gray-50 text-gray-800 px-8 py-4 rounded-lg font-medium text-sm transition-all border border-[#E0DCD3] hover:border-gray-400 flex items-center justify-center gap-2"
               >
                 <BookOpen className="w-4 h-4 text-gray-500" />
                 Publish Your Work

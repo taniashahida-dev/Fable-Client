@@ -26,7 +26,7 @@ export async function POST(req) {
     const { db } = await connectToDatabase();
     
  
-    await db.collection('orders').updateOne(
+    await db.collection('purchased_books').updateOne(
       { stripeSessionId: session.id },
       { $set: { status: 'completed' } }
     );

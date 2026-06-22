@@ -1,17 +1,16 @@
+import { serverFetch } from "../core/server";
 
 
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export const getUserBookmarks = async (email) => {
-    const res = await fetch(`${baseUrl}/api/bookmarks?email=${email}`, { cache: 'no-store' });
-    return res.json();
+    
+    return serverFetch(`/api/bookmarks?email=${email}`, { cache: 'no-store' })
 };
 
 
 export const deleteBookmark = async (id) => {
-    const res = await fetch(`${baseUrl}/api/bookmarks/${id}`, {
+return serverFetch (`/api/bookmarks/${id}`, {
         method: 'DELETE'
-    });
-    return res.json();
+    })
+    
 };
