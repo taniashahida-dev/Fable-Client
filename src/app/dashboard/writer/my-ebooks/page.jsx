@@ -16,8 +16,8 @@ const handleTogglePublish = async (formData) => {
     const currentStatus = formData.get('currentStatus');
     const newStatus = currentStatus?.toLowerCase() === 'published' ? 'unpublished' : 'published';
     
-    await updateEbook(bookId, { status: newStatus }); // অবজেক্ট আকারে পাঠানো হলো
-    revalidatePath('/dashboard/writer/my-ebooks'); // সঠিক ড্যাশবোর্ড পাথ
+    await updateEbook(bookId, { status: newStatus }); 
+    revalidatePath('/dashboard/writer/my-ebooks'); 
 };
 
 const handleDelete = async (formData) => {

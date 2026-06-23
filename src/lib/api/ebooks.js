@@ -12,8 +12,6 @@ export const getWriterEbooks = async (writerId, status = '') => {
     return serverFetch(path, { cache: 'no-store' });
 }
 
-
-
 export const getEbooks = async (filters = {}) => {
   const { search = "", category = "all", availability = "all", sortBy = "newest" } = filters;
   const queryString = `?search=${search}&category=${category}&availability=${availability}&sortBy=${sortBy}`;
