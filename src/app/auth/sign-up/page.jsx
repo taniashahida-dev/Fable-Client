@@ -7,7 +7,7 @@ import { Button, Link } from "@heroui/react";
 import { Eye, EyeOff } from "lucide-react";
 import { GiBlackBook } from "react-icons/gi";
 import { FcGoogle } from "react-icons/fc";
-import { authClient } from "@/lib/auth-client";
+import { authClient, signIn } from "@/lib/auth-client";
 
 export default function SignupPage() {
   // Form fields
@@ -62,6 +62,18 @@ export default function SignupPage() {
       setIsLoading(false);
     }
   };
+  const handleGoogleSignIn = async () => {
+    setError("");
+    try {
+      await signIn.social({
+        provider: "google",
+        redirectTo: redirectTo,
+      });
+    } catch (err) {
+      setError("Google sign-in failed.");
+    }
+  };
+
 
   return (
     <div className="flex min-h-screen bg-white font-sans">
@@ -258,10 +270,11 @@ export default function SignupPage() {
 
           {/* Custom Google Authentication Row */}
           <Button
+          onClick={handleGoogleSignIn}
             type="button"
             variant="bordered"
             radius="xl"
-            className="w-full h-11 bg-white border items-center border-gray-200 text-slate-800 font-bold hover:bg-gray-50 transition-colors duration-200"
+            className="w-full h-11 bg-white border items-center border-[#f59e0b] text-slate-800 font-bold hover:bg-[#f59e0b] transition-colors duration-200"
           >
             <span>
               <FcGoogle/>

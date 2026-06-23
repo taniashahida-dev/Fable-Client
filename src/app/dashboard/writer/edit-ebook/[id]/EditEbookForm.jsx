@@ -41,7 +41,6 @@ export default function EditEbookForm({ writer, ebook }) {
     const [isUploading, setIsUploading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // 🔄 ডাটাবেজ থেকে 'ebook' প্রপ্স আসা মাত্রই স্টেটগুলো লোড হবে
     useEffect(() => {
         if (ebook) {
             setTitle(ebook.title || '');
@@ -53,7 +52,6 @@ export default function EditEbookForm({ writer, ebook }) {
         }
     }, [ebook]);
 
-    // ImgBB ডিরেক্ট কভার আপলোড লজিক
     const handleCoverUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;

@@ -1,6 +1,6 @@
 import { getUserSession } from "@/lib/core/session";
 import { revalidatePath } from "next/cache";
-import { Eye, ArrowRightToSquare, SquareCheck, PencilToSquare } from '@gravity-ui/icons';
+import {  ArrowRightToSquare, SquareCheck, PencilToSquare } from '@gravity-ui/icons';
 import DeleteBookButton from "@/components/Dashboard/DeleteBookButton";
 import { deleteEbook, getWriterEbooks, updateEbook } from "@/lib/api/ebooks";
 import Link from "next/link";
@@ -147,11 +147,7 @@ const handleDelete = async (formData) => {
     <PencilToSquare size={15} />
 </Link>
 
-                                                        {/* View Details Feature Anchor Link */}
-                                                        <button className="p-2 bg-slate-50 hover:bg-[#6366F1] text-slate-500 hover:text-white rounded-lg transition-all border-2 border-slate-200 hover:border-[#6366F1]" title="View Details">
-                                                            <Eye size={15} />
-                                                        </button>
-
+                                                        
                                                         {/* Action Handler Server Component Button */}
                                                         <DeleteBookButton bookId={book._id} deleteAction={handleDelete} />
 

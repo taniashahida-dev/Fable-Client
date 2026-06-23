@@ -50,17 +50,17 @@ export default function SigninPage() {
     }
   };
 
-//   const handleGoogleSignIn = async () => {
-//     setError("");
-//     try {
-//       await signIn.social({
-//         provider: "google",
-//         redirectTo: redirectTo,
-//       });
-//     } catch (err) {
-//       setError("Google sign-in failed.");
-//     }
-//   };
+  const handleGoogleSignIn = async () => {
+    setError("");
+    try {
+      await signIn.social({
+        provider: "google",
+        redirectTo: redirectTo,
+      });
+    } catch (err) {
+      setError("Google sign-in failed.");
+    }
+  };
 
   return (
     <div className="flex min-h-screen bg-white font-sans">
@@ -195,12 +195,12 @@ export default function SigninPage() {
 
               {/* Custom Google Authentication Row */}
               <Button
-                             type="button"
+              onClick={handleGoogleSignIn}
+                             type="submit"
                              variant="bordered"
                              radius="xl"
-                             className="w-full h-11 bg-white border items-center border-gray-200 text-slate-800 font-bold  hover:bg-gray-50 transition-colors duration-200"
-                             
-                           >
+                            className="w-full h-11 bg-white border items-center border-[#f59e0b] text-slate-800 font-bold hover:bg-[#f59e0b] transition-colors duration-200"
+          >
                              <span >
                                  <FcGoogle/>
                                </span>
