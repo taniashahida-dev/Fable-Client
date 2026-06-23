@@ -44,7 +44,7 @@ const ROLE_NAV_ITEMS = {
 
 export function DashboardSidebar() {
   const { data: session } = useSession();
-  const pathname = usePathname(); // কারেন্ট ইউআরএল পাথ ডাইনামিকালি রিড করবে
+  const pathname = usePathname(); 
   const user = session?.user;
   const role = user?.role;
   const config = ROLE_NAV_ITEMS[role] || ROLE_NAV_ITEMS.reader;

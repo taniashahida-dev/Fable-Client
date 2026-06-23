@@ -1,34 +1,36 @@
 import { getUserSession } from "@/lib/core/session";
 import { revalidatePath } from "next/cache";
-import { Eye, ArrowRightToSquare, SquareCheck } from '@gravity-ui/icons';
+import { Eye, ArrowRightToSquare, SquareCheck, PencilToSquare } from '@gravity-ui/icons';
 import DeleteBookButton from "@/components/Dashboard/DeleteBookButton";
 import { deleteEbook, getWriterEbooks, updateEbook } from "@/lib/api/ebooks";
-import { EditBookModal } from "./EditBookModal";
+import Link from "next/link";
 
 const MyBooksPage = async () => {
 
     const user = await getUserSession();
     const writersEBook = await getWriterEbooks(user?.id) || [];
     
-    const handleTogglePublish = async (formData) => {
-        'use server';
-        const bookId = formData.get('bookId');
-        const currentStatus = formData.get('currentStatus');
-        const newStatus = currentStatus?.toLowerCase() === 'published' ? 'unpublished' : 'published';
-        
-        await updateEbook(bookId, newStatus);
-        revalidatePath('/my-ebooks'); 
-    };
+const handleTogglePublish = async (formData) => {
+    'use server';
+    const bookId = formData.get('bookId');
+    const currentStatus = formData.get('currentStatus');
+    const newStatus = currentStatus?.toLowerCase() === 'published' ? 'unpublished' : 'published';
+    
+    await updateEbook(bookId, { status: newStatus }); // অবজেক্ট আকারে পাঠানো হলো
+    revalidatePath('/dashboard/writer/my-ebooks'); // সঠিক ড্যাশবোর্ড পাথ
+};
 
-    const handleDelete = async (formData) => {
-        'use server';
-        const bookId = formData.get('bookId');
-        
-        if (bookId) {
-            await deleteEbook(bookId);
-            revalidatePath('/my-ebooks'); 
-        }
-    };
+const handleDelete = async (formData) => {
+    'use server';
+    const bookId = formData.get('bookId');
+    
+    if (bookId) {
+        await deleteEbook(bookId);
+        revalidatePath('/dashboard/writer/my-ebooks'); // সঠিক ড্যাশবোর্ড পাথ
+    }
+};
+
+   
 
     // High Contrast Status Pill styling for light backgrounds
     const getStatusStyle = (status) => {
@@ -136,8 +138,14 @@ const MyBooksPage = async () => {
                                                             </button>
                                                         </form>
 
-                                                        {/* Edit Modal Component Wireframe */}
-                                                        <EditBookModal book={book} />
+                                                     {/* Edit Button linked with Dynamic ID */}
+<Link 
+    href={`/dashboard/writer/edit-ebook/${book._id}`}
+    className="p-2 bg-slate-50 hover:bg-[#6366F1] text-slate-500 hover:text-white rounded-lg transition-all border-2 border-slate-200 hover:border-[#6366F1] flex items-center justify-center" 
+    title="Edit Ebook"
+>
+    <PencilToSquare size={15} />
+</Link>
 
                                                         {/* View Details Feature Anchor Link */}
                                                         <button className="p-2 bg-slate-50 hover:bg-[#6366F1] text-slate-500 hover:text-white rounded-lg transition-all border-2 border-slate-200 hover:border-[#6366F1]" title="View Details">
