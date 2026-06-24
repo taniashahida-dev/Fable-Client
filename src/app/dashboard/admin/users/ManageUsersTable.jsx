@@ -10,11 +10,10 @@ import DeleteUserModal from "./DeleteUserModal";
 export default function ManageUsersTable({ initialUsers }) {
   const [users, setUsers] = useState(initialUsers || []);
   
-  // মোডাল এবং ইউজার ট্র্যাক করার স্টেট
+ 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
 
-  // 🛠️ Role Change Logic
   const handleRoleChange = async (id, newRole) => {
     const res = await updateUsers(id, newRole);
 
@@ -26,13 +25,13 @@ export default function ManageUsersTable({ initialUsers }) {
     }
   };
 
-  // 🛠️ ডিলিট বাটন ক্লিক করলে মোডাল ট্রিগার করার ফাংশন
+ 
   const triggerDeleteModal = (user) => {
     setUserToDelete(user);
     setIsModalOpen(true);
   };
 
-  // 🛠️ কাস্টম মোডাল থেকে কনফার্মেশন পাওয়ার পর ডিলিট করার লজিক
+ 
   const handleConfirmDelete = async () => {
     if (!userToDelete) return;
 

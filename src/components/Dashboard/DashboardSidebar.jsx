@@ -37,7 +37,6 @@ const ROLE_NAV_ITEMS = {
       { icon: PencilToSquare, href: "/dashboard/writer/edit-ebook", label: "Edit Ebook" },
       { icon: ObjectsAlignBottom, href: "/dashboard/writer/sales-history", label: "Sales History" },
       { icon: Bookmark, href: "/dashboard/writer/bookmarks", label: "Bookmarks" },
-      { icon: Person, href: "/dashboard/writer/profile", label: "Profile" },
     ],
   },
 };

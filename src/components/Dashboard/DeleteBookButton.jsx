@@ -18,7 +18,7 @@ export default function DeleteBookButton({ bookId, deleteAction }) {
     return (
         <>
            
-            <form ref={formRef} action={deleteAction} className="hidden">
+            <form ref={formRef} action={deleteAction} className="hidden ">
                 <input type="hidden" name="bookId" value={bookId} />
             </form>
 

@@ -12,7 +12,7 @@ export default function NotFound() {
     <div className="min-h-screen bg-[#fafafa] flex flex-col items-center justify-center p-6 font-sans">
       <div className="w-full max-w-md flex flex-col items-center text-center gap-8">
         
-        {/* --- Logo Header --- */}
+      
         <div className="flex items-center gap-3 select-none">
           <div className="relative w-8 h-8 rounded-lg overflow-hidden shadow-sm">
              <span className=" text-3xl font-bold"> <GiBlackBook /></span>
@@ -20,13 +20,13 @@ export default function NotFound() {
           <span className="text-3xl font-agbalumo font-bold tracking-tight text-slate-900">Fable</span>
         </div>
 
-        {/* --- Visual Illustration Centrepiece --- */}
+      
         <div className="relative w-48 h-48 my-2 drop-shadow-[0_10px_25px_rgba(124,93,250,0.12)]">
-          {/* Decorative background cards representing books */}
+        
           <div className="absolute inset-0 bg-[#f5a623] rounded-2xl -rotate-12 scale-90 translate-y-2 opacity-90" />
           <div className="absolute inset-0 bg-[#7c5dfa] rounded-2xl -rotate-6 scale-95 translate-x-1" />
           
-          {/* Main front card */}
+        
           <div className="absolute inset-0 bg-white border border-gray-100 rounded-2xl shadow-sm flex flex-col items-center justify-center p-4 rotate-[4deg]">
             <span className="text-6xl font-black text-[#f5a623] tracking-tighter select-none">
               404
@@ -34,7 +34,6 @@ export default function NotFound() {
           </div>
         </div>
 
-        {/* --- Text Content --- */}
         <div className="space-y-3">
           <h1 className="text-[32px] font-bold text-slate-900 tracking-tight leading-tight">
             Page Not Found
@@ -44,9 +43,9 @@ export default function NotFound() {
           </p>
         </div>
 
-        {/* --- Dual Action Buttons Container --- */}
+       
         <div className="w-full space-y-3 pt-2">
-          {/* Primary Action */}
+        
           <Button
             type="button"
             radius="xl"
@@ -56,7 +55,7 @@ export default function NotFound() {
             ← Back to Home
           </Button>
 
-          {/* Secondary Action */}
+       
           <Button
             type="button"
             variant="bordered"
@@ -68,7 +67,6 @@ export default function NotFound() {
           </Button>
         </div>
 
-        {/* --- Footer Branding --- */}
         <div className="text-[11px] font-bold tracking-wider text-gray-400 uppercase pt-4 select-none">
           Lost in the margins
         </div>

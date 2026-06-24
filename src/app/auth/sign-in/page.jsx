@@ -64,15 +64,15 @@ export default function SigninPage() {
 
   return (
     <div className="flex min-h-screen bg-white font-sans">
-      {/* --- Left Side: Banner (Identical to Signup) --- */}
+     
       <div className="hidden lg:flex w-[45%] flex-col justify-between bg-[#7c5dfa] p-16 text-white relative overflow-hidden">
-        {/* Logo and Brand */}
+       
         <div className="flex items-center gap-3 z-10">
          <span className=" text-3xl font-bold"> <GiBlackBook /></span>
           <span className="text-4xl font-agbalumo font-bold tracking-tight">Fable</span>
         </div>
 
-        {/* Catchphrase */}
+    
         <div className="max-w-md z-10 mb-24">
           <h1 className="text-[44px] font-bold tracking-tight leading-tight mb-5 text-white">
             Welcome back to your stories.
@@ -82,7 +82,7 @@ export default function SigninPage() {
           </p>
         </div>
 
-        {/* Illustration Stacked Graphics */}
+     
         <div className="absolute bottom-50 -right-10 w-95 h-85 z-10">
           <Image
             src="/image/book.png"
@@ -94,10 +94,10 @@ export default function SigninPage() {
         </div>
       </div>
 
-      {/* --- Right Side: Signin Form --- */}
+   
       <div className="w-full lg:w-[55%] flex items-center justify-center p-6 sm:p-12 md:p-16 xl:p-20 bg-white">
         <div className="w-full max-w-115 flex flex-col gap-8">
-          {/* Header */}
+        
           <div className="space-y-1">
             <h2 className="text-[28px] font-bold text-slate-900 tracking-tight">
               Sign in to Fable
@@ -109,14 +109,14 @@ export default function SigninPage() {
 
           <form className="flex flex-col gap-5"
           onSubmit={handleSignin}>
-            {/* Display Error Message */}
+          
             {error && (
               <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm font-medium border border-red-200">
                 {error}
               </div>
             )}
 
-            {/* Email Address */}
+          
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-bold text-slate-800">Email address</label>
               <input
@@ -129,7 +129,7 @@ export default function SigninPage() {
               />
             </div>
 
-            {/* Password */}
+          
             <div className="flex flex-col gap-1.5">
               <div className="flex justify-between items-center">
                 <label className="text-sm font-bold text-slate-800">Password</label>
@@ -159,7 +159,7 @@ export default function SigninPage() {
               </div>
             </div>
 
-            {/* Remember Me Option */}
+        
             <div className="flex items-center gap-2 py-1">
               <input
                 type="checkbox"
@@ -173,7 +173,7 @@ export default function SigninPage() {
               </label>
             </div>
 
-            {/* Form Submission Actions Container */}
+        
             <div className="space-y-4 pt-2">
               <Button
                 type="submit"
@@ -185,7 +185,6 @@ export default function SigninPage() {
                 Sign in
               </Button>
 
-              {/* In-Line Divider Line */}
               <div className="relative flex items-center justify-center py-1">
                 <div className="w-full border-t border-gray-100" />
                 <span className="absolute px-3 bg-white text-[11px] text-gray-400 uppercase font-bold tracking-wider">
@@ -193,7 +192,7 @@ export default function SigninPage() {
                 </span>
               </div>
 
-              {/* Custom Google Authentication Row */}
+          
               <Button
               onClick={handleGoogleSignIn}
                              type="submit"
@@ -209,7 +208,7 @@ export default function SigninPage() {
             </div>
           </form>
 
-          {/* Navigation Option Footer */}
+       
           <div className="text-center text-sm font-medium text-slate-500">
             Do not have an account yet?{" "}
             <Link
