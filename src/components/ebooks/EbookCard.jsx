@@ -8,7 +8,7 @@ export default function EbookCard({ book }) {
 
   const isSold = book.salesCount > 0;
 
-  // ছবিতে দেওয়া আর্টের মতো প্রিমিয়াম ব্যাকগ্রাউন্ড গ্রাডিয়েন্ট জেনারেটর (যদি রিয়েল ছবি না থাকে)
+ 
   const getRandomGradient = (title = "") => {
     const code = title.charCodeAt(0) || 0;
     if (code % 3 === 0) return "from-purple-600 via-indigo-700 to-indigo-950";

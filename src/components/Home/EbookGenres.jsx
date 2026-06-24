@@ -1,5 +1,8 @@
+"use client";
+
 import React from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { 
   BookOpen, 
   Sparkles, 
@@ -11,8 +14,36 @@ import {
   ArrowRight 
 } from 'lucide-react';
 
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+     
+      staggerChildren: 0.15 
+    }
+  }
+};
+
+
+const cardVariants = {
+  hidden: { 
+    opacity: 0, 
+    y: 50 
+  },
+  visible: { 
+    opacity: 1, 
+    y: 0, 
+    transition: { 
+      type: "spring", 
+      stiffness: 65, 
+      damping: 18     
+    } 
+  }
+};
+
 const EbookGenres = () => {
-  // Balanced typography and interactive styling palette
   const genres = [
     {
       id: 1,
@@ -59,10 +90,11 @@ const EbookGenres = () => {
   ];
 
   return (
+  
     <section className="py-16 bg-[#f59e0b] border-b border-[#EAE6DF]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Minimal Header */}
+      
         <div className="text-center mb-10 space-y-2">
           <div className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#1A4B58] bg-[#1A4B58]/5 px-2.5 py-1 rounded-md">
             <Layers className="w-3 h-3" />
@@ -73,41 +105,54 @@ const EbookGenres = () => {
           </h2>
         </div>
 
-        {/* Compact Interactive Grid Layout */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <motion.div 
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-20px" }} 
+        >
           {genres.map((genre) => {
             const IconComponent = genre.icon;
             
             return (
-              <Link 
+              <motion.div
                 key={genre.id}
-                href={`/browse-books?category=${genre.query}`}
-                className="group relative p-4 bg-white border border-[#EAE6DF] rounded-xl hover:border-gray-950 hover:bg-white shadow-3xs hover:shadow-md transition-all duration-300 flex flex-col items-center justify-center text-center overflow-hidden h-28"
+                variants={cardVariants}
+                whileHover={{ 
+                  y: -4,
+                  transition: { duration: 0.2, ease: "easeOut" }
+                }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full"
               >
-                {/* Subtle Hover Background Glow Effect */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${genre.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0`} />
+                <Link 
+                  href={`/browse-books?category=${genre.query}`}
+                  className="group relative p-4 bg-white border border-[#EAE6DF] rounded-xl hover:border-gray-950 shadow-3xs hover:shadow-md transition-all duration-300 flex flex-col items-center justify-center text-center overflow-hidden h-28 cursor-pointer"
+                >
+               
+                  <div className={`absolute inset-0 bg-linear-to-br ${genre.color} opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-0`} />
+  <div className="flex flex-col items-center space-y-2.5 relative z-10 transform group-hover:-translate-y-1 transition-transform duration-300">
+                  
+                    <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-transparent group-hover:scale-110 transition-all duration-300">
+                      <IconComponent className="w-5 h-5 text-gray-700 group-hover:text-current transition-colors" />
+                    </div>
 
-                {/* Main Card Content Stack */}
-                <div className="flex flex-col items-center space-y-2.5 relative z-10 transform group-hover:-translate-y-1 transition-transform duration-300">
-                  {/* Icon Component */}
-                  <div className="p-2 rounded-lg bg-gray-50 group-hover:bg-transparent group-hover:scale-110 transition-all duration-300">
-                    <IconComponent className="w-5 h-5 text-gray-700 group-hover:text-current transition-colors" />
+                 
+                    <span className="font-sans font-semibold text-sm text-gray-800 group-hover:text-gray-950 transition-colors">
+                      {genre.name}
+                    </span>
                   </div>
 
-                  {/* Genre Title Text */}
-                  <span className="font-sans font-semibold text-sm text-gray-800 group-hover:text-gray-950 transition-colors">
-                    {genre.name}
-                  </span>
-                </div>
-
-                {/* Animated Arrow Micro-indicator sliding up from the bottom */}
-                <div className="absolute bottom-2 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
-                  <ArrowRight className="w-3.5 h-3.5 text-gray-950" />
-                </div>
-              </Link>
+               
+                  <div className="absolute bottom-2 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
+                    <ArrowRight className="w-3.5 h-3.5 text-gray-950" />
+                  </div>
+                </Link>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
       </div>
     </section>
