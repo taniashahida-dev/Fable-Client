@@ -55,7 +55,7 @@ export async function POST(request) {
       date: new Date(),
     });
 
-    // ৩. স্ট্রাইপ গেটওয়েতে রিডাইরেক্ট (303 Redirect)
+  
     return NextResponse.redirect(session.url, 303);
   } catch (error) {
     console.error('Writer Stripe session configuration failure:', error);

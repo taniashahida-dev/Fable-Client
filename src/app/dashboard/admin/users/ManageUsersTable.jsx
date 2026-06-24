@@ -9,8 +9,6 @@ import DeleteUserModal from "./DeleteUserModal";
 
 export default function ManageUsersTable({ initialUsers }) {
   const [users, setUsers] = useState(initialUsers || []);
-  
- 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
 
@@ -25,13 +23,11 @@ export default function ManageUsersTable({ initialUsers }) {
     }
   };
 
- 
   const triggerDeleteModal = (user) => {
     setUserToDelete(user);
     setIsModalOpen(true);
   };
 
- 
   const handleConfirmDelete = async () => {
     if (!userToDelete) return;
 
@@ -50,39 +46,41 @@ export default function ManageUsersTable({ initialUsers }) {
 
   return (
     <>
-      <Table className="bg-[#121624] border border-slate-800/60 rounded-xl overflow-hidden shadow-lg">
+      <Table className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <Table.ScrollContainer>
           <Table.Content aria-label="Manage users table">
             
             {/* 📋 Table Header */}
-            <Table.Header className="bg-[#161b2e] text-slate-400 text-xs font-bold uppercase">
-              <Table.Column isRowHeader className="py-4 px-4 text-left !bg-[#161b2e] text-slate-400">
+            <Table.Header className="bg-[#f8fafc] border-b border-slate-100 text-[#475569] text-[11px] font-bold uppercase tracking-wider">
+              <Table.Column isRowHeader className="py-4 px-6 text-left !bg-[#f8fafc] text-slate-500 font-bold">
                 NAME
               </Table.Column>
-              <Table.Column className="py-4 px-4 text-left !bg-[#161b2e] text-slate-400">EMAIL</Table.Column>
-              <Table.Column className="py-4 px-4 text-left !bg-[#161b2e] text-slate-400">ROLE</Table.Column>
-              <Table.Column className="py-4 px-4 text-center !bg-[#161b2e] text-slate-400">ACTIONS</Table.Column>
+              <Table.Column className="py-4 px-6 text-left !bg-[#f8fafc] text-slate-500 font-bold">EMAIL</Table.Column>
+              <Table.Column className="py-4 px-6 text-left !bg-[#f8fafc] text-slate-500 font-bold">ROLE</Table.Column>
+              <Table.Column className="py-4 px-6 text-center !bg-[#f8fafc] text-slate-500 font-bold">ACTIONS</Table.Column>
             </Table.Header>
             
             {/* 📋 Table Body */}
             <Table.Body>
               {users.map((user) => (
-                <Table.Row key={user._id} className="!bg-[#121624] border-b border-slate-800/40 hover:bg-white/5 transition-colors">
+                <Table.Row key={user._id} className="border-b border-slate-500/5 hover:bg-[#f8fafc]/60 transition-all duration-200">
                   
                   {/* Name */}
-                  <Table.Cell className="py-4 px-4 text-sm font-semibold text-white !bg-[#121624]">
+                  <Table.Cell className="py-4 px-6 text-sm font-bold text-[#0f172a] !bg-white">
                     {user.name}
                   </Table.Cell>
                   
                   {/* Email */}
-                  <Table.Cell className="py-4 px-4 text-sm text-slate-400 !bg-[#121624]">
+                  <Table.Cell className="py-4 px-6 text-sm text-slate-600 font-medium !bg-white">
                     {user.email}
                   </Table.Cell>
                   
                   {/* Role Chip */}
-                  <Table.Cell className="py-4 px-4 text-sm !bg-[#121624]">
+                  <Table.Cell className="py-4 px-6 text-sm !bg-white">
                     <Chip 
-                      size="sm" variant="flat" className="capitalize text-xs font-bold"
+                      size="sm" 
+                      variant="flat" 
+                      className="capitalize text-[11px] font-bold px-2.5 py-1 rounded-md border-0"
                       color={user.role === "admin" ? "danger" : user.role === "writer" ? "secondary" : "success"}
                     >
                       {user.role}
@@ -90,23 +88,24 @@ export default function ManageUsersTable({ initialUsers }) {
                   </Table.Cell>
                   
                   {/* Actions */}
-                  <Table.Cell className="py-4 px-4 text-sm !bg-[#121624]">
+                  <Table.Cell className="py-4 px-6 text-sm !bg-white">
                     <div className="flex items-center gap-3 justify-center">
                       
                       {/* Dropdown Component */}
                       <Dropdown>
                         <Dropdown.Trigger>
-                          {/* 💡 ফিক্সড: বাটন সরিয়ে টেইলউইন্ড দিয়ে ডিজাইন করা span ব্যবহার করা হয়েছে */}
-                          <span className="inline-flex items-center justify-center px-3 h-8 text-xs font-medium rounded-xl bg-white/5 text-slate-300 gap-1 hover:bg-white/10 transition-colors cursor-pointer select-none">
-                            Role <ChevronDown className="size-3" />
+                          <span className="inline-flex items-center justify-center px-3 h-8 text-xs font-bold rounded-lg bg-[#f1f5f9] border border-slate-200 text-slate-700 gap-1.5 hover:bg-[#e2e8f0] transition-all cursor-pointer select-none">
+                            Role <ChevronDown className="size-3 text-slate-500" />
                           </span>
                         </Dropdown.Trigger>
                         
-                        <Dropdown.Popover className="bg-[#161b2e] border border-slate-800 text-white rounded-xl">
+                        <Dropdown.Popover className="bg-white border border-slate-100 text-slate-800 rounded-xl shadow-xl">
                           <Dropdown.Menu 
                             aria-label="Roles" 
                             onAction={(key) => handleRoleChange(user._id, key)}
-                            itemClasses={{ base: "text-slate-300 rounded-lg hover:bg-[#7c5dfa] hover:text-white" }}
+                            itemClasses={{ 
+                              base: "text-slate-700 text-xs rounded-lg hover:bg-[#6366F1] hover:text-white font-semibold transition-colors" 
+                            }}
                           >
                             <Dropdown.Item id="reader">Reader</Dropdown.Item>
                             <Dropdown.Item id="writer">Writer</Dropdown.Item>
@@ -119,10 +118,9 @@ export default function ManageUsersTable({ initialUsers }) {
                       <Button 
                         isIconOnly 
                         size="sm" 
-                        color="danger" 
-                        variant="light" 
+                        variant="flat" 
                         onClick={() => triggerDeleteModal(user)} 
-                        className="text-rose-500 rounded-lg hover:bg-rose-500/10"
+                        className="bg-[#334155] text-white rounded-lg hover:bg-[#1e293b] min-w-8 h-8 flex items-center justify-center transition-colors"
                       >
                         <TrashBin className="size-4" />
                       </Button>
@@ -136,7 +134,6 @@ export default function ManageUsersTable({ initialUsers }) {
         </Table.ScrollContainer>
       </Table>
 
-      {/* আলাদা করা মোডাল কম্পোনেন্ট */}
       <DeleteUserModal 
         isOpen={isModalOpen}
         onOpenChange={setIsModalOpen}

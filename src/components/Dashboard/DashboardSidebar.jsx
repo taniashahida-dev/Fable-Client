@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSession } from "@/lib/auth-client";
 import { usePathname } from "next/navigation"; 
-import {  Briefcase, Envelope, House, Magnifier, Person, LayoutSideContent ,Bookmark,Books,BookOpen,CopyPlus,PencilToSquare,ObjectsAlignBottom} from "@gravity-ui/icons";
+import {  Briefcase, Envelope, House, Magnifier, Person, LayoutSideContent ,ChartLineArrowUp,Bookmark,Books,BookOpen,CopyPlus,PencilToSquare,ObjectsAlignBottom} from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import Link from "next/link";
 import { GiBlackBook } from "react-icons/gi";
@@ -14,8 +14,8 @@ const ROLE_NAV_ITEMS = {
     items: [
       { icon: House, href: "/dashboard/admin", label: "Overview" },
       { icon: Person, href: "/dashboard/admin/users", label: "Manage Users" },
-      { icon: Briefcase, href: "/dashboard/admin/ebooks", label: "Manage Ebooks" },
-      { icon: Magnifier, href: "/dashboard/admin/transactions", label: "Transactions" },
+      { icon: Books , href: "/dashboard/admin/ebooks", label: "Manage Ebooks" },
+      { icon: ChartLineArrowUp , href: "/dashboard/admin/transactions", label: "Transactions" },
     ],
   },
   reader: {
