@@ -73,7 +73,12 @@ const FeaturedEbooks = ({ allBooks = [] }) => {
             viewport={{ once: true, margin: "-40px" }}
           >
             {featuredBooks.map((book) => (
-              <Link key={book._id} href={`/browse-books/${book._id}`}>
+              /* এখানে aria-label যোগ করা হয়েছে */
+              <Link 
+                key={book._id} 
+                href={`/browse-books/${book._id}`}
+                aria-label={`View details for ${book.title || 'this ebook'}`}
+              >
                 <motion.div
                   variants={cardVariants}
                   whileHover={{ y: -5, transition: { duration: 0.2 } }}
@@ -84,13 +89,13 @@ const FeaturedEbooks = ({ allBooks = [] }) => {
                     <div className="relative aspect-3/4 w-full overflow-hidden rounded-2xl border border-gray-100/70 bg-[#FAF9F5] shadow-2xs">
                       {book.coverImage ? (
                         <Image
-    src={book?.coverImage } 
-    alt={book?.title || 'Ebook Cover'}
-    fill 
-    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
-    priority={false} 
-    className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
-  />
+                          src={book?.coverImage} 
+                          alt={`Cover image of ${book?.title || 'Ebook'}`}
+                          fill 
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
+                          priority={false} 
+                          className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                        />
                       ) : (
                         <div className="w-full h-full bg-[#1A4B58] flex flex-col justify-between p-4 text-white">
                           <span className="text-[7px] uppercase tracking-wider opacity-60">Fable</span>

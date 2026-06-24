@@ -52,7 +52,7 @@ const Bookmarks = async () => {
             {/* Smart Friendly Call-To-Action (CTA) */}
             <div className="pt-2">
               <Link
-                href="/browse"
+                href="/browse-books"
                 className="inline-flex items-center gap-2 text-xs font-semibold text-white bg-gray-950 hover:bg-black px-5 py-3 rounded-xl transition-all shadow-sm group"
               >
                 <Compass className="w-4 h-4 text-slate-300 group-hover:rotate-12 transition-transform" />

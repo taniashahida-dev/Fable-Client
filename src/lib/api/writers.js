@@ -15,3 +15,13 @@ export const getLoggedInWriter = async () => {
     const user = await getUserSession();
     return getWriters(user?.id);
 }
+
+
+export const checkWriterVerification = async (writerId) => {
+    if (!writerId) return { isVerified: false };
+    
+  
+    return serverFetch(`/api/writer/check-verification/${writerId}`, {
+        cache: 'no-store'
+    });
+}
