@@ -1,8 +1,8 @@
-import { serverFetch } from "../core/server";
+import { protectedFetch, serverFetch } from "../core/server";
 
 export const  getCombinedTransactions = async  ()=> {
   try {
-    const data = await serverFetch("/api/admin/transactions", {
+    const data = await protectedFetch("/api/admin/transactions", {
       cache: "no-store", 
     });
     return Array.isArray(data) ? data : [];

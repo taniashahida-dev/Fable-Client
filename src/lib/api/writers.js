@@ -1,4 +1,4 @@
-import { serverFetch } from "../core/server";
+import { protectedFetch, serverFetch } from "../core/server";
 import { getUserSession } from "../core/session";
 
 
@@ -21,7 +21,7 @@ export const checkWriterVerification = async (writerId) => {
     if (!writerId) return { isVerified: false };
     
   
-    return serverFetch(`/api/writer/check-verification/${writerId}`, {
+    return protectedFetch(`/api/writer/check-verification/${writerId}`, {
         cache: 'no-store'
     });
 }

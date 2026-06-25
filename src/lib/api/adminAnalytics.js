@@ -1,6 +1,6 @@
-import { serverFetch } from "../core/server";
+import { protectedFetch} from "../core/server";
 
 
 export const getAdminRawAnalytics = async () => {
-  return serverFetch("/api/admin/raw-analytics", { cache: "no-store" });
+  return protectedFetch("/api/admin/raw-analytics", { cache: "no-store" });
 };

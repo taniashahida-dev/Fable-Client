@@ -1,8 +1,6 @@
-import { serverFetch } from "../core/server";
+import {  serverMutation } from "../core/server";
 
 export const deleteBookmark = async (id) => {
-return serverFetch (`/api/bookmarks/${id}`, {
-        method: 'DELETE'
-    })
+return serverMutation(`/api/bookmarks/${id}`, {}, 'DELETE');
     
 };

@@ -75,7 +75,6 @@ function SignupFormContent() {
   };
 
   return (
-    /* pt-[65px] যোগ করা হয়েছে যাতে গ্লোবাল নেভিগেশন বারের নিচে কন্টেন্ট না ঢোকে */
     <div className="flex min-h-screen bg-white font-sans">
       
       {/* --- Left Side: Banner --- */}

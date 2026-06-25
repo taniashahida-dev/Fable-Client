@@ -1,20 +1,16 @@
-import { serverFetch } from "../core/server";
+import { protectedFetch, serverFetch, serverMutation } from "../core/server";
 
 
 
 
 export const getusers = async () => {
-    return serverFetch(`/api/users`);
+    return protectedFetch(`/api/users`);
 }
 export const deleteUsers = async (id) => {
-    return serverFetch(`/api/users/${id}`,{ method: "DELETE" });
+   return serverMutation(`/api/users/${id}`, {}, "DELETE");
 }
 
 export const updateUsers = async (id,newRole) => {
-    return serverFetch(`/api/users/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( { role: newRole })
-    })
+   return serverMutation(`/api/users/${id}`, { role: newRole }, 'PATCH');
 }
 

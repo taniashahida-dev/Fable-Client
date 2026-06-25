@@ -1,4 +1,4 @@
-import { serverFetch } from "../core/server";
+import { protectedFetch, serverFetch, serverMutation } from "../core/server";
 
 
 
@@ -9,7 +9,7 @@ export const getWriterEbooks = async (writerId, status = '') => {
     if (status) {
         path += `&status=${status}`;
     }
-    return serverFetch(path, { cache: 'no-store' });
+    return protectedFetch(path);
 }
 
 export const getEbooks = async (filters = {}) => {
@@ -29,16 +29,10 @@ export const getEBookById = async (bookId, email = '') => {
 
 
 export const updateEbook = async (bookId, updatedData) => {
-    return serverFetch(`/api/ebooks/${bookId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( updatedData )
-    })
+   return serverMutation(`/api/ebooks/${bookId}`, updatedData, 'PATCH');
 };
 
 
 export const deleteEbook = async (bookId) => {
-    return serverFetch (`/api/ebooks/${bookId}`, {
-        method: 'DELETE'
-    })
+    return serverMutation(`/api/ebooks/${bookId}`, {}, 'DELETE');
 };
