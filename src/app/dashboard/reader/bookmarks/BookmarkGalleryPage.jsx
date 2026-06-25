@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { X, BookmarkPlus, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { deleteBookmark } from "@/lib/api/bookmark";
+import toast from "react-hot-toast";
 
 export default function BookmarkGalleryPage({ initialData }) {
   const [bookmarks, setBookmarks] = useState(initialData || []);
@@ -21,11 +22,11 @@ export default function BookmarkGalleryPage({ initialData }) {
       
         setBookmarks((prev) => prev.filter((item) => item._id !== id));
       } else {
-        alert("Failed to remove bookmark from server");
+        toast.error("Failed to remove bookmark from server");
       }
     } catch (error) {
       console.error("Error removing bookmark:", error);
-      alert("Something went wrong!");
+      toast.error("Something went wrong!");
     }
   };
 

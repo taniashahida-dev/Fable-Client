@@ -1,15 +1,25 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react"; // 🌟 ফিক্স ১: ইম্পোর্ট যুক্ত করা হলো
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
-import { DollarSign, BookOpen, History, Bookmark,  } from "lucide-react";
+import { DollarSign, BookOpen, History, Bookmark  } from "lucide-react";
 
 export default function OverviewClient({ stats, revenueChartData, topBooksChartData, recentSales, userName }) {
+  // 🌟 ফিক্স ২: মাউন্ট স্টেট হ্যান্ডেল করা হলো
+  const [isMounted, setIsMounted] = useState(false);
+
+ useEffect(() => {
+ 
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <div className="min-h-screen p-4 md:p-8 font-sans max-w-7xl mx-auto mt-6">
       <div className="space-y-8">
         
-      
         <div className="flex justify-between items-center border-b-2 border-slate-200 pb-5">
           <div>
             <h1 className="text-2xl md:text-3xl text-[#0F172A] font-serif font-black tracking-tight">
@@ -24,10 +34,8 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
           </span>
         </div>
 
-      
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           
-       
           <div className="bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all group">
             <div className="flex justify-between items-start">
               <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 group-hover:text-indigo-600 transition-colors">
@@ -43,7 +51,6 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
             </p>
           </div>
 
-        
           <div className="bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all group">
             <div className="flex justify-between items-start">
               <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 group-hover:text-emerald-600 transition-colors">
@@ -59,7 +66,6 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
             </p>
           </div>
 
-         
           <div className="bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all group">
             <div className="flex justify-between items-start">
               <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 group-hover:text-amber-600 transition-colors">
@@ -92,10 +98,10 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
 
         </div>
 
-      
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-          <div className="lg:col-span-2 bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm">
+          {/* 🌟 ফিক্স ৩: কন্টেইনার উইডথ সুরক্ষার জন্য min-w-0 এবং relative যুক্ত করা হয়েছে */}
+          <div className="lg:col-span-2 bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm min-w-0 relative">
             <div className="mb-6">
               <h3 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wider">
                 Earnings Performance Trend ($)
@@ -103,28 +109,32 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
               <p className="text-xs text-slate-400 mt-0.5">Dynamic 6-month earnings visualization</p>
             </div>
             <div className="h-72 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={revenueChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <defs>
-                    <linearGradient id="colorEarnings" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#6366F1" stopOpacity={0.15}/>
-                      <stop offset="95%" stopColor="#6366F1" stopOpacity={0}/>
-                    </linearGradient>
-                  </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                  <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                  <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#ffffff', borderRadius: '12px', border: '2px solid #e2e8f0', fontSize: '12px' }}
-                  />
-                  <Area type="monotone" dataKey="earnings" stroke="#6366F1" strokeWidth={2.5} fillOpacity={1} fill="url(#colorEarnings)" />
-                </AreaChart>
-              </ResponsiveContainer>
+              {isMounted ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={revenueChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorEarnings" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#6366F1" stopOpacity={0.15}/>
+                        <stop offset="95%" stopColor="#6366F1" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                    <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} />
+                    <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#ffffff', borderRadius: '12px', border: '2px solid #e2e8f0', fontSize: '12px' }}
+                    />
+                    <Area type="monotone" dataKey="earnings" stroke="#6366F1" strokeWidth={2.5} fillOpacity={1} fill="url(#colorEarnings)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="w-full h-full bg-slate-50 rounded-xl animate-pulse" />
+              )}
             </div>
           </div>
 
-          
-          <div className="bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm flex flex-col justify-between space-y-6">
+          {/* 🌟 ফিক্স ৪: এখানেও চার্টকে min-w-0 দিয়ে সুরক্ষায় রাখা হয়েছে */}
+          <div className="bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm flex flex-col justify-between space-y-6 min-w-0">
             <div>
               <div className="mb-4">
                 <h3 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wider">
@@ -139,20 +149,23 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
                 </div>
               ) : (
                 <div className="h-32 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={topBooksChartData} margin={{ top: 5, right: 5, left: -35, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                      <XAxis dataKey="name" stroke="#94a3b8" fontSize={9} tickLine={false} truncate />
-                      <YAxis stroke="#94a3b8" fontSize={10} tickLine={false} />
-                      <Tooltip contentStyle={{ borderRadius: '12px', fontSize: '11px' }} />
-                      <Bar dataKey="sales" fill="#10b981" radius={[4, 4, 0, 0]} barSize={25} />
-                    </BarChart>
-                  </ResponsiveContainer>
+                  {isMounted ? (
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={topBooksChartData} margin={{ top: 5, right: 5, left: -35, bottom: 0 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                        <XAxis dataKey="name" stroke="#94a3b8" fontSize={9} tickLine={false} />
+                        <YAxis stroke="#94a3b8" fontSize={10} tickLine={false} />
+                        <Tooltip contentStyle={{ borderRadius: '12px', fontSize: '11px' }} />
+                        <Bar dataKey="sales" fill="#10b981" radius={[4, 4, 0, 0]} barSize={25} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  ) : (
+                    <div className="w-full h-full bg-slate-50 rounded-xl animate-pulse" />
+                  )}
                 </div>
               )}
             </div>
 
-           
             <div className="border-t-2 border-slate-100 pt-4 space-y-3 flex-1 flex flex-col justify-end">
               <h4 className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider mb-1">Recent Activity Feed</h4>
               

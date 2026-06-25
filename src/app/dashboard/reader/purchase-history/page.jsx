@@ -3,11 +3,18 @@ import { getPurchasedBooks } from "@/lib/api/purchasedbooksData";
 import Image from "next/image";
 
 export default async function ReaderPurchaseHistory() {
-  const purchasedBooks = await getPurchasedBooks();
+  const purchasedBooksData = await getPurchasedBooks();
+const purchasedBooks = Array.isArray(purchasedBooksData) ? purchasedBooksData : [];
+const totalBooks = purchasedBooks.length;
 
-  // স্ট্যাটস ক্যালকুলেশন
-  const totalBooks = purchasedBooks.length;
-  const totalSpent = purchasedBooks.reduce((sum, item) => sum + item.price, 0).toFixed(2);
+
+ const totalSpent = purchasedBooks.length > 0 
+  ? purchasedBooks.reduce((sum, item) => {
+      const itemPrice = item && item.price ? Number(item.price) : 0;
+      return sum + itemPrice;
+    }, 0).toFixed(2)
+  : "0.00";
+  
   const thisMonthBooks = purchasedBooks.filter(item => {
     const pDate = new Date(item.purchasedAt);
     const cDate = new Date();
@@ -18,7 +25,7 @@ export default async function ReaderPurchaseHistory() {
     <div className="p-6  min-h-screen">
       <h1 className="text-3xl font-serif font-bold text-gray-900 mb-6">Purchase History</h1>
       
-      {/* 📊 উপরে থাকা ৩টি সুন্দর স্ট্যাটস কার্ড */}
+     
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-white p-5 rounded-xl border border-[#EAE6DF] shadow-xs">
           <span className="text-3xl font-serif font-bold text-[#1A4B58] block">{totalBooks}</span>
@@ -59,7 +66,7 @@ export default async function ReaderPurchaseHistory() {
                     {/* ইবুক ইমেজ এবং টাইটেল কলাম */}
                     <td className="py-4 px-6 font-medium text-gray-900">
                       <div className="flex items-center gap-4 relative">
-                        <div className="w-10 h-14 relative bg-gray-100 rounded shadow-xs overflow-hidden flex-shrink-0">
+                        <div className="w-10 h-14 relative bg-gray-100 rounded shadow-xs overflow-hidden shrink-0">
                           {book.bookCover ? (
                             <Image 
                               src={book.bookCover} 

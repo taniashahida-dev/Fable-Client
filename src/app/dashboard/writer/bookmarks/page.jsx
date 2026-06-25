@@ -3,7 +3,7 @@ import { Bookmark, Eye, BookOpen, Person } from '@gravity-ui/icons';
 import Link from "next/link";
 
 const WriterBookmarksPage = async () => {
-    // এক্সপ্রেস এপিআই হয়ে সিঙ্গেল রুট লজিকে রাইটারের ট্র্যাকিং ডেটা আসছে
+   
     const bookmarkAnalytics = await getWriterBookmarkedAnalytics() || [];
 
     return (

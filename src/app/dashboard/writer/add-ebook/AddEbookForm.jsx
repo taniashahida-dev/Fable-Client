@@ -12,10 +12,11 @@ import {
     Select, 
     ListBox, 
     Button, 
-    toast
+  
 } from '@heroui/react';
 import { ArrowUpToLine, BookOpen, ArrowRight, ChevronDown, Flame } from '@gravity-ui/icons';
 import { createEbooks } from '@/lib/actions/addEbooks';
+import toast from 'react-hot-toast';
 
 // 🎨 Streamlined High-Contrast Bright UI Utility Classes mapping your brand palette
 const textInputClass = "w-full bg-[#F8FAFC] border-2 border-slate-200 text-[#0F172A] font-medium rounded-xl px-4 py-3 outline-none placeholder:text-slate-400 focus:border-[#6366F1] focus:bg-white transition-all";
@@ -57,7 +58,7 @@ export default function AddEbookForm({ writer }) {
             if (data.success) {
                 setCoverUrl(data.data.url);
                 setErrors(prev => ({ ...prev, cover: null }));
-                toast.success("Cover image uploaded successfully!");
+             toast.success("Cover image uploaded successfully!");
             } else {
                 setErrors(prev => ({ ...prev, cover: "Upload failed. Try again." }));
             }
@@ -101,6 +102,8 @@ export default function AddEbookForm({ writer }) {
             description,
             coverImage: coverUrl,
             status: 'Pending', 
+            availabilityStatus: 'available', 
+            salesCount: 0,
             writerId: writer?.id || '',
             writerName: writer?.name || 'Anonymous'
         };
@@ -110,7 +113,7 @@ export default function AddEbookForm({ writer }) {
             const payload = await createEbooks(newEbookData);
 
             if (payload?.insertedId) {
-                toast.success("Ebook added to publishing queue successfully!");
+              toast.success("Ebook added to publishing queue successfully!");
                 setCoverUrl('');
                 setErrors({});
                 if (formRef.current) {
@@ -120,7 +123,7 @@ export default function AddEbookForm({ writer }) {
                 toast.error("Failed to add ebook. Please try again.");
             }
         } catch (error) {
-            toast.error("Something went wrong during submission.");
+           toast.error("Something went wrong during submission.");
         } finally {
             setIsSubmitting(false);
         }

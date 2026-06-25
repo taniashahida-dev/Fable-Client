@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Table, Button, Chip, toast } from "@heroui/react";
+import { Table, Button, Chip } from "@heroui/react";
 import { TrashBin } from "@gravity-ui/icons";
 import Image from "next/image";
  
 import DeleteBookModal from "./DeleteBookModal";
 import { deleteEbook, updateEbook } from "@/lib/api/ebooks";
 import StatusDropdown from "@/components/Dashboard/StatusDropDown";
+import toast from "react-hot-toast";
 
 export default function ManageEbooksTable({ initialBooks }) {
   const [books, setBooks] = useState(initialBooks || []);
@@ -23,12 +24,12 @@ export default function ManageEbooksTable({ initialBooks }) {
         setBooks(prevBooks => 
           prevBooks.map(b => b._id === bookId ? { ...b, status: targetStatus } : b)
         );
-        toast.success(`Ebook status updated to ${targetStatus}!`);
+       toast.success(`Ebook status updated to ${targetStatus}!`);
       } else {
-        toast.error("Failed to update status");
+       toast.error("Failed to update status");
       }
     } catch (error) {
-      toast.error("Something went wrong");
+     toast.error("Something went wrong");
     }
   };
 
@@ -37,7 +38,7 @@ export default function ManageEbooksTable({ initialBooks }) {
     const res = await deleteEbook(bookToDelete._id);
     if (res?.deletedCount > 0 || res) {
       setBooks(books.filter(b => b._id !== bookToDelete._id));
-      toast.success("Ebook deleted successfully!");
+     toast.success("Ebook deleted successfully!");
     } else {
       toast.error("Failed to delete ebook");
     }

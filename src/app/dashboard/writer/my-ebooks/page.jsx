@@ -1,6 +1,6 @@
 import { getUserSession } from "@/lib/core/session";
 import { revalidatePath } from "next/cache";
-import { ArrowRightToSquare, SquareCheck, PencilToSquare } from '@gravity-ui/icons';
+import {  PencilToSquare } from '@gravity-ui/icons';
 import DeleteBookButton from "@/components/Dashboard/DeleteBookButton";
 import { deleteEbook, getWriterEbooks, updateEbook } from "@/lib/api/ebooks";
 import Link from "next/link";
@@ -81,6 +81,7 @@ const MyBooksPage = async () => {
                                     </tr>
                                 ) : (
                                     writersEBook.map((book) => {
+                                        
                                         return (
                                             <tr key={book._id} className="hover:bg-slate-50/50 transition-colors group">
                                                 

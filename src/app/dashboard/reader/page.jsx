@@ -9,8 +9,11 @@ import { LayoutDashboard } from "lucide-react";
 
 export default async function ReaderDashboardOverview() {
   
-  const purchasedBooks = await getPurchasedBooks();
-  const bookMarks = await getUserBookMarks()
+  const purchasedBooksData = await getPurchasedBooks();
+  const bookMarksData = await getUserBookMarks()
+
+  const purchasedBooks = Array.isArray(purchasedBooksData) ? purchasedBooksData : [];
+  const bookMarks = Array.isArray(bookMarksData) ? bookMarksData : [];
 
   return (
     <div className="p-6  min-h-screen mt-10">

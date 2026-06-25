@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useEffect } from "react"; // 👈 useState এবং useEffect অ্যাড করা হয়েছে
 import { 
   Users, 
   BookOpen, 
@@ -22,23 +23,29 @@ import {
 } from "recharts";
 
 export default function OverviewClient({ stats, revenueChartData, topBooksChartData, userName }) {
+  // 👑 হাইড্রেশন এবং টাইমিং ফিক্স করার জন্য স্টেট গার্ড
+  const [isMounted, setIsMounted] = useState(false);
+  
+useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+    }, 0);
 
+    return () => clearTimeout(timer);
+  }, []);
   const COLORS = ["#6366F1", "#8B5CF6", "#F59E0B", "#10B981", "#EF4444", "#EC4899", "#3B82F6"];
 
   return (
     <div className="w-full bg-white min-h-screen p-4 md:p-6 text-[#0F172A]">
       
-   
       <div className="mb-6">
-        <p className=" text-slate-500 font-medium">
-          Here`s what`s happening with your platform ecosystem today.
+        <p className="text-slate-500 font-medium">
+          Here is what`s happening with your platform ecosystem today.
         </p>
       </div>
 
-    
+      {/* 📊 কার্ড সেকশন */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-        
-     
         <div className="bg-[#0F172A] p-6 rounded-2xl text-white shadow-md flex items-center justify-between border border-slate-800">
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Revenue</p>
@@ -51,7 +58,6 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
           </div>
         </div>
 
-   
         <div className="bg-[#F8FAFC] p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Readers</p>
@@ -72,7 +78,6 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
           </div>
         </div>
 
-      
         <div className="bg-[#F8FAFC] p-6 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-between">
           <div>
             <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Ebooks</p>
@@ -82,13 +87,13 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
             <BookOpen className="w-6 h-6 stroke-[2.5]" />
           </div>
         </div>
-
       </div>
 
- 
+      {/* 📊 গ্রাফ ও চার্ট সেকশন */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      
-        <div className="lg:col-span-2 bg-[#F8FAFC] p-6 rounded-2xl border border-slate-100 shadow-sm">
+        
+        {/* প্ল্যাটফর্ম সেলস অ্যানালাইসিস বার চার্ট */}
+        <div className="lg:col-span-2 bg-[#F8FAFC] p-6 rounded-2xl border border-slate-100 shadow-sm min-w-0">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="w-5 h-5 text-[#6366F1]" />
             <div>
@@ -97,26 +102,30 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
             </div>
           </div>
           
-    
-          <div className="w-full h-[320px] pr-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={revenueChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                <XAxis dataKey="name" stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} dy={10} />
-                <YAxis stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} dx={-5} />
-                <Tooltip 
-                  contentStyle={{ backgroundColor: "#0F172A", borderRadius: "12px", border: "none", color: "#fff" }}
-                  itemStyle={{ color: "#F59E0B", fontWeight: "bold" }}
-                  cursor={{ fill: '#E2E8F0', opacity: 0.4 }}
-                />
-                <Bar dataKey="earnings" fill="#6366F1" radius={[6, 6, 0, 0]} barSize={38} />
-              </BarChart>
-            </ResponsiveContainer>
+          <div className="w-full h-[320px] pr-2 relative">
+            {/* 🛠️ ফিক্স: ব্রাউজারে মাউন্ট হওয়ার পরেই কেবল চার্ট রেন্ডার হবে */}
+            {isMounted ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={revenueChartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                  <XAxis dataKey="name" stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} dy={10} />
+                  <YAxis stroke="#64748B" fontSize={12} tickLine={false} axisLine={false} dx={-5} />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: "#0F172A", borderRadius: "12px", border: "none", color: "#fff" }}
+                    itemStyle={{ color: "#F59E0B", fontWeight: "bold" }}
+                    cursor={{ fill: '#E2E8F0', opacity: 0.4 }}
+                  />
+                  <Bar dataKey="earnings" fill="#6366F1" radius={[6, 6, 0, 0]} barSize={38} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="w-full h-full bg-slate-100/50 rounded-xl animate-pulse" /> // মাউন্ট হওয়ার আগের সেফ হোল্ডার
+            )}
           </div>
         </div>
 
-       
-        <div className="bg-[#F8FAFC] p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
+        {/* জনরা ডিস্ট্রিবিউশন পাই চার্ট */}
+        <div className="bg-[#F8FAFC] p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between min-w-0">
           <div className="flex items-center gap-2 mb-4">
             <PieIcon className="w-5 h-5 text-[#8B5CF6]" />
             <div>
@@ -126,33 +135,42 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
           </div>
 
           <div className="w-full h-[220px] flex items-center justify-center relative">
-            {topBooksChartData?.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={topBooksChartData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={85}
-                    paddingAngle={4}
-                    dataKey="sales"
-                  >
-                    {topBooksChartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{ backgroundColor: "#0F172A", borderRadius: "12px", border: "none", color: "#fff" }}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
+            {/* 🛠️ ফিক্স: এখানেও মাউন্ট চেক ইন্টিগ্রেট করা হয়েছে */}
+            {!isMounted ? (
+              <div className="w-full h-full bg-slate-100/50 rounded-xl animate-pulse" />
+            ) : topBooksChartData?.length > 0 ? (
+              <>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={topBooksChartData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={65}
+                      outerRadius={85}
+                      paddingAngle={4}
+                      dataKey="sales"
+                    >
+                      {topBooksChartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={{ backgroundColor: "#0F172A", borderRadius: "12px", border: "none", color: "#fff" }}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+                
+                <div className="absolute text-center pointer-events-none">
+                  <span className="text-2xl font-black text-[#0F172A]">{stats?.liveEbooks || 0}</span>
+                  <p className="text-[9px] font-bold uppercase text-slate-400 tracking-wider">Live Books</p>
+                </div>
+              </>
             ) : (
               <p className="text-xs text-slate-400">No genre data available</p>
             )}
           </div>
 
-        
           <div className="grid grid-cols-2 gap-2 mt-4 max-h-[100px] overflow-y-auto pt-2 border-t border-slate-200">
             {topBooksChartData?.map((entry, index) => (
               <div key={index} className="flex items-center gap-2 text-xs font-semibold text-slate-600">

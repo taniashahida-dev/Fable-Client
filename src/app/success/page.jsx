@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { CheckCircle2, ArrowRight, Mail, ArrowLeft, ShoppingBag, Award } from 'lucide-react';
 import { db } from '@/lib/mongodb'; 
 import { getUserSession } from '@/lib/core/session';
+import { ObjectId } from 'mongodb'; // 🎯 বইয়ের ID ম্যাচ করার জন্য ObjectId ইমপোর্ট করলাম
 
 export default async function Success({ searchParams }) {
   const { session_id } = await searchParams;
@@ -25,13 +26,11 @@ export default async function Success({ searchParams }) {
     return redirect('/');
   }
 
- 
   const isWriterFee = metadata?.paymentType === 'publishing_fee';
 
   if (status === 'complete') {
     try {
       if (isWriterFee) {
-       
         await db.collection('all_transactions').updateOne(
           { stripeSessionId: session_id },
           { $set: { status: 'completed' } }
@@ -44,11 +43,30 @@ export default async function Success({ searchParams }) {
           );
         }
       } else {
+       
+
         
         await db.collection('purchased_books').updateOne(
           { stripeSessionId: session_id },
           { $set: { status: 'completed' } }
         );
+
+      
+        const bookId = metadata?.bookId;
+        if (bookId) {
+          await db.collection('ebooks').updateOne(
+            { _id: new ObjectId(bookId) }, 
+            { 
+              $set: { 
+                availabilityStatus: 'sold',
+                          
+              },
+              $inc: { salesCount: 1 }      
+            }
+          );
+         
+        }
+        // -------------------------------------------------------------
       }
     } catch (error) {
       console.error("Database status update failed:", error);
@@ -110,7 +128,6 @@ export default async function Success({ searchParams }) {
 
           <div className="pt-2 space-y-2.5">
             {isWriterFee ? (
-              
               <Link 
                 href="/dashboard/writer" 
                 className="w-full bg-[#0F172A] hover:bg-black text-white py-3 px-4 rounded-xl font-medium text-sm transition-all shadow-xs flex items-center justify-center gap-2 group"
@@ -119,7 +136,6 @@ export default async function Success({ searchParams }) {
                 <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
               </Link>
             ) : (
-            
               <Link 
                 href="/dashboard/reader/bookshelf" 
                 className="w-full bg-[#0F172A] hover:bg-black text-white py-3 px-4 rounded-xl font-medium text-sm transition-all shadow-xs flex items-center justify-center gap-2 group"

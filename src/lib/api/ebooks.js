@@ -19,12 +19,15 @@ export const getEbooks = async (filters = {}) => {
 };
 
 
-
-export const getEBookById = async (bookId) => {
-    return serverFetch(`/api/ebooks/${bookId}`, {
+export const getEBookById = async (bookId, email = '') => {
+    
+    const path = email ? `/api/ebooks/${bookId}?email=${email}` : `/api/ebooks/${bookId}`;
+    return serverFetch(path, {
         cache: 'no-store' 
-    })
+    });
 };
+
+
 export const updateEbook = async (bookId, updatedData) => {
     return serverFetch(`/api/ebooks/${bookId}`, {
         method: 'PATCH',

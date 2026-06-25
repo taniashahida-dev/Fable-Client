@@ -41,6 +41,7 @@ export default function DeleteUserModal({ isOpen, onOpenChange, userToDelete, on
               </Button>
               <Button 
                 onPress={onConfirm}
+               
                 className="bg-rose-600 text-white font-semibold hover:bg-rose-700 rounded-xl px-5 h-10 text-sm transition shadow-lg shadow-rose-600/20"
               >
                 Yes, Delete
@@ -53,3 +54,6 @@ export default function DeleteUserModal({ isOpen, onOpenChange, userToDelete, on
     </AlertDialog>
   );
 }
+
+
+

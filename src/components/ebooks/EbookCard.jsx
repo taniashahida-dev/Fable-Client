@@ -8,7 +8,6 @@ export default function EbookCard({ book }) {
 
   const isSold = book.salesCount > 0;
 
- 
   const getRandomGradient = (title = "") => {
     const code = title.charCodeAt(0) || 0;
     if (code % 3 === 0) return "from-purple-600 via-indigo-700 to-indigo-950";
@@ -23,14 +22,12 @@ export default function EbookCard({ book }) {
     >
       <div className="w-full aspect-3/4 relative overflow-hidden bg-slate-100">
         
-     
         {isSold && (
           <div className="absolute top-3 right-3 bg-rose-500 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md z-20 shadow-md">
             Sold
           </div>
         )}
 
-       
         {book.coverImage ? (
           <img
             src={book.coverImage}
@@ -45,7 +42,6 @@ export default function EbookCard({ book }) {
         )}
       </div>
 
-   
       <div className="p-4 flex-1 flex flex-col justify-between gap-2">
         <div className="space-y-0.5">
           <h2 className="font-bold text-slate-800 text-base leading-snug group-hover:text-indigo-600 transition-colors truncate">
@@ -61,7 +57,6 @@ export default function EbookCard({ book }) {
             {book.price === 0 ? "Free" : `$${book.price.toFixed(2)}`}
           </span>
           
-       
           <span className="text-[10px] font-extrabold uppercase tracking-wider bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md">
             {book.category || "General"}
           </span>

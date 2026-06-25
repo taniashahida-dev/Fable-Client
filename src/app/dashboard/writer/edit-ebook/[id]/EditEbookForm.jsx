@@ -12,11 +12,12 @@ import {
     Select, 
     ListBox, 
     Button,
-    toast
+  
 } from '@heroui/react';
 import { ArrowUpToLine, BookOpen, ArrowRight, ChevronDown, Flame } from '@gravity-ui/icons';
 import { useRouter } from 'next/navigation';
 import { updateEbook } from '@/lib/api/ebooks';
+import toast from 'react-hot-toast';
 
 
 const textInputClass = "w-full bg-[#F8FAFC] border-2 border-slate-200 text-[#0F172A] font-medium rounded-xl px-4 py-3 outline-none placeholder:text-slate-400 focus:border-[#6366F1] focus:bg-white transition-all";
@@ -43,12 +44,16 @@ export default function EditEbookForm({ writer, ebook }) {
 
     useEffect(() => {
         if (ebook) {
-            setTitle(ebook.title || '');
-            setCategory(ebook.category || 'fiction');
-            setPrice(ebook.price !== undefined ? ebook.price.toString() : '0');
-            setTags(Array.isArray(ebook.tags) ? ebook.tags.join(", ") : ebook.tags || '');
-            setDescription(ebook.description || '');
-            setCoverUrl(ebook.coverImage || '');
+            const timer = setTimeout(() => {
+                setTitle(ebook.title || '');
+                setCategory(ebook.category || 'fiction');
+                setPrice(ebook.price !== undefined ? ebook.price.toString() : '0');
+                setTags(Array.isArray(ebook.tags) ? ebook.tags.join(", ") : ebook.tags || '');
+                setDescription(ebook.description || '');
+                setCoverUrl(ebook.coverImage || '');
+            }, 0);
+
+            return () => clearTimeout(timer);
         }
     }, [ebook]);
 
@@ -76,7 +81,7 @@ export default function EditEbookForm({ writer, ebook }) {
             if (data.success) {
                 setCoverUrl(data.data.url);
                 setErrors(prev => ({ ...prev, cover: null }));
-                toast.success("Cover image updated successfully!");
+               toast.success("Cover image updated successfully!");
             } else {
                 setErrors(prev => ({ ...prev, cover: "Upload failed. Try again." }));
             }
@@ -87,7 +92,7 @@ export default function EditEbookForm({ writer, ebook }) {
         }
     };
 
-    // সাবমিশন এবং ব্যাকএন্ড PATCH রিকোয়েস্ট ট্রিগার
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -114,18 +119,18 @@ export default function EditEbookForm({ writer, ebook }) {
         };
 
         try {
-            // আপনার `updateEbook` ফাংশনকে কল করা হচ্ছে (যা PATCH মেথড ব্যবহার করে)
+          
             const res = await updateEbook(ebook?._id, updatedEbookData);
             
             if (res) {
-                toast.success("Ebook masterpiece updated successfully!");
+               toast.success("Ebook masterpiece updated successfully!");
                 router.push('/dashboard/writer/my-ebooks');
                 router.refresh();
             } else {
                 toast.error("Failed to update ebook. Please try again.");
             }
         } catch (error) {
-            toast.error("Something went wrong during update.");
+          toast.error("Something went wrong during update.");
         } finally {
             setIsSubmitting(false);
         }

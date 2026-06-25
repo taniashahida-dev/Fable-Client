@@ -4,7 +4,6 @@ import { Table, Chip } from "@heroui/react";
 
 export default function TransactionsTable({ transactions = [] }) {
   
-  // ডেট ফরম্যাট করার হেল্পার ফাংশন (যেমন: "Jun 24")
   const formatDate = (dateString) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);

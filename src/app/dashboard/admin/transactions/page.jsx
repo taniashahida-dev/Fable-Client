@@ -26,7 +26,7 @@ export default async function AdminTransactionsPage() {
       {/* 📊 Table Wrapper */}
       <div className="w-full">
         {transactions && transactions.length > 0 ? (
-          // আমাদের আগের তৈরি করা আল্ট্রা-ক্লিন ডাইনামিক টেবিলটি রেন্ডার হবে
+         
           <TransactionsTable transactions={transactions} />
         ) : (
           /* 🔍 Empty State (No Gobindo Design, Pure Aesthetic UI) */

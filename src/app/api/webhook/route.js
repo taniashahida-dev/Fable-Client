@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '../../../lib/stripe';
-import { connectToDatabase } from '@/lib/mongodb';
+import {  db } from '@/lib/mongodb';
 
 export async function POST(req) {
   const payload = await req.text();
@@ -23,7 +23,7 @@ export async function POST(req) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object;
 
-    const { db } = await connectToDatabase();
+    const { db } = await db();
     
  
     await db.collection('purchased_books').updateOne(

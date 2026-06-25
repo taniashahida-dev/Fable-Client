@@ -1,12 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react"; // 👈 Suspense ইম্পোর্ট করা হলো
 import { getEbooks } from "@/lib/api/ebooks";
 import EbookCard from "@/components/ebooks/EbookCard";
 import EbookFilters from "@/components/ebooks/EbookFilters";
 import { useSearchParams } from "next/navigation";
+import EbookSkeletonCard from "@/components/ebooks/EbookSkeletonCard";
 
-export default function BrowseBooksPage() {
+// 🌟 ১. আপনার আগের পুরো ফাংশনটিকে জাস্ট নাম বদলে 'BrowseBooksContent' করা হলো
+function BrowseBooksContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
 
@@ -19,14 +21,14 @@ export default function BrowseBooksPage() {
   const [ebooks, setEbooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  
+  // আপনার ফিক্সড কন্ডিশনাল ইফেক্ট (কোনো লাল দাগ আসবে না)
   useEffect(() => {
-    if (initialCategory) {
+    if (initialCategory && initialCategory !== selectedGenre) {
       setSelectedGenre(initialCategory);
     }
-  }, [initialCategory]);
+  }, [initialCategory, selectedGenre]);
 
- 
+  // ডাটা ফেচ করার ইফেক্ট
   useEffect(() => {
     const fetchFilteredData = async () => {
       setLoading(true);
@@ -43,7 +45,6 @@ export default function BrowseBooksPage() {
     fetchFilteredData();
   }, [searchQuery, selectedGenre, availability, sortBy]);
 
- 
   const displayedEbooks = ebooks.filter(book => book.price >= priceRange[0] && book.price <= priceRange[1]);
 
   return (
@@ -60,7 +61,6 @@ export default function BrowseBooksPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
           
-        
           <div className="lg:col-span-1 sticky top-24">
             <EbookFilters
               searchQuery={searchQuery}
@@ -76,10 +76,13 @@ export default function BrowseBooksPage() {
             />
           </div>
 
-         
           <div className="lg:col-span-3 space-y-4">
             {loading ? (
-              <div className="text-center py-24 text-slate-400 font-medium">Loading catalog data...</div>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, index) => (
+                  <EbookSkeletonCard key={index} />
+                ))}
+              </div>
             ) : displayedEbooks.length > 0 ? (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {displayedEbooks.map((bookItem) => (
@@ -98,5 +101,18 @@ export default function BrowseBooksPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// 🌟 ২. মূল এক্সপোর্টে শুধু 'Suspense' দিয়ে কন্টেন্টটাকে মুড়ে দেওয়া হলো যাতে বিল্ড পাস হয়ে যায়
+export default function BrowseBooksPage() {
+  return (
+    <Suspense fallback={
+      <div className="w-full min-h-screen bg-white flex items-center justify-center">
+        <p className="text-slate-400 text-sm font-medium animate-pulse">Loading storage catalog...</p>
+      </div>
+    }>
+      <BrowseBooksContent />
+    </Suspense>
   );
 }

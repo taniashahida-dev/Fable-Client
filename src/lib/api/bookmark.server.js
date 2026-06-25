@@ -13,11 +13,6 @@ export const getUserBookMarks = async () => {
 
 
 
-// export const getBookmarkedEbooks = async () => {
-//     const user = await getUserSession();
-//     if (!user?.email) return [];
-//     return getBookmarks(user.email);
-// };
 
 export const getWriterBookmarkedAnalytics = async () => {
     const user = await getUserSession();
