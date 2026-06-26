@@ -1,35 +1,37 @@
-// src/proxy.js অথবা src/proxy.ts
+// src/proxy.js
 import { NextResponse } from "next/server";
 
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
-  // ১. ইন্টারনাল ফাইল এবং এক্সপ্রেস ব্যাকএন্ডের এপিআই রুটগুলোকে বাইপাস করা
+  // Internal routes bypass
   if (
-    pathname.startsWith("/api/") || 
-    pathname.startsWith("/_next/") || 
+    pathname.startsWith("/api/") ||
+    pathname.startsWith("/_next/") ||
     pathname.includes(".")
   ) {
     return NextResponse.next();
   }
 
   try {
-    // 🚀 ২. বডি লিক বন্ধ করার জন্য সম্পূর্ণ ফ্রেশ একটি হেডার তৈরি করা
+    // Clean headers
     const cleanHeaders = new Headers();
     cleanHeaders.set("Accept", "application/json");
-    
-    // মেইন রিকোয়েস্ট থেকে শুধুমাত্র কুকি টুকু তুলে নতুন ক্লিন হেডারে বসানো
+
     const cookie = request.headers.get("cookie");
+
     if (cookie) {
       cleanHeaders.set("cookie", cookie);
     }
 
-    // ৩. ক্লিন হেডার নিয়ে Better-Auth কল করা
-    const sessionRes = await fetch(`${request.nextUrl.origin}/api/auth/get-session`, {
-      method: "GET", // মেথড নির্দিষ্ট থাকবে
-      headers: cleanHeaders, // 👈 খবরদার! request.headers সরাসরি পাস না করে cleanHeaders পাস করুন
-      // এটি করার ফলে ইবুকের POST body ডেটা আর এর ভেতরে ঢুকতে পারবে না
-    });
+    // Get Better Auth session
+    const sessionRes = await fetch(
+      `${request.nextUrl.origin}/api/auth/get-session`,
+      {
+        method: "GET",
+        headers: cleanHeaders,
+      }
+    );
 
     if (!sessionRes.ok) {
       return NextResponse.next();
@@ -38,22 +40,69 @@ export async function proxy(request) {
     const session = await sessionRes.json();
     const user = session?.user;
 
-    // ৪. রাউট প্রোটেকশন লজিক
+    // ===========================
+    // Private Dashboard
+    // ===========================
     if (pathname.startsWith("/dashboard") && !user) {
-      return NextResponse.redirect(new URL("/auth/sign-in", request.url));
+      return NextResponse.redirect(
+        new URL("/auth/sign-in", request.url)
+      );
     }
 
-    // ৫. রোল ভেরিফিকেশন (এডমিন/রাইটার চেক)
-    if (pathname.startsWith("/dashboard/admin") && user?.role !== "admin") {
-      return NextResponse.redirect(new URL("/", request.url));
+    // ===========================
+    // Admin Dashboard
+    // ===========================
+    if (
+      pathname.startsWith("/dashboard/admin") &&
+      user?.role !== "admin"
+    ) {
+      return NextResponse.redirect(
+        new URL("/", request.url)
+      );
     }
 
-    if (pathname.startsWith("/dashboard/writer") && user?.role !== "writer") {
-      return NextResponse.redirect(new URL("/", request.url));
+    // ===========================
+    // Writer Dashboard
+    // ===========================
+    if (
+      pathname.startsWith("/dashboard/writer") &&
+      user?.role !== "writer"
+    ) {
+      return NextResponse.redirect(
+        new URL("/", request.url)
+      );
+    }
+
+    // ===========================
+    // Reader Dashboard
+    // ===========================
+    if (
+      pathname.startsWith("/dashboard/user") &&
+      user?.role !== "reader"
+    ) {
+      return NextResponse.redirect(
+        new URL("/", request.url)
+      );
+    }
+
+    // ===========================
+    // Optional:
+    // Logged in user can't visit auth pages
+    // ===========================
+    if (
+      user &&
+      (
+        pathname.startsWith("/auth/sign-in") ||
+        pathname.startsWith("/auth/sign-up")
+      )
+    ) {
+      return NextResponse.redirect(
+        new URL("/", request.url)
+      );
     }
 
   } catch (error) {
-    console.error("Proxy fetch error bypassed:", error);
+    console.error("Proxy Error:", error);
     return NextResponse.next();
   }
 
@@ -61,5 +110,9 @@ export async function proxy(request) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"],
+  matcher: [
+    "/dashboard/:path*",
+    "/auth/sign-in",
+    "/auth/sign-up",
+  ],
 };
