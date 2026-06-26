@@ -6,9 +6,10 @@ import { TrashBin } from "@gravity-ui/icons";
 import Image from "next/image";
  
 import DeleteBookModal from "./DeleteBookModal";
-import { deleteEbook, updateEbook } from "@/lib/api/ebooks";
+
 import StatusDropdown from "@/components/Dashboard/StatusDropDown";
 import toast from "react-hot-toast";
+import { deleteEbook, updateEbook } from "@/lib/api/ebooks";
 
 export default function ManageEbooksTable({ initialBooks }) {
   const [books, setBooks] = useState(initialBooks || []);

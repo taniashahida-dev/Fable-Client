@@ -1,4 +1,5 @@
-import { protectedFetch, serverFetch, serverMutation } from "../core/server";
+import { getAccessToken } from "../actions/token";
+import {  serverFetch, serverMutation } from "../core/server";
 
 
 
@@ -9,7 +10,7 @@ export const getWriterEbooks = async (writerId, status = '') => {
     if (status) {
         path += `&status=${status}`;
     }
-    return protectedFetch(path);
+    return serverFetch(path);
 }
 
 export const getEbooks = async (filters = {}) => {
@@ -29,10 +30,22 @@ export const getEBookById = async (bookId, email = '') => {
 
 
 export const updateEbook = async (bookId, updatedData) => {
-   return serverMutation(`/api/ebooks/${bookId}`, updatedData, 'PATCH');
+    const token = await getAccessToken()
+  return serverMutation(
+    `/api/ebooks/${bookId}`,
+    updatedData,
+    "PATCH",
+    token
+);
 };
 
 
 export const deleteEbook = async (bookId) => {
-    return serverMutation(`/api/ebooks/${bookId}`, {}, 'DELETE');
+    const token = await getAccessToken()
+   return serverMutation(
+    `/api/ebooks/${bookId}`,
+    {},
+    "DELETE",
+    token
+);
 };

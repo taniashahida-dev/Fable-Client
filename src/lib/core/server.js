@@ -1,67 +1,58 @@
-import { getUserToken } from "./session";
-
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+"use server";
 
 
+ // 🚀 সার্ভার সাইড সিকিউরিটি লক সচল থাকবে
 
 
-
-export const authHeader = async () => {
-    const token = await getUserToken();
-    const header = token ? {
-        authorization: `Bearer ${token}`
-    } : {};
-    return header;
-}
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:8000";
 
 
 
-export const serverFetch = async (path, options = {}) => {
-    const res = await fetch(`${baseUrl}${path}`, {
-        method: options.method || 'GET', 
-        headers: {
-            ...((options.body && !(options.body instanceof FormData)) && { 'Content-Type': 'application/json' }),
-            ...options.headers,
-        },
-        ...options
-    });
-    return res.json();
-}
+export const serverFetch = async (
+  path,
+  options = {},
+  token
+) => {
+  const headers = {
+    "Content-Type": "application/json",
+  };
 
-export const protectedFetch = async (path) => {
-    const res = await fetch(`${baseUrl}${path}`,
-        {
-            headers: await authHeader()
-        }
-    );
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
 
+  const res = await fetch(`${baseUrl}${path}`, {
+    ...options,
+    headers,
+  });
 
-    return handleStatusCode(res);
-}
+  return res.json();
+};
 
+export const serverMutation = async (
+  path,
+  data = {},
+  method = "POST",
+  token
+) => {
+  const headers = {
+    "Content-Type": "application/json",
+  };
 
-export const serverMutation = async (path, data, method = 'POST') => {
-    const res = await fetch(`${baseUrl}${path}`, {
-        method: method,
-        headers: {
-            'Content-Type': 'application/json',
-            ... await authHeader()
-        },
-        body: JSON.stringify(data),
-    });
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
 
-    // handle 401, 404, 403
+  const res = await fetch(`${baseUrl}${path}`, {
+    method,
+    headers,
+    body: JSON.stringify(data),
+  });
 
-    return res.json();
-}
+  const text = await res.text();
 
-const handleStatusCode = res => {
-    if (res.status === 401) {
-        redirect('/unauthorized')
-    }
-    else if (res.status === 403) {
-        redirect('/forbidden');
-    }
+  console.log("Status:", res.status);
+  console.log("Raw Response:", text);
 
-    return res.json()
-}
+  return JSON.parse(text);
+};

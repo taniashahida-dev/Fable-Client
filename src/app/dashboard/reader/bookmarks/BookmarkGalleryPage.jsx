@@ -5,22 +5,34 @@ import { X, BookmarkPlus, ShoppingBag } from "lucide-react";
 import Link from "next/link";
 import { deleteBookmark } from "@/lib/api/bookmark";
 import toast from "react-hot-toast";
+import DeleteConfirmModal from "./DeleteConfirmModal";
+
 
 export default function BookmarkGalleryPage({ initialData }) {
   const [bookmarks, setBookmarks] = useState(initialData || []);
+  
+  // 🚀 ২. মোডাল ওপেন এবং আইডি ট্র্যাক করার জন্য স্টেট
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedBookmarkId, setSelectedBookmarkId] = useState(null);
 
   // Handler to remove bookmark instantly from UI & database
   const handleRemoveBookmark = async (id) => {
-    const confirmDelete = confirm("Are you sure you want to remove this bookmark?");
-    if (!confirmDelete) return;
+    // 🚀 ৩. ব্রাউজারের ওল্ড confirm() এর বদলে আমাদের নতুন মোডাল ট্রিগার করবে
+    setSelectedBookmarkId(id);
+    setIsModalOpen(true);
+  };
+
+  // 🚀 ৪. মোডাল থেকে "Remove" বাটনে ক্লিক করলে এই আসল ডিলিট ফাংশনটি রান হবে
+  const executeDelete = async () => {
+    const id = selectedBookmarkId;
+    setIsModalOpen(false); // মোডাল বন্ধ হবে
 
     try {
-      
       const data = await deleteBookmark(id);
       
       if (data.success) {
-      
         setBookmarks((prev) => prev.filter((item) => item._id !== id));
+        toast.success("Bookmark removed successfully"); // একটি সুন্দর সাকসেস মেসেজ
       } else {
         toast.error("Failed to remove bookmark from server");
       }
@@ -53,7 +65,6 @@ export default function BookmarkGalleryPage({ initialData }) {
               </div>
             )}
 
-           
             <button 
               onClick={() => handleRemoveBookmark(item._id)}
               className="absolute top-3 right-3 w-6 h-6 bg-red-900/80 hover:bg-red-700 text-white rounded-md flex items-center justify-center transition-colors cursor-pointer shadow-sm z-20"
@@ -109,6 +120,13 @@ export default function BookmarkGalleryPage({ initialData }) {
           </div>
         </div>
       </Link>
+
+      {/* 🚀 ৫. ইনজেক্টেড মোডাল কম্পোনেন্ট (পেজের বাইরে থাকবে, লজিক ডিস্টার্ব করবে না) */}
+      <DeleteConfirmModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={executeDelete}
+      />
 
     </div>
   );

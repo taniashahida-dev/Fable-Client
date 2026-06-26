@@ -109,7 +109,7 @@ export default function AddEbookForm({ writer }) {
         };
 
         try {
-            console.log("Submitting Ebook Payload Data:", newEbookData);
+            console.log("Submitting Data:", newEbookData);
             const payload = await createEbooks(newEbookData);
 
             if (payload?.insertedId) {

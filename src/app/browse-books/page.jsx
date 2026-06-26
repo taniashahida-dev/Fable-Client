@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react"; // 👈 Suspense ইম্পোর্ট করা হলো
+import React, { useState, useEffect, Suspense } from "react";
 import { getEbooks } from "@/lib/api/ebooks";
 import EbookCard from "@/components/ebooks/EbookCard";
 import EbookFilters from "@/components/ebooks/EbookFilters";
 import { useSearchParams } from "next/navigation";
 import EbookSkeletonCard from "@/components/ebooks/EbookSkeletonCard";
+import { Pagination } from '@heroui/react'; // 🚀 HeroUI Pagination ইম্পোর্ট করা হলো
 
-// 🌟 ১. আপনার আগের পুরো ফাংশনটিকে জাস্ট নাম বদলে 'BrowseBooksContent' করা হলো
 function BrowseBooksContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "all";
@@ -21,14 +21,42 @@ function BrowseBooksContent() {
   const [ebooks, setEbooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // আপনার ফিক্সড কন্ডিশনাল ইফেক্ট (কোনো লাল দাগ আসবে না)
+  // ================= 🚀 পেজিনেশন স্টেট ও লজিক শুরু =================
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6; // 👈 প্রতি পেজে কয়টি বই দেখাবেন
+
+  // ফিল্টার বা সার্চ চেঞ্জ হলে কারেন্ট পেজ ১ এ রিসেট করার জন্য ইফেক্ট
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedGenre, availability, sortBy, priceRange]);
+
+  // ফিল্টার হওয়া মোট বইয়ের লিস্ট
+  const displayedEbooks = ebooks.filter(book => book.price >= priceRange[0] && book.price <= priceRange[1]);
+
+  // পেজিনেশনের ক্যালকুলেশনসমূহ
+  const totalItems = displayedEbooks.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  
+  // কারেন্ট পেজের জন্য ডেটা স্লাইস করা
+  const currentPagedEbooks = displayedEbooks.slice(indexOfFirstItem, indexOfLastItem);
+
+  const handlePageChange = (pageNumber) => {
+    if (pageNumber >= 1 && pageNumber <= totalPages) {
+      setCurrentPage(pageNumber);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+  // ================= 🚀 পেজিনেশন স্টেট ও লজিক শেষ =================
+
   useEffect(() => {
     if (initialCategory && initialCategory !== selectedGenre) {
       setSelectedGenre(initialCategory);
     }
   }, [initialCategory, selectedGenre]);
 
-  // ডাটা ফেচ করার ইফেক্ট
   useEffect(() => {
     const fetchFilteredData = async () => {
       setLoading(true);
@@ -44,8 +72,6 @@ function BrowseBooksContent() {
 
     fetchFilteredData();
   }, [searchQuery, selectedGenre, availability, sortBy]);
-
-  const displayedEbooks = ebooks.filter(book => book.price >= priceRange[0] && book.price <= priceRange[1]);
 
   return (
     <div className="w-full min-h-screen bg-white text-slate-900 block pt-24 pb-12 font-sans">
@@ -76,16 +102,16 @@ function BrowseBooksContent() {
             />
           </div>
 
-          <div className="lg:col-span-3 space-y-4">
+          <div className="lg:col-span-3 space-y-8"> {/* 🚀 পেজিনেশনের জন্য স্পেসিং বাড়ানো হলো */}
             {loading ? (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, index) => (
                   <EbookSkeletonCard key={index} />
                 ))}
               </div>
-            ) : displayedEbooks.length > 0 ? (
+            ) : currentPagedEbooks.length > 0 ? ( // 👈 displayedEbooks এর জায়গায় স্লাইস করা currentPagedEbooks লুপ হবে
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-                {displayedEbooks.map((bookItem) => (
+                {currentPagedEbooks.map((bookItem) => (
                   <EbookCard key={bookItem._id} book={bookItem} />
                 ))}
               </div>
@@ -96,6 +122,87 @@ function BrowseBooksContent() {
                 </p>
               </div>
             )}
+
+            {/* ================= 🚀 HeroUI Pagination UI Component ================= */}
+            {!loading && totalPages > 1 && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-slate-100 mt-4">
+                
+                {/* ১. পেজিনেশন সামারি */}
+                <Pagination.Summary className="text-xs text-slate-500 font-medium">
+                  Showing {indexOfFirstItem + 1}-{Math.min(indexOfLastItem, totalItems)} of {totalItems} results
+                </Pagination.Summary>
+<Pagination.Content className="flex items-center gap-1">
+  
+  {/* প্রিভিয়াস বাটন */}
+  <Pagination.Item>
+    <div
+      onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+      className={`flex items-center gap-1 px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-950 hover:text-white transition-all select-none ${
+        currentPage === 1 ? "opacity-40 cursor-not-allowed" : "cursor-pointer"
+      }`}
+    >
+      <Pagination.PreviousIcon className="w-3.5 h-3.5" />
+      <span>Previous</span>
+    </div>
+  </Pagination.Item>
+
+  {/* ডাইনামিক পেজ নাম্বার জেনারেটর */}
+  {Array.from({ length: totalPages }, (_, index) => {
+    const pageNum = index + 1;
+    
+    if (
+      pageNum === 1 || 
+      pageNum === totalPages || 
+      (pageNum >= currentPage - 1 && pageNum <= currentPage + 1)
+    ) {
+      return (
+        <Pagination.Item key={pageNum}>
+          <div
+            onClick={() => handlePageChange(pageNum)}
+            className={`w-9 h-9 text-xs font-semibold rounded-xl border transition-all flex items-center justify-center cursor-pointer select-none ${
+              currentPage === pageNum
+                ? "bg-slate-950 text-white border-slate-950 shadow-sm"
+                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+            }`}
+          >
+            <Pagination.Link isActive={currentPage === pageNum}>
+              {pageNum}
+            </Pagination.Link>
+          </div>
+        </Pagination.Item>
+      );
+    }
+
+    if (
+      (pageNum === 2 && currentPage > 3) || 
+      (pageNum === totalPages - 1 && currentPage < totalPages - 2)
+    ) {
+      return (
+        <Pagination.Item key={pageNum} className="px-1 text-slate-400">
+          <Pagination.Ellipsis />
+        </Pagination.Item>
+      );
+    }
+
+    return null;
+  })}
+
+  {/* নেক্সট বাটন */}
+  <Pagination.Item>
+    <div
+      onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+      className={`flex items-center gap-1 px-3 py-2 text-xs font-semibold rounded-xl border border-slate-200 bg-white text-slate-600 hover:bg-slate-950 hover:text-white transition-all select-none ${
+        currentPage === totalPages ? "opacity-40 cursor-not-allowed" : "cursor-pointer"
+      }`}
+    >
+      <span>Next</span>
+      <Pagination.NextIcon className="w-3.5 h-3.5" />
+    </div>
+  </Pagination.Item>
+
+</Pagination.Content>
+              </div>
+            )}
           </div>
 
         </div>
@@ -104,7 +211,6 @@ function BrowseBooksContent() {
   );
 }
 
-// 🌟 ২. মূল এক্সপোর্টে শুধু 'Suspense' দিয়ে কন্টেন্টটাকে মুড়ে দেওয়া হলো যাতে বিল্ড পাস হয়ে যায়
 export default function BrowseBooksPage() {
   return (
     <Suspense fallback={

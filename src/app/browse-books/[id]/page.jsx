@@ -1,8 +1,10 @@
-import { getEBookById } from "@/lib/api/ebooks";
+
 import EbookDetails from "../EbookDetails";
 import { getWriters } from "@/lib/api/writers";
 import { getUserSession } from "@/lib/core/session";
 import { getUserBookMarks } from "@/lib/api/bookmark.server";
+import { getEBookById } from "@/lib/api/ebooks";
+
 
 const EbookDetailsPage = async ({ params }) => {
     const { id } = await params;

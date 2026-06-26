@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useTransition } from 'react';
-// 🌟 ফিক্স ১: HeroUI এর Button আবার নিয়ে আসা হলো কারণ ড্রপডাউন ট্রিগার হিসেবে এটিই এরর দূর করবে
+// 🌟 HeroUI এর Button এবং Dropdown
 import { Dropdown, Button } from '@heroui/react'; 
 import { ArrowRightToSquare, SquareCheck, ChevronDown } from '@gravity-ui/icons';
 
@@ -29,9 +29,11 @@ export default function StatusDropdown({ bookId, currentStatus, toggleAction }) 
 
     return (
         <Dropdown>
-            {/* 🌟 ফিক্স ২: Dropdown.Trigger এর ভেতরে হিরোইউ-এর Button কম্পোনেন্ট ব্যবহার করা হলো */}
+            {/* 🌟 ফিক্স: `asChild` বাদ দিয়ে স্বাভাবিক রাখা হয়েছে */}
             <Dropdown.Trigger>
+                {/* 🌟 ফিক্স: এখানে `as="div"` যোগ করা হয়েছে যাতে এটি বাটন ট্যাগ জেনারেট না করে। ডিজাইন ও স্টাইল অপরিবর্তিত থাকবে। */}
                 <Button
+                    as="div"
                     disabled={isPending}
                     variant="flat"
                     className={`w-[120px] justify-between px-3 py-1.5 h-8 font-bold rounded-xl text-[10px] border tracking-wider uppercase transition-all flex items-center gap-1.5 cursor-pointer ${getStatusStyle(currentStatus)}`}
@@ -42,7 +44,6 @@ export default function StatusDropdown({ bookId, currentStatus, toggleAction }) 
             </Dropdown.Trigger>
             
             <Dropdown.Popover>
-                {/* 🌟 ফিক্স ৩: ব্যাকগ্রাউন্ড কালার একটু মডিফাই করে আপনার টেবিলের সাথে ম্যাচ করানো হয়েছে */}
                 <Dropdown.Menu aria-label="Ebook Status Options" className="bg-white border border-slate-100 rounded-xl p-1 shadow-2xl min-w-[130px]">
                     
                     {/* Publish */}

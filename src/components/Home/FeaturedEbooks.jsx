@@ -26,7 +26,11 @@ const cardVariants = {
 
 const FeaturedEbooks = ({ allBooks = [] }) => {
  
-  const featuredBooks = [...allBooks].reverse().slice(0, 8);
+ const booksArray = Array.isArray(allBooks) 
+    ? allBooks 
+    : (allBooks && Array.isArray(allBooks.ebooks) ? allBooks.ebooks : []);
+
+  const featuredBooks = [...booksArray].reverse().slice(0, 8);
 
   return (
   
