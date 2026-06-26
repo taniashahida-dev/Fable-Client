@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 📚 Fable — Ebook Sharing Platform
 
-## Getting Started
+> *Discover, share, and read original ebooks from emerging writers worldwide.*
 
-First, run the development server:
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-brightgreen?style=for-the-badge)](https://your-live-url.vercel.app)
+[![Client Repo](https://img.shields.io/badge/GitHub-Client-181717?style=for-the-badge&logo=github)](https://github.com/your-username/fable-client)
+[![Server Repo](https://img.shields.io/badge/GitHub-Server-181717?style=for-the-badge&logo=github)](https://github.com/your-username/fable-server)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🌟 What is Fable?
+
+Fable is a full-stack ebook sharing platform built with the MERN stack (MongoDB, Express, React/Next.js, Node.js). It connects readers with independent writers, enabling seamless ebook discovery, purchasing, and management — all in one place.
+
+---
+
+## ✨ Key Features
+
+**For Readers**
+- Browse, search, filter, and sort ebooks by genre, price, and availability
+- Purchase ebooks securely via **Stripe Checkout**
+- Track purchase history and access a personal reading library
+- Bookmark ebooks for later
+
+**For Writers**
+- Upload and manage ebooks with cover images via **imgBB**
+- Publish/unpublish ebooks and monitor sales history
+- Access a dedicated writer dashboard with analytics
+
+**For Admins**
+- Manage all users, ebooks, and transactions from a central dashboard
+- Promote/demote user roles and moderate content
+- View revenue analytics with charts and KPI cards
+
+**Platform-wide**
+- JWT-based authentication with Google OAuth via **BetterAuth**
+- Role-based access control (Reader / Writer / Admin)
+- Framer Motion animations and skeleton loaders
+- Fully responsive across mobile, tablet, and desktop
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| **Frontend** | Next.js 15, React 19, Tailwind CSS 4 |
+| **Backend** | Node.js, Express.js |
+| **Database** | MongoDB Atlas |
+| **Auth** | JWT, BetterAuth (Google OAuth) |
+| **Payments** | Stripe Checkout |
+| **Image Upload** | imgBB API |
+| **Charts** | Recharts |
+| **Animations** | Framer Motion |
+| **Icons** | Lucide React |
+| **HTTP Client** | Axios |
+
+---
+
+## 📦 NPM Packages Used
+
+**Client**
+`next` · `react` · `tailwindcss` · `axios` · `framer-motion` · `recharts` · `lucide-react` · `stripe` · `better-auth` 
+
+**Server**
+`express` · `mongodb` · `jsonwebtoken` · `cors` · `dotenv` · `stripe` · `nodemailer`
+
+---
+
+## 🔐 Admin Credentials
+
+```
+Email:    admin@fable.com
+Password: Admin@123
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Getting Started Locally
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Clone the repositories
+git clone https://github.com/taniashahida-dev/Fable-Client
+git clone https://github.com/taniashahida-dev/Fable-Server
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔒 Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+All sensitive keys — MongoDB URI, JWT secret, Stripe keys, imgBB API key, and Google OAuth credentials — are stored securely via `.env` files and never exposed in the codebase.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📁 Project Structure (Client)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+fable-client/
+├── app/
+│   ├── (public)/         # Home, Browse, Ebook Details
+│   ├── dashboard/
+│   │   ├── user/         # Reader dashboard
+│   │   ├── writer/       # Writer dashboard
+│   │   └── admin/        # Admin dashboard
+│   └── auth/             # Login, Register
+├── components/           # Shared UI components
+└── lib/                  # API helpers, utilities
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+*Built with ❤️ as part of an advanced MERN stack assignment.*
