@@ -30,18 +30,17 @@ export default function StatusDropdown({ bookId, currentStatus, toggleAction }) 
     return (
         <Dropdown>
             {/* 🌟 ফিক্স: `asChild` বাদ দিয়ে স্বাভাবিক রাখা হয়েছে */}
-            <Dropdown.Trigger>
-                {/* 🌟 ফিক্স: এখানে `as="div"` যোগ করা হয়েছে যাতে এটি বাটন ট্যাগ জেনারেট না করে। ডিজাইন ও স্টাইল অপরিবর্তিত থাকবে। */}
-                <Button
-                    as="div"
-                    disabled={isPending}
-                    variant="flat"
-                    className={`w-[120px] justify-between px-3 py-1.5 h-8 font-bold rounded-xl text-[10px] border tracking-wider uppercase transition-all flex items-center gap-1.5 cursor-pointer ${getStatusStyle(currentStatus)}`}
-                >
-                    <span>{isPending ? 'Updating...' : (currentStatus || 'Pending')}</span>
-                    <ChevronDown size={12} className="shrink-0" />
-                </Button>
-            </Dropdown.Trigger>
+           <Dropdown.Trigger>
+    <div
+        className={`w-[120px] justify-between px-3 py-1.5 h-8 font-bold rounded-xl text-[10px] border tracking-wider uppercase transition-all flex items-center gap-1.5 cursor-pointer ${getStatusStyle(currentStatus)}`}
+    >
+        <span>
+            {isPending ? "Updating..." : (currentStatus || "Pending")}
+        </span>
+
+        <ChevronDown size={12} className="shrink-0" />
+    </div>
+</Dropdown.Trigger>
             
             <Dropdown.Popover>
                 <Dropdown.Menu aria-label="Ebook Status Options" className="bg-white border border-slate-100 rounded-xl p-1 shadow-2xl min-w-[130px]">

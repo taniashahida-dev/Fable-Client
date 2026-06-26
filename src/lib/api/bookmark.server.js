@@ -8,9 +8,14 @@ import { getUserSession } from "../core/session";
 
 
 export const getUserBookMarks = async () => {
-  const token =await getAccessToken()
+
   const user = await getUserSession();
     if (!user?.email) return [];
+      const token =await getAccessToken()
+        if (!token) {
+        return [];
+    }
+
    return serverFetch(
     `/api/bookmarks?email=${user.email}&role=reader`,
     { cache: "no-store" },

@@ -7,7 +7,7 @@ const WriterBookmarksPage = async () => {
     const bookmarkAnalytics = await getWriterBookmarkedAnalytics() || [];
 
     return (
-        <div className="min-h-screen p-6 md:p-10 font-sans mt-16 max-w-7xl mx-auto">
+        <div className="min-h-screen p-6 md:p-10 font-sans mt-6 md:mt-2 max-w-7xl mx-auto">
             <div className="space-y-8">
                 
                 {/* 📌 Header Title - High Contrast Bright Layout */}
@@ -97,7 +97,7 @@ const WriterBookmarksPage = async () => {
 
                                             {/* Action Control - View Details Button */}
                                             <Link 
-                                                href={`/ebooks/${bookId}`}
+                                                href={`/browse-books/${bookId}`}
                                                 className="flex items-center gap-1 px-3 py-1.5 bg-slate-50 hover:bg-[#6366F1] text-slate-600 hover:text-white rounded-lg transition-all border-2 border-slate-200 hover:border-[#6366F1] text-xs font-bold uppercase tracking-wider"
                                                 title="View Ebook Details"
                                             >

@@ -112,7 +112,6 @@ export async function proxy(request) {
 export const config = {
   matcher: [
     "/dashboard/:path*",
-    "/auth/sign-in",
-    "/auth/sign-up",
+   
   ],
 };

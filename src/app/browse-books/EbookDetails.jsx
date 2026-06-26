@@ -38,7 +38,10 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
     availabilityStatus = "available",
   } = bookData;
 
-  const isWriter = currentUser && currentUser._id === bookData.writerId;
+const isWriter =
+  currentUser &&
+  (currentUser.id === bookData.writerId ||
+    currentUser._id === bookData.writerId);
   const hasPurchased = bookData.hasPurchased === true;
   const isSoldOut = salesCount >= 1 || availabilityStatus?.toLowerCase() === "sold" ;
 
@@ -47,31 +50,41 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
     ? description.substring(0, 170) + "..." 
     : description;
 
-  const handleBookmarkClick = async () => {
-    if (!currentUser) return toast.error("Please log in to bookmark this book.");
-    if (isBookmarked) return toast.error("Already bookmarked this book");
+ const handleBookmarkClick = async () => {
+  if (!currentUser) {
+    return toast.error("Please log in to bookmark this book.");
+  }
 
-    const response = await addBookmark({
-      bookId: id,
-      bookName: title,
-      coverImage: bookCover || "", 
-      writerId: bookData.writerId,
-      writerName,
-      price,
-      userEmail: currentUser.email,
-      userName: currentUser.name || "Anonymous Reader",
-    });
+  if (isWriter) {
+    return toast.error("You cannot bookmark your own ebook.");
+  }
 
-    if (response.success) {
+  if (isBookmarked) {
+    return toast.error("Already bookmarked this book.");
+  }
+
+  const response = await addBookmark({
+    bookId: id,
+    bookName: title,
+    coverImage: bookCover || "",
+    writerId: bookData.writerId,
+    writerName,
+    price,
+    userEmail: currentUser.email,
+    userName: currentUser.name || "Anonymous Reader",
+  });
+
+  if (response.success) {
+    setIsBookmarked(true);
+    toast.success("Bookmarked successfully!");
+  } else {
+    toast.error(response.message || "Something went wrong!");
+
+    if (response.message?.includes("Already")) {
       setIsBookmarked(true);
-      toast.success("Bookmarked successfully!");
-    } else {
-      toast.error(response.message || "Something went wrong!");
-      if (response.message?.includes("Already")) {
-        setIsBookmarked(true);
-      }
     }
-  };
+  }
+};
 
   return (
     <div className="py-12 mt-20 px-4 sm:px-6 lg:px-8">
@@ -146,15 +159,23 @@ const EbookDetails = ({ bookData, currentUser, writer }) => {
               </div>
 
               <div className="mt-4">
-                {hasPurchased ? (
-                  <button disabled className="w-full bg-[#1A4B58] text-white py-3 px-4 rounded-md font-medium text-sm flex items-center justify-center gap-2 cursor-default">
-                    <BookOpen className="w-4 h-4" /> Already Purchased
-                  </button>
-                ) : isWriter ? (
-                  <div className="w-full bg-gray-100 border border-gray-200 text-gray-500 py-3 px-4 rounded-md font-medium text-xs text-center">
-                    You cannot purchase your own published ebook.
-                  </div>
-                ) : isSoldOut ? (
+               {hasPurchased ? (
+  <button
+    disabled
+    className="w-full bg-[#1A4B58] text-white py-3 px-4 rounded-md font-medium text-sm flex items-center justify-center gap-2 cursor-default"
+  >
+    <BookOpen className="w-4 h-4" />
+    Already Purchased
+  </button>
+) : isWriter ? (
+  <button
+    type="button"
+    onClick={() => toast.error("You cannot purchase your own ebook.")}
+    className="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 py-3 px-4 rounded-md font-medium text-sm transition-all"
+  >
+    Buy Now
+  </button>
+) : isSoldOut ? (
                   <button disabled className="w-full bg-gray-200 text-gray-400 py-3 px-4 rounded-md font-medium text-sm cursor-not-allowed text-center">
                     This unique copy has been sold and is no longer available
                   </button>

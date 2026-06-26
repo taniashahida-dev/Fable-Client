@@ -23,9 +23,8 @@ function BrowseBooksContent() {
 
   // ================= 🚀 পেজিনেশন স্টেট ও লজিক শুরু =================
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6; // 👈 প্রতি পেজে কয়টি বই দেখাবেন
+  const itemsPerPage = 6; 
 
-  // ফিল্টার বা সার্চ চেঞ্জ হলে কারেন্ট পেজ ১ এ রিসেট করার জন্য ইফেক্ট
   useEffect(() => {
     setCurrentPage(1);
   }, [searchQuery, selectedGenre, availability, sortBy, priceRange]);

@@ -45,7 +45,7 @@ const MyBooksPage = async () => {
     };
 
     return (
-       <div className="min-h-screen p-4 md:p-8 font-sans max-w-7xl mx-auto mt-6">
+       <div className="min-h-screen p-4 md:p-8 font-sans max-w-7xl mx-auto mt-6 lg:mt-1">
         <div className="space-y-6">
           
             {/* হেডার সেকশন */}
