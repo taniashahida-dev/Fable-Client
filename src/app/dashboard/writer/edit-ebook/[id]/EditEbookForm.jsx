@@ -121,10 +121,13 @@ export default function EditEbookForm({ writer, ebook }) {
         try {
           
             const res = await updateEbook(ebook?._id, updatedEbookData);
+            console.log(res);
             
             if (res) {
                toast.success("Ebook masterpiece updated successfully!");
-                router.push('/dashboard/writer/my-ebooks');
+setTimeout(() => {
+  router.replace("/dashboard/writer/my-ebooks");
+}, 300);
                 router.refresh();
             } else {
                 toast.error("Failed to update ebook. Please try again.");

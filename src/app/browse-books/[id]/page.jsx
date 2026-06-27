@@ -12,7 +12,7 @@ const EbookDetailsPage = async ({ params }) => {
     const user = await getUserSession();
     const eBook = await getEBookById(id, user?.email); 
 
-
+console.log(eBook);
     const userBookmarks = await getUserBookMarks();
     
    

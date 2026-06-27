@@ -50,11 +50,10 @@ function BrowseBooksContent() {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
-  useEffect(() => {
-    if (initialCategory && initialCategory !== selectedGenre) {
-      setSelectedGenre(initialCategory);
-    }
-  }, [initialCategory, selectedGenre]);
+  
+ useEffect(() => {
+  setSelectedGenre(initialCategory);
+}, [initialCategory]);
 
   useEffect(() => {
     const fetchFilteredData = async () => {
@@ -101,15 +100,14 @@ function BrowseBooksContent() {
           </div>
 
           <div className="lg:col-span-3 space-y-8">
-            {" "}
-            {/* 🚀 পেজিনেশনের জন্য স্পেসিং বাড়ানো হলো */}
+           
             {loading ? (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 {[...Array(6)].map((_, index) => (
                   <EbookSkeletonCard key={index} />
                 ))}
               </div>
-            ) : currentPagedEbooks.length > 0 ? ( // 👈 displayedEbooks এর জায়গায় স্লাইস করা currentPagedEbooks লুপ হবে
+            ) : currentPagedEbooks.length > 0 ? ( 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 {currentPagedEbooks.map((bookItem) => (
                   <EbookCard key={bookItem._id} book={bookItem} />

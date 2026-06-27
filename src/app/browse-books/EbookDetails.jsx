@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 const EbookDetails = ({ bookData, currentUser, writer }) => {
   const [isBookmarked, setIsBookmarked] = useState(bookData?.isBookmarked || false);
-  const [checkoutLoading, setCheckoutLoading] = useState(false); // 👈 স্ট্রাইপ লোডিং স্টেট
+  const [checkoutLoading, setCheckoutLoading] = useState(false); 
 
   if (!bookData) {
     return (
@@ -50,6 +50,8 @@ const isWriter =
     ? description.substring(0, 170) + "..." 
     : description;
 
+
+   
  const handleBookmarkClick = async () => {
   if (!currentUser) {
     return toast.error("Please log in to bookmark this book.");
@@ -85,7 +87,11 @@ const isWriter =
     }
   }
 };
-
+ console.log({
+  hasPurchased: bookData.hasPurchased,
+  isWriter,
+  showFullDescription,
+});
   return (
     <div className="py-12 mt-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-sm border border-[#EAE6DF] overflow-hidden p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-10">

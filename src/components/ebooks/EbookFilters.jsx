@@ -15,7 +15,7 @@ export default function EbookFilters({
   sortBy,
   setSortBy,
 }) {
-  const genres = ["fiction", "non-fiction", "sci-fi", "mystery", "biography","horro"];
+  const genres = ["fiction", "non-fiction", "sci-fi", "mystery", "biography","horror"];
 
   return (
     <div className="bg-slate-50 border border-slate-100 p-4 md::p-5 rounded-2xl space-y-5">
