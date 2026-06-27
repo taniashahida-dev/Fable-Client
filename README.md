@@ -2,9 +2,9 @@
 
 > *Discover, share, and read original ebooks from emerging writers worldwide.*
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-brightgreen?style=for-the-badge)](https://your-live-url.vercel.app)
-[![Client Repo](https://img.shields.io/badge/GitHub-Client-181717?style=for-the-badge&logo=github)](https://github.com/your-username/fable-client)
-[![Server Repo](https://img.shields.io/badge/GitHub-Server-181717?style=for-the-badge&logo=github)](https://github.com/your-username/fable-server)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-brightgreen?style=for-the-badge)](https://fable-bookstore.vercel.app)
+[![Client Repo](https://img.shields.io/badge/GitHub-Client-181717?style=for-the-badge&logo=github)](https://github.com/taniashahida-dev/Fable-Client)
+[![Server Repo](https://img.shields.io/badge/GitHub-Server-181717?style=for-the-badge&logo=github)](https://github.com/taniashahida-dev/Fable-Server)
 
 ---
 
