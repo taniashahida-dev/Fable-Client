@@ -23,7 +23,7 @@ const AddEbookPage = async () => {
                 <div className="max-w-md w-full bg-white border-2 border-slate-200 rounded-2xl p-8 text-center shadow-md space-y-6">
                     <div className="flex justify-center">
                         <div className="p-4 bg-[#6366F1]/10 text-[#6366F1] rounded-full">
-                            <ShieldCheck size={40} className="stroke-[2]" />
+                            <ShieldCheck size={40} className="stroke-2" />
                         </div>
                     </div>
 

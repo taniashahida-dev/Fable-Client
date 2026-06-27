@@ -48,17 +48,18 @@ export default function ManageEbooksTable({ initialBooks }) {
 
   return (
     <>
-      <Table className="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-        <Table.ScrollContainer>
+    <div className="w-full overflow-x-auto">
+      <Table className="w-full min-w-200  bg-white border border-slate-100 rounded-2xl overflow-x-auto shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+        <Table.ScrollContainer className="overflow-x-auto">
           <Table.Content aria-label="Ebooks management table">
             
             {/* 📋 Table Header */}
             <Table.Header className="bg-[#f8fafc] border-b border-slate-100 text-[#475569] text-[11px] font-bold uppercase tracking-wider">
-              <Table.Column isRowHeader className="py-4 px-6 text-left !bg-[#f8fafc] text-slate-500 font-bold">TITLE</Table.Column>
-              <Table.Column className="py-4 px-6 text-left !bg-[#f8fafc] text-slate-500 font-bold">WRITER</Table.Column>
-              <Table.Column className="py-4 px-6 text-left !bg-[#f8fafc] text-slate-500 font-bold">PRICE</Table.Column>
-              <Table.Column className="py-4 px-6 text-center !bg-[#f8fafc] text-slate-500 font-bold">STATUS</Table.Column>
-              <Table.Column className="py-4 px-6 text-center !bg-[#f8fafc] text-slate-500 font-bold">ACTIONS</Table.Column>
+              <Table.Column isRowHeader className="py-4 px-6 text-left bg-[#f8fafc]! text-slate-500 font-bold">TITLE</Table.Column>
+              <Table.Column className="py-4 px-3 md:px-6 text-left bg-[#f8fafc]! text-slate-500 font-bold">WRITER</Table.Column>
+              <Table.Column className="py-4 px-3 md:px-6 text-left bg-[#f8fafc]! text-slate-500 font-bold">PRICE</Table.Column>
+              <Table.Column className="py-4 px-3 md:px-6 text-center bg-[#f8fafc]! text-slate-500 font-bold">STATUS</Table.Column>
+              <Table.Column className="py-4 px-3 md:px-6 text-center bg-[#f8fafc]! text-slate-500 font-bold">ACTIONS</Table.Column>
             </Table.Header>
             
             {/* 📋 Table Body */}
@@ -69,9 +70,9 @@ export default function ManageEbooksTable({ initialBooks }) {
                   <Table.Row key={book._id} className="border-b border-slate-500/5 hover:bg-[#f8fafc]/60 transition-all duration-200">
                     
                     {/* Title with Book Cover Image */}
-                    <Table.Cell className="py-4 px-6 !bg-white">
-                      <div className="flex items-center gap-4">
-                        <div className="relative w-10 h-14 rounded-md overflow-hidden bg-slate-100 border border-slate-200/60 shadow-sm flex-shrink-0">
+                    <Table.Cell className="py-3 md:py-4 px-3 md:px-6 bg-white!">
+                      <div className="flex items-center gap-2 md:gap-4">
+                        <div className="relative w-8 h-12 md:w-10 md:h-14 rounded-md overflow-hidden bg-slate-100 border border-slate-200/60 shadow-sm shrink-0">
                           <Image
                             src={book.coverImage || "/placeholder-book.jpg"}
                             alt={book.title}
@@ -79,24 +80,24 @@ export default function ManageEbooksTable({ initialBooks }) {
                             className="object-cover"
                           />
                         </div>
-                        <span className="text-sm font-bold text-[#0f172a] max-w-[200px] truncate">
+                        <span className="text-sm font-bold text-[#0f172a] max-w-25 md:max-w-50 truncate">
                           {book.title}
                         </span>
                       </div>
                     </Table.Cell>
                     
                     {/* Writer */}
-                    <Table.Cell className="py-4 px-6 text-sm text-slate-600 font-medium !bg-white">
+                    <Table.Cell className="py-4 px-6 text-sm text-slate-600 font-medium bg-white!">
                       {book.writerName || "Unknown"}
                     </Table.Cell>
                     
                     {/* Price */}
-                    <Table.Cell className="py-4 px-6 text-sm font-bold text-[#6366F1] !bg-white">
+                    <Table.Cell className="py-3 md:py-4 px-3 md:px-6 text-sm font-bold text-[#6366F1] bg-white!">
                       {Number(book.price) === 0 ? "Free" : `$${book.price}`}
                     </Table.Cell>
                     
                     {/* Status Chip */}
-                    <Table.Cell className="py-4 px-6 text-center !bg-white">
+                    <Table.Cell className="py-3 md:py-4 px-3 md:px-6 text-center bg-white!">
                       <Chip 
                         size="sm" 
                         variant="flat" 
@@ -111,7 +112,7 @@ export default function ManageEbooksTable({ initialBooks }) {
                     </Table.Cell>
                     
                     {/* Actions */}
-                    <Table.Cell className="py-4 px-6 !bg-white">
+                    <Table.Cell className="py-3 md:py-4 px-3 md:px-6 !bg-white">
                       <div className="flex items-center gap-3 justify-center">
                         <StatusDropdown
                           bookId={book._id} 
@@ -125,7 +126,7 @@ export default function ManageEbooksTable({ initialBooks }) {
                           size="sm" 
                           variant="flat" 
                           onClick={() => { setBookToDelete(book); setIsModalOpen(true); }} 
-                          className="bg-[#334155] text-white rounded-lg hover:bg-[#1e293b] min-w-8 h-8 flex items-center justify-center transition-colors"
+                          className="bg-[#334155] text-white rounded-lg hover:bg-[#1e293b] min-w-7 h-7 md:min-w-8 md:h-8 flex items-center justify-center transition-colors"
                         >
                           <TrashBin className="size-4" />
                         </Button>
@@ -139,7 +140,7 @@ export default function ManageEbooksTable({ initialBooks }) {
           </Table.Content>
         </Table.ScrollContainer>
       </Table>
-      
+      </div>
       <DeleteBookModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} bookToDelete={bookToDelete} onConfirm={handleConfirmDelete} />
     </>
   );

@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect } from "react"; // 🌟 ফিক্স ১: ইম্পোর্ট যুক্ত করা হলো
+import React, { useState, useEffect } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
 import { DollarSign, BookOpen, History, Bookmark  } from "lucide-react";
 
 export default function OverviewClient({ stats, revenueChartData, topBooksChartData, recentSales, userName }) {
-  // 🌟 ফিক্স ২: মাউন্ট স্টেট হ্যান্ডেল করা হলো
+ 
   const [isMounted, setIsMounted] = useState(false);
 
  useEffect(() => {
@@ -100,7 +100,7 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-          {/* 🌟 ফিক্স ৩: কন্টেইনার উইডথ সুরক্ষার জন্য min-w-0 এবং relative যুক্ত করা হয়েছে */}
+       
           <div className="lg:col-span-2 bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm min-w-0 relative">
             <div className="mb-6">
               <h3 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wider">
@@ -133,7 +133,7 @@ export default function OverviewClient({ stats, revenueChartData, topBooksChartD
             </div>
           </div>
 
-          {/* 🌟 ফিক্স ৪: এখানেও চার্টকে min-w-0 দিয়ে সুরক্ষায় রাখা হয়েছে */}
+        
           <div className="bg-white p-6 border-2 border-slate-200 rounded-2xl shadow-sm flex flex-col justify-between space-y-6 min-w-0">
             <div>
               <div className="mb-4">

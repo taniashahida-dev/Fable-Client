@@ -47,7 +47,7 @@ const TopWriters = ({ fetchedData = [] }) => {
     <section className="py-16 bg-[#FAF9F5] border-b border-[#EAE6DF] overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* সেকশন হেডার */}
+     
         <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-amber-500/10 text-amber-700 text-[11px] font-semibold rounded-full tracking-wide uppercase">
             <Award className="w-3 h-3 fill-amber-500/20" />

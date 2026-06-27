@@ -64,12 +64,12 @@ export function DashboardSidebar() {
     <div className="flex flex-col h-full justify-between">
       <div className="flex flex-col gap-6">
         {/* Brand Header Identity */}
-        <div className="px-3 flex flex-col gap-0.5">
+       <div className="px-3 pb-5 border-b border-slate-700/50 flex flex-col gap-1">
           <div className="flex items-center text-white gap-2">
-            <span className=" text-3xl font-bold"> <GiBlackBook /></span>
-            <span className="text-lg font-bold tracking-tight">Fable</span>
+            <span className="text-3xl font-bold text-indigo-400"> <GiBlackBook /></span>
+            <span className="text-xl font-bold font-agbalumo  text-slate-900 tracking-tight">Fable</span>
           </div>
-          <span className="text-[9px] font-bold tracking-widest text-slate-500 uppercase mt-1">
+          <span className="text-[9px] font-bold tracking-widest text-slate-400 uppercase mt-1">
             {config.subtitle}
           </span>
         </div>
@@ -77,7 +77,7 @@ export function DashboardSidebar() {
         {/* Navigation Core List */}
         <nav className="flex flex-col gap-1.5">
           {config.items.map((item) => {
-            // চেক করা হচ্ছে কারেন্ট পেজের পাথ এবং লিংকের পাথ একই কিনা
+          
             const isActive = pathname === item.href;
 
             return (
@@ -85,17 +85,16 @@ export function DashboardSidebar() {
                 href={item.href}
                 key={item.label}
                 onClick={() => setIsOpen(false)}
-                // image_cdeddf.png অনুযায়ী কন্ডিশনাল টেইলউইন্ড ক্লাস ডাইনামিকালি সেট করা হয়েছে
                 className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
                   isActive 
-                    ? "bg-[#7c5dfa] text-white font-semibold shadow-md shadow-[#7c5dfa]/20" 
-                    : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
+                    ? "bg-linear-to-r from-indigo-600 to-violet-600 text-white font-semibold shadow-lg shadow-indigo-900/40" 
+                    : "text-slate-300 hover:bg-slate-800 hover:text-white hover:translate-x-1 duration-300"
                 }`}
                 type="button"
               >
                 {/* ইমেজ ফাইলের মতো আইকনের ব্যাকগ্রাউন্ড স্কয়ার কন্টেইনার আর্ট */}
                 <div className={`p-1.5 rounded-lg flex items-center justify-center transition-colors ${
-                  isActive ? "bg-white/20 text-white" : "text-slate-500 group-hover:text-slate-300"
+                  isActive ? "bg-white/20 text-white" : "bg-slate-800 text-slate-400 group-hover:text-slate-300"
                 }`}>
                   <item.icon className="size-4" />
                 </div>
@@ -108,8 +107,8 @@ export function DashboardSidebar() {
 
       {/* Embedded Profile User Badge at Footer */}
       {user && (
-        <div className="mt-auto p-2 border-t border-slate-800/50 bg-[#121624]/40 rounded-xl flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-purple-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+        <div className="mt-auto p-3 border-t  bg-slate-900/70 backdrop-blur-md border border-slate-700 rounded-xl flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-linear-to-r from-indigo-500 to-violet-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
             {getAvatarInitials()}
           </div>
           <div className="flex flex-col overflow-hidden">
@@ -128,7 +127,7 @@ export function DashboardSidebar() {
   return (
     <>
       {/* Desktop Sidebar Container */}
-      <aside className="hidden w-64 shrink-0 bg-[#0e111d] border-r border-slate-900 p-4 lg:block h-screen sticky top-0 z-50">
+     <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 bg-[#0e111d] border-r border-slate-900 p-4 z-50 flex-col">
         {sidebarItems}
       </aside>
 
@@ -139,7 +138,7 @@ export function DashboardSidebar() {
           radius="full"
           variant="solid" 
           isIconOnly 
-          className="bg-[#0e111d] text-slate-200 shadow-xl border border-slate-800 hover:text-white"
+          className="bg-linear-to-r from-indigo-600 to-violet-600 text-slate-200 shadow-2xl border border-slate-800 hover:text-white"
           onPress={() => setIsOpen(true)}
         >
           <LayoutSideContent className="size-6" />
@@ -153,7 +152,8 @@ export function DashboardSidebar() {
         placement="left"
         className="z-50"
         classNames={{
-          base: "bg-[#0e111d] p-4 text-white max-w-[260px]",
+        base:
+"bg-gradient-to-b from-[#0f172a] via-[#111827] to-[#020617] p-5 text-white w-[85%] max-w-[300px] border-r border-slate-700",
           closeButton: "text-white top-4 right-4"
         }}
       >
@@ -163,9 +163,10 @@ export function DashboardSidebar() {
             <Drawer.Header className="px-3 pt-2">
               <Drawer.Heading className="text-slate-500 text-[10px] tracking-wider uppercase font-bold">
                 Navigation
+                <Drawer.Header className="border-b border-slate-700 pb-3"></Drawer.Header>
               </Drawer.Heading>
             </Drawer.Header>
-            <Drawer.Body className="px-0 py-4 h-[calc(100vh-80px)] overflow-y-auto">
+            <Drawer.Body className="px-2 py-4 h-[calc(100vh-80px)] overflow-y-auto">
               {sidebarItems}
             </Drawer.Body>
           </Drawer.Dialog>

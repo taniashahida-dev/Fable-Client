@@ -1,15 +1,11 @@
-
 import { Bookmark, Compass, Sparkles } from "lucide-react";
 import Link from "next/link";
 import BookmarkGalleryPage from "./BookmarkGalleryPage";
 import { getUserBookMarks } from "@/lib/api/bookmark.server";
 
 const Bookmarks = async () => {
-
-
   let initialBookmarks = [];
-  initialBookmarks = await getUserBookMarks()
-  
+  initialBookmarks = await getUserBookMarks();
 
   return (
     <div className="w-full min-h-screen  text-slate-900 pt-12 pb-12 font-sans">
@@ -25,9 +21,9 @@ const Bookmarks = async () => {
           </h1>
         </div>
 
-        {/* CONDITION-BASED RENDERING */}
+      
         {initialBookmarks.length > 0 ? (
-          // If bookmarks exist, show the gallery grid
+       
           <BookmarkGalleryPage initialData={initialBookmarks} />
         ) : (
           // FRIENDLY & INTERACTIVE EMPTY STATE
@@ -49,7 +45,6 @@ const Bookmarks = async () => {
               </p>
             </div>
 
-            {/* Smart Friendly Call-To-Action (CTA) */}
             <div className="pt-2">
               <Link
                 href="/browse-books"

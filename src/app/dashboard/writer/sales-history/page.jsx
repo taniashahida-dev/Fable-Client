@@ -25,9 +25,9 @@ export default async function WriterSalesHistory() {
           </div>
         </div>
 
-        {/* 💳 BOLD PREMIUM TOTAL REVENUE CARD: High Contrast White Background with clear Slate borders */}
+     
         <div className="bg-white px-6 py-4 rounded-xl border-2 border-slate-200 shadow-sm flex items-center gap-4 self-start sm:self-auto">
-          {/* Golden Orange Background Box with Pure White Icon */}
+        
           <div className="p-2.5 bg-[#F59E0B] text-white rounded-lg shadow-xs">
             <DollarSign className="w-5 h-5 font-black" />
           </div>
@@ -46,9 +46,9 @@ export default async function WriterSalesHistory() {
           <p className="text-sm text-[#64748B] font-medium">When readers purchase your stories via Stripe Checkout, their records will list right here.</p>
         </div>
       ) : (
-        /* 📊 HIGH-CONTRAST BOLD TABLE: Strong borders and deep ink typography so everything is instantly visible */
+       
         <div className="bg-white rounded-xl border-2 border-slate-200 shadow-md overflow-hidden">
-          <div className="overflow-x-auto">
+         <div className="hidden sm:block overflow-x-auto">
             <table className="w-full text-left border-collapse">
               
               {/* Table Header Row: Using Prussian Blue text over a distinctly darker slate tint */}
@@ -79,8 +79,8 @@ export default async function WriterSalesHistory() {
                     {/* Column 2: Buyer Identity (Sharper Dark Text) */}
                     <td className="py-4 px-6 text-slate-800 font-semibold">
                       <div className="flex items-center gap-2">
-                        <User className="w-3.5 h-3.5 text-[#64748B] stroke-[2] flex-shrink-0" />
-                        <span className="truncate max-w-[200px]">
+                        <User className="w-3.5 h-3.5 text-[#64748B] stroke-2 fshrink-0" />
+                        <span className="truncate max-w-50">
                           {sale.buyerName || sale.buyerEmail || "Anonymous Reader"}
                         </span>
                       </div>
@@ -89,7 +89,7 @@ export default async function WriterSalesHistory() {
                     {/* Column 3: Format Purchase Date */}
                     <td className="py-4 px-6 text-slate-600 font-medium">
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-3.5 h-3.5 text-[#64748B] stroke-[2] flex-shrink-0" />
+                        <Calendar className="w-3.5 h-3.5 text-[#64748B] stroke-2 shrink-0" />
                         <span>
                           {new Date(sale.purchasedAt || sale.createdAt).toLocaleDateString("en-US", {
                             year: "numeric",
@@ -111,6 +111,73 @@ export default async function WriterSalesHistory() {
 
             </table>
           </div>
+
+          {/* Mobile Sales Cards */}
+<div className="sm:hidden divide-y divide-slate-200">
+  {salesData.map((sale) => (
+    <div
+      key={sale._id}
+      className="p-4 space-y-3 hover:bg-slate-50 transition-colors"
+    >
+      <div>
+        <p className="text-[11px] uppercase text-slate-400 font-bold">
+          Ebook
+        </p>
+        <div className="flex items-center gap-2 mt-1">
+          <BookOpen className="w-4 h-4 text-indigo-600 shrink-0" />
+          <span className="font-semibold text-slate-900">
+            {sale.bookName || "Untitled Ebook"}
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <p className="text-[11px] uppercase text-slate-400 font-bold">
+          Buyer
+        </p>
+        <div className="flex items-center gap-2 mt-1">
+          <User className="w-4 h-4 text-slate-500 shrink-0" />
+          <span className="text-slate-700">
+            {sale.buyerName ||
+              sale.buyerEmail ||
+              "Anonymous Reader"}
+          </span>
+        </div>
+      </div>
+
+      <div className="flex justify-between">
+        <div>
+          <p className="text-[11px] uppercase text-slate-400 font-bold">
+            Date
+          </p>
+
+          <div className="flex items-center gap-2 mt-1">
+            <Calendar className="w-4 h-4 text-slate-500 shrink-0" />
+            <span className="text-sm text-slate-600">
+              {new Date(
+                sale.purchasedAt || sale.createdAt
+              ).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </span>
+          </div>
+        </div>
+
+        <div className="text-right">
+          <p className="text-[11px] uppercase text-slate-400 font-bold">
+            Amount
+          </p>
+
+          <span className="text-lg font-bold text-indigo-600">
+            ${Number(sale.price || 0).toFixed(2)}
+          </span>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
         </div>
       )}
 

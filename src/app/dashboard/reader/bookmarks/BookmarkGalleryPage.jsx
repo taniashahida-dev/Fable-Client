@@ -7,32 +7,27 @@ import { deleteBookmark } from "@/lib/api/bookmark";
 import toast from "react-hot-toast";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 
-
 export default function BookmarkGalleryPage({ initialData }) {
   const [bookmarks, setBookmarks] = useState(initialData || []);
-  
-  // 🚀 ২. মোডাল ওপেন এবং আইডি ট্র্যাক করার জন্য স্টেট
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBookmarkId, setSelectedBookmarkId] = useState(null);
 
-  // Handler to remove bookmark instantly from UI & database
   const handleRemoveBookmark = async (id) => {
-    // 🚀 ৩. ব্রাউজারের ওল্ড confirm() এর বদলে আমাদের নতুন মোডাল ট্রিগার করবে
     setSelectedBookmarkId(id);
     setIsModalOpen(true);
   };
 
-  // 🚀 ৪. মোডাল থেকে "Remove" বাটনে ক্লিক করলে এই আসল ডিলিট ফাংশনটি রান হবে
   const executeDelete = async () => {
     const id = selectedBookmarkId;
-    setIsModalOpen(false); // মোডাল বন্ধ হবে
+    setIsModalOpen(false);
 
     try {
       const data = await deleteBookmark(id);
-      
+
       if (data.success) {
         setBookmarks((prev) => prev.filter((item) => item._id !== id));
-        toast.success("Bookmark removed successfully"); // একটি সুন্দর সাকসেস মেসেজ
+        toast.success("Bookmark removed successfully");
       } else {
         toast.error("Failed to remove bookmark from server");
       }
@@ -43,29 +38,29 @@ export default function BookmarkGalleryPage({ initialData }) {
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-stretch">
-      
-      {/* 1. LOOPING THE REAL BOOKMARK CARDS (MATCHING IMAGE_42729E.PNG) */}
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6 items-stretch">
       {bookmarks.map((item) => (
-        <div 
-          key={item._id} 
+        <div
+          key={item._id}
           className="bg-white border border-[#EAE6DF] rounded-2xl p-0 flex flex-col justify-between overflow-hidden shadow-3xs hover:shadow-md transition-all duration-300 relative group"
         >
           {/* Top Aspect Ratio Box for Cover Artwork */}
-          <div className="w-full aspect-[3/4.5] bg-[#1A4B58] relative flex items-center justify-center overflow-hidden">
+          <div className="w-full aspect-3/4.5 bg-[#1A4B58] relative flex items-center justify-center overflow-hidden">
             {item.coverImage ? (
-              <img 
-                src={item.coverImage} 
-                alt={item.bookName} 
-                className="w-full h-full object-cover" 
+              <img
+                src={item.coverImage}
+                alt={item.bookName}
+                className="w-full h-full object-cover"
               />
             ) : (
               <div className="absolute bottom-4 left-4 right-4 text-left">
-                <p className="font-serif text-sm font-bold text-white/90 leading-tight">{item.bookName}</p>
+                <p className="font-serif text-sm font-bold text-white/90 leading-tight">
+                  {item.bookName}
+                </p>
               </div>
             )}
 
-            <button 
+            <button
               onClick={() => handleRemoveBookmark(item._id)}
               className="absolute top-3 right-3 w-6 h-6 bg-red-900/80 hover:bg-red-700 text-white rounded-md flex items-center justify-center transition-colors cursor-pointer shadow-sm z-20"
               title="Remove Bookmark"
@@ -85,7 +80,6 @@ export default function BookmarkGalleryPage({ initialData }) {
               </p>
             </div>
 
-            {/* Footer Action strip matching Buy button layout */}
             <div className="flex items-center justify-between pt-1">
               <span className="text-sm font-mono font-bold text-amber-800">
                 ${Number(item.price).toFixed(2)}
@@ -101,8 +95,7 @@ export default function BookmarkGalleryPage({ initialData }) {
         </div>
       ))}
 
-      {/* 2. DOTTED DYNAMIC "ADD MORE" SLOT (MATCHING RIGHTMOST CARD IN IMAGE_42729E.PNG) */}
-      <Link 
+      <Link
         href="/browse-books"
         className="border-2 border-dashed border-[#EAE6DF] rounded-2xl bg-white/40 hover:bg-white hover:border-gray-950 transition-all duration-300 flex flex-col items-center justify-center text-center p-6 min-h-[350px] group cursor-pointer"
       >
@@ -121,13 +114,11 @@ export default function BookmarkGalleryPage({ initialData }) {
         </div>
       </Link>
 
-      {/* 🚀 ৫. ইনজেক্টেড মোডাল কম্পোনেন্ট (পেজের বাইরে থাকবে, লজিক ডিস্টার্ব করবে না) */}
       <DeleteConfirmModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={executeDelete}
       />
-
     </div>
   );
 }

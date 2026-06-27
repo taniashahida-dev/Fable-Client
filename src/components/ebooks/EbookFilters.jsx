@@ -18,7 +18,7 @@ export default function EbookFilters({
   const genres = ["fiction", "non-fiction", "sci-fi", "mystery", "biography","horro"];
 
   return (
-    <div className="bg-slate-50 border border-slate-100 p-5 rounded-2xl space-y-6">
+    <div className="bg-slate-50 border border-slate-100 p-4 md::p-5 rounded-2xl space-y-5">
       {/* 1. Interactive Search Input */}
       <TextField value={searchQuery} onChange={(v) => setSearchQuery(v)} className="w-full">
         <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block mb-2">Search</span>
@@ -27,7 +27,7 @@ export default function EbookFilters({
             <Magnifier className="w-4 h-4" />
           </InputGroup.Prefix>
           <InputGroup.Input
-            placeholder="Title or writer name..."
+            placeholder="Search books..."
             className="bg-transparent text-slate-800 placeholder-slate-400 text-sm py-2.5 px-3 outline-none w-full"
           />
         </InputGroup>

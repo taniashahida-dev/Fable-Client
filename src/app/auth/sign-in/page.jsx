@@ -61,51 +61,72 @@ function SigninFormContent() {
   };
 
   return (
-    /* pt-[65px] এবং min-h ক্যালকুলেশন ফিক্স করা হয়েছে */
-    <div className="flex min-h-screen bg-white font-sans">
+ 
+  <div className="flex min-h-screen bg-linear-to-br from-slate-50 via-white to-violet-50 font-sans">
       
       {/* --- Left Side: Banner --- */}
-      <div className="hidden lg:flex w-[45%] flex-col justify-between bg-[#7c5dfa] p-16 text-white relative overflow-hidden">
+      <div className="hidden lg:flex w-[45%] flex-col justify-between bg-linear-to-br
+from-violet-700
+via-indigo-700
+to-slate-900 p-16 text-white relative overflow-hidden">
+
+  <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-white/10 blur-3xl" />
+    <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-indigo-400/20 blur-3xl" />
+</div>
         <div className="flex items-center gap-3 z-10">
           <span className="text-3xl font-bold"><GiBlackBook /></span>
-          <span className="text-4xl font-agbalumo font-bold tracking-tight">Fable</span>
+          <span className="text-5xl font-agbalumo  font-bold tracking-tight">Fable</span>
         </div>
 
         <div className="max-w-md z-10 my-auto py-12">
-          <h1 className="text-[40px] font-bold tracking-tight leading-tight mb-5 text-white">
+          <h1 className="text-5xl
+leading-tight font-bold tracking-tight  mb-5 text-white">
             Welcome back to your stories.
           </h1>
-          <p className="text-base text-purple-100/90 leading-relaxed max-w-sm">
+          <p className="text-lg
+leading-8 text-purple-100/90 max-w-sm">
             Log in to pick up right where you left off, manage your shelf, or share your latest chapter.
           </p>
         </div>
 
-        <div className="absolute -bottom-10 -right-10 w-80 h-80 z-10">
+        <div className="absolute bottom-0 right-0 w-[360px] h-[360px] z-10 pointer-events-none">
           <Image
             src="/image/book.png"
             alt="Stacked books illustration"
             fill
             priority
-            className="object-contain object-bottom opacity-95"
+            className="object-contain object-bottom drop-shadow-2xl"
           />
         </div>
       </div>
 
       {/* --- Right Side: Signin Form --- */}
-      <div className="w-full lg:w-[55%] flex items-center justify-center p-6 sm:p-12 md:p-16 bg-white">
-        <div className="w-full max-w-md flex flex-col gap-6">
+      <div className="w-full lg:w-[55%] flex items-center justify-center p-6 sm:p-10 md:p-14">
+       <div className="w-full max-w-md rounded-3xl bg-white/90 backdrop-blur-xl border border-slate-200 shadow-[0_20px_60px_rgba(15,23,42,.08)] p-8 md:p-10 flex flex-col gap-6">
+         <div className="lg:hidden flex justify-center mb-2">
+  <div className="flex items-center gap-3">
+    <div className="w-12 h-12 rounded-2xl bg-violet-600 text-white flex items-center justify-center shadow-lg">
+      <GiBlackBook className="text-2xl" />
+    </div>
+
+    <span className="text-3xl font-agbalumo text-slate-900">
+      Fable
+    </span>
+  </div>
+</div>
           <div className="space-y-1">
-            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+           <h2 className="text-4xl font-black tracking-tight text-slate-900">
               Sign in to Fable
             </h2>
-            <p className="text-slate-500 text-sm font-medium">
+          <p className="text-slate-500 text-[15px] leading-relaxed">
               Enter your details to access your dashboard.
             </p>
           </div>
 
-          <form className="flex flex-col gap-4" onSubmit={handleSignin}>
+          <form className="flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-500" onSubmit={handleSignin}>
             {error && (
-              <div className="bg-red-50 text-red-600 p-3 rounded-xl text-sm font-medium border border-red-200">
+              <div className="bg-red-50 text-red-600 p-3 rounded-2xl text-sm font-medium border border-red-200">
                 {error}
               </div>
             )}
@@ -118,7 +139,7 @@ function SigninFormContent() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full border border-gray-200 hover:border-gray-300 focus:border-[#7c5dfa] focus:ring-1 focus:ring-[#7c5dfa] focus:outline-none h-11 px-4 rounded-xl text-sm text-slate-800 transition-all"
+                className="w-full border border-slate-200 hover:border-violet-300 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none h-12 px-4 rounded-2xl text-sm text-slate-800 transition-all"
               />
             </div>
 
@@ -136,7 +157,7 @@ function SigninFormContent() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full border border-gray-200 hover:border-gray-300 focus:border-[#7c5dfa] focus:ring-1 focus:ring-[#7c5dfa] focus:outline-none h-11 pl-4 pr-10 rounded-xl text-sm text-slate-800 transition-all"
+                  className="w-full border border-slate-200 hover:border-violet-300 focus:border-violet-500 focus:ring-4 focus:ring-violet-100 focus:outline-none h-12 pl-4 pr-10 rounded-2xl text-sm text-slate-800 transition-all"
                 />
                 <button
                   className="absolute right-3 top-1/2 -translate-y-1/2 focus:outline-none text-neutral-400 hover:text-neutral-600 transition"
@@ -148,13 +169,13 @@ function SigninFormContent() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 py-1">
+            <div className="flex items-center justify-between py-2">
               <input
                 type="checkbox"
                 id="rememberMe"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 rounded-md border-gray-300 text-[#7c5dfa] focus:ring-[#7c5dfa] cursor-pointer"
+                className="w-4 h-4 rounded-md border-gray-300 text-[#7c5dfa] focus:ring-violet-100 cursor-pointer"
               />
               <label htmlFor="rememberMe" className="text-xs font-medium text-slate-600 cursor-pointer select-none">
                 Remember me for 30 days
@@ -165,14 +186,29 @@ function SigninFormContent() {
               <Button
                 type="submit"
                 radius="xl"
-                className="w-full h-11 bg-[#7c5dfa] text-white font-bold hover:bg-[#694be2] shadow-md transition-all duration-200"
+               className="
+w-full
+h-12
+rounded-2xl
+bg-linear-to-r
+from-violet-600
+to-indigo-600
+font-bold
+text-white
+shadow-lg
+shadow-violet-300/40
+hover:scale-[1.02]
+hover:shadow-xl
+transition-all
+duration-300
+"
                 isLoading={isLoading}
                 isDisabled={isLoading}
               >
                 Sign in
               </Button>
 
-              <div className="relative flex items-center justify-center py-1">
+           <div className="relative flex items-center justify-center py-2">
                 <div className="w-full border-t border-gray-200" />
                 <span className="absolute px-3 bg-white text-[11px] text-gray-400 uppercase font-bold tracking-wider">
                   or
@@ -185,8 +221,7 @@ function SigninFormContent() {
             onClick={handleGoogleSignIn}
             variant="bordered"
             radius="xl"
-            className="w-full h-11 bg-white border border-gray-200 hover:border-gray-300 text-slate-700 font-semibold transition-all duration-200 gap-2"
-          >
+            className="w-full h-12 rounded-2xl bg-white border border-slate-200 hover:border-violet-300 hover:bg-slate-50 text-slate-700 font-semibold transition-all duration-300 gap-2">
             <FcGoogle className="text-lg"/>
             Continue with Google
           </Button>

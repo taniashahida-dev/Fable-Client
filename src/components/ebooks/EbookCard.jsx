@@ -16,12 +16,11 @@ export default function EbookCard({ book }) {
   };
 
   return (
-    <Link 
+    <Link
       href={`/browse-books/${book._id}`}
       className="group bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col relative"
     >
       <div className="w-full aspect-3/4 relative overflow-hidden bg-slate-100">
-        
         {isSold && (
           <div className="absolute top-3 right-3 bg-rose-500 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-md z-20 shadow-md">
             Sold
@@ -35,16 +34,22 @@ export default function EbookCard({ book }) {
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
         ) : (
-          <div className={`w-full h-full bg-linear-to-br ${getRandomGradient(book.title)} p-6 flex flex-col justify-end text-white relative`}>
-            <div className="absolute top-4 left-4 text-white/20 font-bold tracking-widest text-xs uppercase">Fable Original</div>
-            <h3 className="text-xl font-bold tracking-tight leading-tight line-clamp-3 mb-2">{book.title}</h3>
+          <div
+            className={`w-full h-full bg-linear-to-br ${getRandomGradient(book.title)} p-6 flex flex-col justify-end text-white relative`}
+          >
+            <div className="absolute top-4 left-4 text-white/20 font-bold tracking-widest text-xs uppercase">
+              Fable Original
+            </div>
+            <h3 className="text-xl font-bold tracking-tight leading-tight line-clamp-3 mb-2">
+              {book.title}
+            </h3>
           </div>
         )}
       </div>
 
-      <div className="p-4 flex-1 flex flex-col justify-between gap-2">
+      <div className="p-3 md:p-4 flex-1 flex flex-col justify-between gap-2">
         <div className="space-y-0.5">
-          <h2 className="font-bold text-slate-800 text-base leading-snug group-hover:text-indigo-600 transition-colors truncate">
+          <h2 className="font-bold text-slate-800  md:text-base leading-snug group-hover:text-indigo-600 transition-colors truncate">
             {book.title}
           </h2>
           <p className="text-xs font-medium text-slate-400 truncate">
@@ -53,10 +58,10 @@ export default function EbookCard({ book }) {
         </div>
 
         <div className="flex items-center justify-between pt-1">
-          <span className="text-base font-bold text-slate-900 font-mono">
+          <span className="md:text-base font-bold text-slate-900 font-mono">
             {book.price === 0 ? "Free" : `$${book.price.toFixed(2)}`}
           </span>
-          
+
           <span className="text-[10px] font-extrabold uppercase tracking-wider bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md">
             {book.category || "General"}
           </span>

@@ -29,7 +29,7 @@ const MyBooksPage = async () => {
         }
     };
 
-    // 💡 ফাংশনালিটি এবং কালার কোড আগের মতোই রাখা হয়েছে
+   
     const getStatusStyle = (status) => {
         switch (status?.toLowerCase()) {
             case 'published':
@@ -45,10 +45,10 @@ const MyBooksPage = async () => {
     };
 
     return (
-       <div className="min-h-screen p-4 md:p-8 font-sans max-w-7xl mx-auto mt-6 lg:mt-1">
+       <div className="min-h-screen p-4 sm:p-5 md:p-8 font-sans max-w-7xl mx-auto mt-4 lg:mt-1">
         <div className="space-y-6">
           
-            {/* হেডার সেকশন */}
+        
             <div className="flex justify-between items-center border-b border-slate-100 pb-5">
                 <div>
                     <h1 className="text-2xl md:text-3xl text-[#0F172A] font-serif font-black tracking-tight">
@@ -61,23 +61,23 @@ const MyBooksPage = async () => {
                 </span>
             </div>
 
-            {/* 📊 টেবিল কন্টেইনার */}
+       
             <div className="bg-white border border-slate-200/70 rounded-2xl shadow-sm overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse table-fixed"> 
+               <div className="overflow-x-auto scrollbar-thin">
+                    <table className="min-w-180 w-full text-left border-collapse table-fixed"> 
                         <thead>
                            
                             <tr className="border-b border-slate-200 text-slate-500 uppercase text-[11px] font-extrabold tracking-wider bg-slate-50/75">
-                                <th className="py-4 px-6 w-[40%]">Title</th>
-                                <th className="py-4 px-4 w-[15%]">Price</th>
-                                <th className="py-4 px-4 w-[20%]">Status</th>
-                                <th className="py-4 px-6 text-right w-[25%] min-w-[160px] ">Actions</th>
+                                <th className="py-3 md:py-4 px-3 md:px-6 w-[40%]">Title</th>
+                                <th className="py-3 md:py-4 px-3 md:px-6 w-[15%]">Price</th>
+                                <th className="py-3 md:py-4 px-3 md:px-6 w-[20%]">Status</th>
+                                <th className="py-3 md:py-4 px-3 md:px-6 text-right w-[25%] min-w-40 ">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 text-sm font-medium text-slate-600">
                             {writersEBook.length === 0 ? (
                                 <tr>
-                                    <td colSpan="4" className="py-16 text-center text-slate-400 font-medium text-base">
+                                    <td colSpan="4" className="py-12 md:py-16 text-center text-slate-400 font-medium text-sm md:text-base">
                                         No ebooks uploaded yet. Create your first masterpiece!
                                         </td>
                                     </tr>
@@ -87,23 +87,25 @@ const MyBooksPage = async () => {
                                         return (
                                             <tr key={book._id} className="hover:bg-slate-50/50 transition-colors group">
                                                 
-                                                {/* কলাম ১: টাইটেল */}
-                                                <td className="py-4 px-6 flex items-center gap-4">
-                                                    <div className="w-10 h-14 bg-slate-50 rounded-lg overflow-hidden border border-slate-200/80 shadow-xs shrink-0 transition-transform group-hover:scale-[1.03]">
+                                              
+                                               <td className="py-3 md:py-4 px-3 md:px-6">
+    <div className="flex items-center gap-3">
+                                                    <div className="w-9 h-12 md:w-10 md:h-14 bg-slate-50 rounded-lg overflow-hidden border border-slate-200/80 shadow-xs shrink-0 transition-transform group-hover:scale-[1.03]">
                                                         {book.coverImage ? (
                                                             <img src={book.coverImage} alt={book.title} className="w-full h-full object-cover" />
                                                         ) : (
                                                             <div className="w-full h-full bg-slate-100 flex items-center justify-center text-[8px] text-slate-400 font-black tracking-tighter">NO COVER</div>
                                                         )}
                                                     </div>
-                                                    {/* 💡 এখানে truncate প্রপার্টি পারফেক্টলি কাজ করবে উইডথ ফিক্সড থাকায় */}
-                                                    <div className="font-bold text-[#0F172A] group-hover:text-indigo-600 transition-colors truncate pr-4">
+                                                 
+                                                   <div className="font-bold text-[#0F172A] group-hover:text-indigo-600 transition-colors truncate max-w-35 md:max-w-full">
                                                         {book.title}
+                                                    </div>
                                                     </div>
                                                 </td>
                                                 
-                                                {/* কলাম ২: প্রাইস */}
-                                                <td className="py-4 px-4 text-indigo-600 font-bold">
+                                            
+                                                <td className="py-3 md:py-4 px-3 md:px-4 text-indigo-600 font-bold whitespace-nowrap">
                                                     {book.price === 0 ? (
                                                         <span className="text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md text-xs font-bold">Free</span>
                                                     ) : (
@@ -111,16 +113,16 @@ const MyBooksPage = async () => {
                                                     )}
                                                 </td>
 
-                                                {/* কলাম ৩: স্ট্যাটাস */}
-                                                <td className="py-4 px-4">
+                                              
+                                              <td className="py-3 md:py-4 px-3 md:px-4 whitespace-nowrap">
                                                     <span className={`px-2.5 py-1 rounded-lg text-[10px] font-extrabold border tracking-wider uppercase inline-block ${getStatusStyle(book.status)}`}>
                                                         {book.status || 'Pending'}
                                                     </span>
                                                 </td>
 
-                                                {/* কলাম ৪: অ্যাকশন */}
-                                                <td className="py-4 px-6 text-right">
-                                                    <div className="flex items-center justify-end gap-2">
+                                              
+                                             <td className="py-3 md:py-4 px-3 md:px-6 text-right">
+                                                    <div className="flex items-center justify-end gap-1.5 md:gap-2 whitespace-nowrap">
                                                         <StatusDropdown
                                                             bookId={book._id} 
                                                             currentStatus={book.status} 

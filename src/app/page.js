@@ -9,7 +9,7 @@ export default async function Home() {
 const allBooks = await getEbooks()
 const allwriters = await getAllWriters()
   return (
-    <div className="block pt-20 min-h-screen ">
+    <div className="pt-16 md:pt-20  min-h-screen ">
       
        <Banner></Banner>
        <FeaturedEbooks allBooks={allBooks}></FeaturedEbooks>

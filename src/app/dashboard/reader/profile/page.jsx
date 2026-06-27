@@ -1,11 +1,17 @@
 import React from "react";
-import { getUserSession } from "@/lib/core/session"; // 👈 আপনার প্রজেক্টের সেশন ইম্পোর্ট পাথটি নিশ্চিত করে নিবেন
-import { Mail, User, Shield, Calendar, ShoppingBag, Bookmark } from "lucide-react";
+import { getUserSession } from "@/lib/core/session";
+import {
+  Mail,
+  User,
+  Shield,
+  Calendar,
+  ShoppingBag,
+  Bookmark,
+} from "lucide-react";
 
 export default async function ProfilePage() {
- 
   const session = await getUserSession();
-  
+
   const user = session?.user || session;
 
   if (!user || !user.email) {
@@ -16,21 +22,24 @@ export default async function ProfilePage() {
     );
   }
 
- 
   const dateObj = new Date(user.createdAt);
-  const formattedJoinedDate = !isNaN(dateObj) 
-    ? dateObj.toLocaleDateString("en-US", { month: "short", year: "2-digit" }).replace(" ", " '")
+  const formattedJoinedDate = !isNaN(dateObj)
+    ? dateObj
+        .toLocaleDateString("en-US", { month: "short", year: "2-digit" })
+        .replace(" ", " '")
     : "N/A";
 
- 
   const userInitials = user.name
-    ? user.name.split(" ").map((n) => n[0]).join("").toUpperCase()
+    ? user.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
     : user.email[0].toUpperCase();
 
   return (
     <div className="w-full pt-4 pb-12 font-sans">
       <div className="max-w-2xl mx-auto space-y-6">
-        
         {/* Page Main Heading */}
         <div className="border-b border-slate-200/60 pb-3">
           <h1 className="text-2xl font-serif font-bold text-[#0F172A] tracking-tight">
@@ -38,7 +47,6 @@ export default async function ProfilePage() {
           </h1>
         </div>
 
-        {/* ================= TOP CARD: AVATAR & QUICK METRICS ================= */}
         <div className="bg-white border-2 border-[#64748B]/15 rounded-2xl p-8 flex flex-col items-center text-center shadow-md relative overflow-hidden">
           <div className="absolute top-0 inset-x-0 h-1.5 bg-[#F59E0B]" />
 
@@ -68,7 +76,9 @@ export default async function ProfilePage() {
                 <ShoppingBag className="w-3.5 h-3.5 text-slate-400 stroke-[2.5]" />
                 0
               </p>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Purchased</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                Purchased
+              </p>
             </div>
 
             <div className="text-center space-y-0.5 border-r border-slate-200/80">
@@ -76,7 +86,9 @@ export default async function ProfilePage() {
                 <Bookmark className="w-3.5 h-3.5 text-[#F59E0B] fill-[#F59E0B]/5 stroke-[2.5]" />
                 0
               </p>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Bookmarked</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                Bookmarked
+              </p>
             </div>
 
             <div className="text-center space-y-0.5">
@@ -84,14 +96,14 @@ export default async function ProfilePage() {
                 <Calendar className="w-3.5 h-3.5 text-slate-400 stroke-[2.5]" />
                 {formattedJoinedDate}
               </p>
-              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Joined</p>
+              <p className="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">
+                Joined
+              </p>
             </div>
           </div>
         </div>
 
-        {/* ================= BOTTOM CARD: FORM INFO STRUCTURAL LIST ================= */}
         <div className="bg-white border-2 border-[#64748B]/15 rounded-2xl overflow-hidden shadow-md">
-          
           {/* Row 1: Email Row */}
           <div className="flex items-center justify-between p-4 border-b border-slate-200/80 sm:px-6">
             <div className="flex items-center gap-2.5 text-xs font-medium text-slate-400">
@@ -126,9 +138,7 @@ export default async function ProfilePage() {
               </span>
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
   );

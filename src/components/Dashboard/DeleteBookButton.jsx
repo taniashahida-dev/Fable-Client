@@ -30,7 +30,7 @@ export default function DeleteBookButton({ bookId, deleteAction }) {
                     className="p-2 bg-slate-800/80 hover:bg-rose-600 text-slate-400 hover:text-white rounded-lg transition border border-slate-700/30 min-w-0 w-8 h-8 flex items-center justify-center"
                     title="Delete"
                 >
-                    <TrashBin size={14} />
+                    <TrashBin size={12} />
                 </Button>
 
               

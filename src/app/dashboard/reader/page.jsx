@@ -11,7 +11,6 @@ export default async function ReaderDashboardOverview() {
   
   const purchasedBooksData = await getPurchasedBooks();
   const bookMarksData = await getUserBookMarks()
-
   const purchasedBooks = Array.isArray(purchasedBooksData) ? purchasedBooksData : [];
   const bookMarks = Array.isArray(bookMarksData) ? bookMarksData : [];
 

@@ -95,20 +95,20 @@ export default function Footer() {
             <p className="text-sm text-slate-400">New releases, weekly.</p>
             
             {/* Subscribe Input Group */}
-           
+           <div className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
                 placeholder="Email address"
              
-                className="w-full bg-slate-800/40 text-sm text-white placeholder-slate-500 px-4 py-2.5 rounded-l-lg border border-slate-700/50 focus:outline-none focus:border-slate-600 transition"
+                className="w-full flex-1 bg-slate-800/40 text-sm text-white placeholder-slate-500 px-4 py-2.5 rounded-l-lg border border-slate-700/50 focus:outline-none focus:border-slate-600 transition"
               />
               <button
                 type="submit"
-                className="bg-[#f59e0b] hover:bg-[#d97706] text-slate-950 font-semibold px-5 rounded-r-lg text-sm transition-colors duration-200"
+                className="bg-[#f59e0b] hover:bg-[#d97706] sm:w-auto w-full  text-slate-950 font-semibold px-5 rounded-r-lg text-sm transition-colors duration-200"
               >
                 Join
               </button>
-           
+           </div>
           </div>
 
         </div>

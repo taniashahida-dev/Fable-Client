@@ -1,32 +1,26 @@
 import { getCombinedTransactions } from "@/lib/api/transaction";
 import TransactionsTable from "./TransactionsTable";
 
-
 export const dynamic = "force-dynamic";
 
-
-
 export default async function AdminTransactionsPage() {
-
   const transactions = await getCombinedTransactions();
 
   return (
-    <div className="w-full min-h-screen bg-white p-6 md:p-10">
-      
-     
+    <div className="w-full min-h-screen bg-white p-4 md:p-6 lg:p-10">
       <div className="mb-8">
-        <h1 className="text-3xl font-extrabold text-[#0f172a] tracking-tight">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-[#0f172a] tracking-tight">
           Transactions
         </h1>
         <p className="text-sm text-slate-500 mt-1">
-          Monitor all system-wide ebook purchases and writer publishing fees in real-time.
+          Monitor all system-wide ebook purchases and writer publishing fees in
+          real-time.
         </p>
       </div>
 
       {/* 📊 Table Wrapper */}
       <div className="w-full">
         {transactions && transactions.length > 0 ? (
-         
           <TransactionsTable transactions={transactions} />
         ) : (
           /* 🔍 Empty State (No Gobindo Design, Pure Aesthetic UI) */
@@ -37,7 +31,6 @@ export default async function AdminTransactionsPage() {
           </div>
         )}
       </div>
-
     </div>
   );
 }

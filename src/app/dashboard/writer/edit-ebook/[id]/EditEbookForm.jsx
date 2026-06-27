@@ -31,7 +31,7 @@ export default function EditEbookForm({ writer, ebook }) {
     const router = useRouter();
     const [errors, setErrors] = useState({});
     
-    // Controlled ফর্ম স্টেটসমূহ
+ 
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('fiction');
     const [price, setPrice] = useState('0');

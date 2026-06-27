@@ -7,26 +7,25 @@ const WriterBookmarksPage = async () => {
     const bookmarkAnalytics = await getWriterBookmarkedAnalytics() || [];
 
     return (
-        <div className="min-h-screen p-6 md:p-10 font-sans mt-6 md:mt-2 max-w-7xl mx-auto">
+        <div className="min-h-screen p-4 md:p-10 font-sans mt-6 md:mt-2 max-w-7xl mx-auto">
             <div className="space-y-8">
-                
-                {/* 📌 Header Title - High Contrast Bright Layout */}
+           
                 <div className="flex justify-between items-center border-b-2 border-slate-200 pb-5">
                     <div className="flex items-center gap-3">
                         <div className="p-2.5 bg-[#6366F1]/10 text-[#6366F1] rounded-xl border border-[#6366F1]/20">
                             <Bookmark size={22} className="stroke-[2.5]" />
                         </div>
                         <div>
-                            <h1 className="text-3xl text-[#0F172A] font-serif font-black tracking-tight">Bookmark Tracker</h1>
+                            <h1 className="text-xl md:text-3xl text-[#0F172A] font-serif font-black tracking-tight">Bookmark Tracker</h1>
                             <p className="text-xs text-[#64748B] font-bold uppercase tracking-wider mt-0.5">See who saved your creative works</p>
                         </div>
                     </div>
-                    <span className="text-xs bg-slate-100 text-[#0F172A] border-2 border-slate-200 px-3 py-1.5 rounded-xl font-bold uppercase tracking-wider">
+                    <span className="text-xs bg-slate-100 text-[#0F172A] border-2 border-slate-200  px-3 py-1.5 rounded-xl font-bold uppercase tracking-wider">
                         Total Saved: {bookmarkAnalytics.length}
                     </span>
                 </div>
 
-                {/* 🖼️ GALLERY VIEW GRID */}
+           
                 {bookmarkAnalytics.length === 0 ? (
                     <div className="bg-white border-2 border-slate-200 rounded-2xl p-12 text-center shadow-sm max-w-xl mx-auto mt-12">
                         <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 mb-4 border border-slate-200">
@@ -38,9 +37,9 @@ const WriterBookmarksPage = async () => {
                         </p>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-6">
                         {bookmarkAnalytics.map((item) => {
-                            // আপনার ডেটাবেজ (image_8e2769.jpg) অনুযায়ী টাইটেল ও আইডি ফিল্ড ম্যাপিং
+                           
                             const title = item.bookName || item.title;
                             const bookId = item.bookId || item._id;
 
@@ -73,13 +72,13 @@ const WriterBookmarksPage = async () => {
                                     {/* Book Meta Details Block */}
                                     <div className="p-4 flex-1 flex flex-col justify-between space-y-4">
                                         <div className="space-y-1">
-                                            <h3 className="font-bold text-[#0F172A] text-base line-clamp-1 group-hover:text-[#6366F1] transition-colors" title={title}>
+                                            <h3 className="font-bold text-[#0F172A] text-sm md:text-base line-clamp-1 group-hover:text-[#6366F1] transition-colors" title={title}>
                                                 {title}
                                             </h3>
                                            
                                         </div>
 
-                                        {/* 👤 READER INFO BLOCK (কার্ডের ভেতরের এক্সক্লুসিভ চেঞ্জার) */}
+                                      
                                         <div className="bg-slate-50 border border-slate-200 rounded-xl p-2.5 space-y-0.5">
                                             <p className="text-[10px] text-[#64748B] font-black uppercase tracking-wider">Bookmarked By</p>
                                             <div className="flex items-center gap-1.5 text-slate-800">
@@ -91,17 +90,17 @@ const WriterBookmarksPage = async () => {
 
                                         {/* Pricing + Action Footer Segment */}
                                         <div className="flex items-center justify-between pt-2 border-t border-slate-100">
-                                            <span className="text-[#6366F1] font-black text-sm">
+                                            <span className="text-[#6366F1] font-black text-xs md:text-sm">
                                                 {item.price === 0 || !item.price ? 'Free' : `$${Number(item.price).toFixed(2)}`}
                                             </span>
 
                                             {/* Action Control - View Details Button */}
                                             <Link 
                                                 href={`/browse-books/${bookId}`}
-                                                className="flex items-center gap-1 px-3 py-1.5 bg-slate-50 hover:bg-[#6366F1] text-slate-600 hover:text-white rounded-lg transition-all border-2 border-slate-200 hover:border-[#6366F1] text-xs font-bold uppercase tracking-wider"
+                                                className="flex items-center gap-1 px-1.5 md:px-3 py-1.5 bg-slate-50 hover:bg-[#6366F1] text-slate-600 hover:text-white rounded-lg transition-all border-2 border-slate-200 hover:border-[#6366F1] text-xs font-bold uppercase tracking-wider"
                                                 title="View Ebook Details"
                                             >
-                                                <Eye size={13} className="stroke-[2.5]" />
+                                                <Eye size={10} className="stroke-[2.5]" />
                                                 <span>View</span>
                                             </Link>
                                         </div>

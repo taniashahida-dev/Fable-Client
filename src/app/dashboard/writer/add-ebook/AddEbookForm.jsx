@@ -33,7 +33,7 @@ export default function AddEbookForm({ writer }) {
     const [isUploading, setIsUploading] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Asynchronously handle and upload selected cover images directly to ImgBB
+   
     const handleCoverUpload = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -130,12 +130,12 @@ export default function AddEbookForm({ writer }) {
     };
 
     return (
-        // Clean white card format utilizing strong Slate Grey borders and soft visual depths
+      
         <div className="max-w-3xl mx-auto my-8 bg-white p-8 border-2 border-slate-200 rounded-2xl shadow-md">
             <Form ref={formRef} onSubmit={handleSubmit} className="space-y-6" validationErrors={errors} validationBehavior="aria">
                 <Fieldset className="space-y-6 w-full">
                     
-                    {/* Header Component Title with bold Prussian Blue branding styling (#0F172A) */}
+             
                     <legend className="text-2xl font-serif font-black text-[#0F172A] border-b-2 border-slate-200 w-full pb-4 tracking-tight flex items-center gap-2.5">
                         <div className="p-2 bg-[#6366F1]/10 text-[#6366F1] rounded-lg">
                             <BookOpen size={20} className="stroke-[2.5]" />
@@ -232,7 +232,6 @@ export default function AddEbookForm({ writer }) {
                     </TextField>
                 </Fieldset>
 
-                {/* Clear Action CTA Footer Section Row */}
                 <div className="flex justify-end gap-3 pt-5 border-t-2 border-slate-200 w-full">
                     <Button
                         type="submit"

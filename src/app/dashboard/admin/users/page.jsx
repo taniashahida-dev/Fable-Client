@@ -12,9 +12,9 @@ export default async function ManageUsersPage() {
   const users = await getusers();
 
   return (
-    <div className="w-full min-h-screen p-6 ">
+    <div className="w-full min-h-screen p-4 md:p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-serif font-bold ">Manage Users</h1>
+        <h1 className="text-xl md:text-2xl font-serif font-bold ">Manage Users</h1>
         <p className="text-xs text-slate-800 mt-1">Easily update user roles or terminate accounts.</p>
       </div>
 
