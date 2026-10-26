@@ -109,4 +109,4 @@ fable-client/
 
 ---
 
-*Built with ❤️ as part of an advanced MERN stack assignment.*
+*Built with a focus on usability, performance, and a seamless reading experience.*
