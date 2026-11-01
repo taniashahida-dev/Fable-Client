@@ -1,4 +1,3 @@
-// src/proxy.js
 import { NextResponse } from "next/server";
 
 export async function proxy(request) {
@@ -24,7 +23,6 @@ export async function proxy(request) {
       cleanHeaders.set("cookie", cookie);
     }
 
-    // Get Better Auth session
     const sessionRes = await fetch(
       `${request.nextUrl.origin}/api/auth/get-session`,
       {
@@ -40,18 +38,13 @@ export async function proxy(request) {
     const session = await sessionRes.json();
     const user = session?.user;
 
-    // ===========================
-    // Private Dashboard
-    // ===========================
     if (pathname.startsWith("/dashboard") && !user) {
       return NextResponse.redirect(
         new URL("/auth/sign-in", request.url)
       );
     }
 
-    // ===========================
-    // Admin Dashboard
-    // ===========================
+
     if (
       pathname.startsWith("/dashboard/admin") &&
       user?.role !== "admin"
@@ -61,9 +54,7 @@ export async function proxy(request) {
       );
     }
 
-    // ===========================
-    // Writer Dashboard
-    // ===========================
+
     if (
       pathname.startsWith("/dashboard/writer") &&
       user?.role !== "writer"
@@ -73,9 +64,6 @@ export async function proxy(request) {
       );
     }
 
-    // ===========================
-    // Reader Dashboard
-    // ===========================
     if (
       pathname.startsWith("/dashboard/user") &&
       user?.role !== "reader"
@@ -85,10 +73,6 @@ export async function proxy(request) {
       );
     }
 
-    // ===========================
-    // Optional:
-    // Logged in user can't visit auth pages
-    // ===========================
     if (
       user &&
       (
