@@ -44,7 +44,7 @@ export default function EbookFilters({
             <Select.Indicator><ChevronDown className="w-4 h-4 text-slate-400" /></Select.Indicator>
           </Select.Trigger>
           {/* FIXED: Changed invalid class 'min-w-45' to 'min-w-[180px]' to prevent layout breakdown */}
-          <Select.Popover className="bg-white border border-slate-200 rounded-xl shadow-xl mt-1 overflow-hidden z-50 min-w-[180px]">
+          <Select.Popover className="bg-white border border-slate-200 rounded-xl shadow-xl mt-1 overflow-hidden z-50 min-w-45">
             <ListBox className="p-1">
               <ListBox.Item id="newest" className="text-slate-700 hover:bg-indigo-600 hover:text-white rounded-lg px-3 py-2 text-sm cursor-pointer">Newest</ListBox.Item>
               <ListBox.Item id="price-low" className="text-slate-700 hover:bg-indigo-600 hover:text-white rounded-lg px-3 py-2 text-sm cursor-pointer">Price: Low to High</ListBox.Item>
