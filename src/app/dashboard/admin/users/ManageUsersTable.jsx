@@ -28,12 +28,16 @@ export default function ManageUsersTable({ initialUsers }) {
       return;
     }
 
-    const res = await updateUsers(id, newRole);
-    if (res) {
-      setUsers(users.map((u) => (u._id === id ? { ...u, role: newRole } : u)));
-      toast.success(`Role updated to ${newRole}!`);
-    } else {
-      toast.error("Failed to update role");
+    try {
+      const res = await updateUsers(id, newRole);
+      if (res && !res.error && res.acknowledged) {
+        setUsers(users.map((u) => (u._id === id ? { ...u, role: newRole } : u)));
+        toast.success(`Role updated to ${newRole}!`);
+      } else {
+        toast.error(res?.message || "Failed to update role");
+      }
+    } catch (error) {
+      toast.error("Something went wrong while updating role");
     }
   };
 
@@ -41,17 +45,21 @@ export default function ManageUsersTable({ initialUsers }) {
     if (!pendingUserRoleChange) return;
 
     const { id, newRole } = pendingUserRoleChange;
-    const res = await updateUsers(id, newRole);
+    try {
+      const res = await updateUsers(id, newRole);
 
-    if (res) {
-      setUsers(users.filter((u) => u._id !== id));
-      toast.success("User promoted to Admin successfully!");
-    } else {
-      toast.error("Failed to update role to Admin");
+      if (res && !res.error && res.acknowledged) {
+        setUsers(users.filter((u) => u._id !== id));
+        toast.success("User promoted to Admin successfully!");
+      } else {
+        toast.error(res?.message || "Failed to update role to Admin");
+      }
+    } catch (error) {
+      toast.error("Something went wrong while promoting user");
+    } finally {
+      setIsAdminModalOpen(false);
+      setPendingUserRoleChange(null);
     }
-
-    setIsAdminModalOpen(false);
-    setPendingUserRoleChange(null);
   };
 
   const triggerDeleteModal = (user) => {
@@ -62,16 +70,20 @@ export default function ManageUsersTable({ initialUsers }) {
   const handleConfirmDelete = async () => {
     if (!userToDelete) return;
 
-    const res = await deleteUsers(userToDelete._id);
-    if (res) {
-      setUsers(users.filter((u) => u._id !== userToDelete._id));
-      toast.success("User deleted successfully!");
-    } else {
-      toast.error("Failed to delete user");
+    try {
+      const res = await deleteUsers(userToDelete._id);
+      if (res && !res.error && res.deletedCount > 0) {
+        setUsers(users.filter((u) => u._id !== userToDelete._id));
+        toast.success("User deleted successfully!");
+      } else {
+        toast.error(res?.message || "Failed to delete user");
+      }
+    } catch (error) {
+      toast.error("Something went wrong while deleting user");
+    } finally {
+      setIsModalOpen(false);
+      setUserToDelete(null);
     }
-
-    setIsModalOpen(false);
-    setUserToDelete(null);
   };
 
   return (

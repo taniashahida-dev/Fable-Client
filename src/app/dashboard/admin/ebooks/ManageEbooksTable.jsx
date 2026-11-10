@@ -21,13 +21,13 @@ export default function ManageEbooksTable({ initialBooks }) {
     try {
       const res = await updateEbook(bookId, { status: targetStatus });
       
-      if (res) {
+      if (res && !res.error && res.acknowledged) {
         setBooks(prevBooks => 
           prevBooks.map(b => b._id === bookId ? { ...b, status: targetStatus } : b)
         );
        toast.success(`Ebook status updated to ${targetStatus}!`);
       } else {
-       toast.error("Failed to update status");
+       toast.error(res?.message || "Failed to update status");
       }
     } catch (error) {
      toast.error("Something went wrong");
@@ -36,14 +36,21 @@ export default function ManageEbooksTable({ initialBooks }) {
 
   // Delete Handler
   const handleConfirmDelete = async () => {
-    const res = await deleteEbook(bookToDelete._id);
-    if (res?.deletedCount > 0 || res) {
-      setBooks(books.filter(b => b._id !== bookToDelete._id));
-     toast.success("Ebook deleted successfully!");
-    } else {
-      toast.error("Failed to delete ebook");
+    if (!bookToDelete) return;
+    try {
+      const res = await deleteEbook(bookToDelete._id);
+      if (res && !res.error && res.deletedCount > 0) {
+        setBooks(prevBooks => prevBooks.filter(b => b._id !== bookToDelete._id));
+        toast.success("Ebook deleted successfully!");
+      } else {
+        toast.error(res?.message || "Failed to delete ebook");
+      }
+    } catch (error) {
+      toast.error("Something went wrong while deleting ebook");
+    } finally {
+      setIsModalOpen(false);
+      setBookToDelete(null);
     }
-    setIsModalOpen(false);
   };
 
   return (

@@ -112,7 +112,7 @@ export default function AddEbookForm({ writer }) {
             console.log("Submitting Data:", newEbookData);
             const payload = await createEbooks(newEbookData);
 
-            if (payload?.insertedId) {
+            if (payload && !payload.error && payload.insertedId) {
               toast.success("Ebook added to publishing queue successfully!");
                 setCoverUrl('');
                 setErrors({});
@@ -120,7 +120,7 @@ export default function AddEbookForm({ writer }) {
                     formRef.current.reset(); 
                 }
             } else {
-                toast.error("Failed to add ebook. Please try again.");
+                toast.error(payload?.message || (typeof payload?.error === "string" ? payload.error : null) || "Failed to add ebook. Please try again.");
             }
         } catch (error) {
            toast.error("Something went wrong during submission.");

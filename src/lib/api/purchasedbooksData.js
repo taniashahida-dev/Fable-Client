@@ -4,14 +4,15 @@ import { getUserSession } from "../core/session";
 
 export const getPurchasedBooksOfReader = async (email) => {
   if (!email) return [];
-const token = await getAccessToken()
- return serverFetch(
-    `/api/purchased-books/reader?email=${email}`,
+  const token = await getAccessToken();
+  if (!token) return [];
+  return serverFetch(
+    `/api/purchased-books/reader?email=${encodeURIComponent(email)}`,
     {
-        cache: "no-store",
+      cache: "no-store",
     },
-    token
-);
+    token,
+  );
 };
 
 
@@ -25,35 +26,38 @@ export const getPurchasedBooks = async () => {
 };
 
 export const purchasedBookWriter = async (writerId) => {
-  const token = await getAccessToken()
- return serverFetch(
-    `/api/purchased-books/writer?writerId=${writerId}`,
+  if (!writerId) return [];
+  const token = await getAccessToken();
+  if (!token) return [];
+  return serverFetch(
+    `/api/purchased-books/writer?writerId=${encodeURIComponent(writerId)}`,
     {
-        cache: "no-store",
+      cache: "no-store",
     },
-    token
-);
+    token,
+  );
 };
 
 
 
 export const getPurchasedBooksOfWriter = async () => {
   const user = await getUserSession();
+  const writerId = user?.id || user?.sub;
 
-
-  if (!user || !user.id) {
+  if (!user || !writerId) {
     console.warn(
       "Unauthorized attempt or missing session data for writer sales.",
     );
     return [];
   }
-    const token = await getAccessToken()
-  const data = await  serverFetch(
-    `/api/purchased-books/writer?writerId=${user.id}`,
+  const token = await getAccessToken();
+  if (!token) return [];
+  const data = await serverFetch(
+    `/api/purchased-books/writer?writerId=${encodeURIComponent(writerId)}`,
     {
-        cache: "no-store",
+      cache: "no-store",
     },
-    token
-);
+    token,
+  );
   return Array.isArray(data) ? data : [];
 };

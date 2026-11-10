@@ -28,13 +28,14 @@ export const getUserBookMarks = async () => {
 
 export const getWriterBookmarkedAnalytics = async () => {
     const user = await getUserSession();
-    const token = await getAccessToken()
-    if (!user?.email) return [];
-    
-    const writerName = user.name || "Tania"; 
-    
+    const writerId = user?.id || user?.sub;
+    if (!writerId) return [];
+
+    const token = await getAccessToken();
+    if (!token) return [];
+
     return serverFetch(
-    `/api/bookmarks?email=${user.email}&role=writer&name=${writerName}`,
+    `/api/bookmarks?role=writer&writerId=${encodeURIComponent(writerId)}`,
     { cache: "no-store" },
     token
 );

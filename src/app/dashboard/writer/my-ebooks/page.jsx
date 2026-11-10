@@ -15,18 +15,35 @@ const MyBooksPage = async () => {
     
     const handleTogglePublish = async (bookId, targetStatus) => {
         'use server';
-        await updateEbook(bookId, { status: targetStatus }); 
-        revalidatePath('/dashboard/writer/my-ebooks'); 
+        const res = await updateEbook(bookId, { status: targetStatus });
+        if (res && !res.error && res.acknowledged) {
+            revalidatePath('/dashboard/writer/my-ebooks');
+            return { success: true, status: targetStatus };
+        }
+        return {
+            error: true,
+            message: res?.message || 'Failed to update ebook status',
+        };
     };
 
     const handleDelete = async (formData) => {
         'use server';
         const bookId = formData.get('bookId');
         
-        if (bookId) {
-            await deleteEbook(bookId);
-            revalidatePath('/dashboard/writer/my-ebooks');
+        if (!bookId) {
+            return { error: true, message: 'Ebook ID is missing' };
         }
+
+        const res = await deleteEbook(bookId);
+        if (res && !res.error && res.deletedCount > 0) {
+            revalidatePath('/dashboard/writer/my-ebooks');
+            return { success: true };
+        }
+
+        return {
+            error: true,
+            message: res?.message || 'Failed to delete ebook',
+        };
     };
 
    
@@ -126,7 +143,8 @@ const MyBooksPage = async () => {
                                                         <StatusDropdown
                                                             bookId={book._id} 
                                                             currentStatus={book.status} 
-                                                            toggleAction={handleTogglePublish} 
+                                                            toggleAction={handleTogglePublish}
+                                                            disabled={!book.status || !['published', 'unpublished'].includes(book.status.toLowerCase())}
                                                         />
                                                         <Link 
                                                             href={`/dashboard/writer/edit-ebook/${book._id}`}

@@ -1,4 +1,5 @@
-import {  serverFetch } from "../core/server";
+import { getAccessToken } from "../actions/token";
+import { serverFetch } from "../core/server";
 import { getUserSession } from "../core/session";
 
 
@@ -19,9 +20,11 @@ export const getLoggedInWriter = async () => {
 
 export const checkWriterVerification = async (writerId) => {
     if (!writerId) return { isVerified: false };
-    
-  
+
+    const token = await getAccessToken();
+    if (!token) return { isVerified: false };
+
     return serverFetch(`/api/writer/check-verification/${writerId}`, {
         cache: 'no-store'
-    });
+    }, token);
 }

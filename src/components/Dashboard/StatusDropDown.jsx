@@ -4,13 +4,24 @@ import React, { useTransition } from 'react';
 // 🌟 HeroUI এর Button এবং Dropdown
 import { Dropdown, Button } from '@heroui/react'; 
 import { ArrowRightToSquare, SquareCheck, ChevronDown } from '@gravity-ui/icons';
+import toast from 'react-hot-toast';
 
-export default function StatusDropdown({ bookId, currentStatus, toggleAction }) {
+export default function StatusDropdown({ bookId, currentStatus, toggleAction, disabled = false }) {
     const [isPending, startTransition] = useTransition();
 
     const handleStatusChange = (targetStatus) => {
+        if (disabled) return;
         startTransition(async () => {
-            await toggleAction(bookId, targetStatus);
+            try {
+                const res = await toggleAction(bookId, targetStatus);
+                if (res?.error) {
+                    toast.error(res.message || 'Failed to update ebook status');
+                } else if (res?.success) {
+                    toast.success(`Ebook status updated to ${targetStatus}!`);
+                }
+            } catch (error) {
+                toast.error('Failed to update ebook status');
+            }
         });
     };
 
@@ -26,6 +37,18 @@ export default function StatusDropdown({ bookId, currentStatus, toggleAction }) 
                 return 'bg-indigo-500/10 text-indigo-600 border-indigo-500/20 hover:bg-indigo-500/20';
         }
     };
+
+    if (disabled) {
+        return (
+            <div
+                title="Pending ebooks require admin approval before publishing"
+                className={`w-[120px] justify-between px-3 py-1.5 h-8 font-bold rounded-xl text-[10px] border tracking-wider uppercase flex items-center gap-1.5 opacity-60 cursor-not-allowed select-none ${getStatusStyle(currentStatus)}`}
+            >
+                <span className="truncate">{currentStatus || "Pending"}</span>
+                <ChevronDown size={12} className="shrink-0 opacity-50" />
+            </div>
+        );
+    }
 
     return (
         <Dropdown>

@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import { getUserSession } from '@/lib/core/session'; 
 import EditEbookForm from './EditEbookForm';
 import { getEBookById } from '@/lib/api/ebooks';
@@ -10,10 +11,21 @@ const EditEbookPage = async ({ params }) => {
     
     const user = await getUserSession();
     
-  
-    const ebookData = id ? await getEBookById(id) : null;
+    let ebookData = null;
+    if (id) {
+        try {
+            ebookData = await getEBookById(id);
+        } catch {
+            ebookData = null;
+        }
+    }
     if (!ebookData) {
         return <EditEbookFallbackPage />;
+    }
+
+    const currentUserId = String(user?.id || user?.sub || '');
+    if (!currentUserId || String(ebookData.writerId || '') !== currentUserId) {
+        redirect('/unauthorized');
     }
     
     return (
