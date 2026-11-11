@@ -36,16 +36,42 @@ export const serverMutation = async (
     headers.Authorization = `Bearer ${token}`;
   }
 
-  const res = await fetch(`${baseUrl}${path}`, {
-    method,
-    headers,
-    body: JSON.stringify(data),
-  });
+  try {
+    const res = await fetch(`${baseUrl}${path}`, {
+      method,
+      headers,
+      body: JSON.stringify(data),
+    });
 
-  const text = await res.text();
+    const text = await res.text();
+    let parsed = null;
 
-  console.log("Status:", res.status);
-  console.log("Raw Response:", text);
+    if (text) {
+      try {
+        parsed = JSON.parse(text);
+      } catch {
+        parsed = { message: text };
+      }
+    }
 
-  return JSON.parse(text);
+    if (!res.ok) {
+      return {
+        error: true,
+        status: res.status,
+        message:
+          parsed?.message ||
+          parsed?.msg ||
+          (typeof parsed?.error === "string" ? parsed.error : null) ||
+          `API Error ${res.status}`,
+      };
+    }
+
+    return parsed ?? { acknowledged: true };
+  } catch (error) {
+    return {
+      error: true,
+      status: 500,
+      message: error?.message || "Network request failed",
+    };
+  }
 };

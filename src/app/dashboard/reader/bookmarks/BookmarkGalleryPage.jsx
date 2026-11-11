@@ -25,11 +25,11 @@ export default function BookmarkGalleryPage({ initialData }) {
     try {
       const data = await deleteBookmark(id);
 
-      if (data.success) {
+      if (data && !data.error && data.success) {
         setBookmarks((prev) => prev.filter((item) => item._id !== id));
         toast.success("Bookmark removed successfully");
       } else {
-        toast.error("Failed to remove bookmark from server");
+        toast.error(data?.message || "Failed to remove bookmark from server");
       }
     } catch (error) {
       console.error("Error removing bookmark:", error);
